@@ -1,0 +1,9 @@
+allowBuilds:
+  ect-bin: true
+  esbuild: set this to true or false
+
+ignoredBuiltDependencies:
+  - esbuild
+
+onlyBuiltDependencies:
+  - ect-bin

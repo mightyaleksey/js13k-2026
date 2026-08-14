@@ -1,0 +1,32 @@
+{
+  "name": "js13k-2025",
+  "version": "1.0.0",
+  "author": "Alexey Litvinov",
+  "devDependencies": {
+    "@babel/preset-flow": "8.0.1",
+    "@eslint/config-helpers": "0.7.0",
+    "@rolldown/plugin-babel": "^0.2.3",
+    "babel-plugin-syntax-hermes-parser": "0.37.0",
+    "clean-css": "5.3.3",
+    "ect-bin": "1.4.1",
+    "eslint": "10.8.1",
+    "flow-bin": "0.327.0",
+    "flow-remove-types": "2.327.0",
+    "html-minifier": "4.0.0",
+    "linter-config": "github:mightyaleksey/linter-config#1d60907cfc7710fd29db842ade8dbb48c07ffd75",
+    "posthtml": "0.16.7",
+    "prettier": "3.9.6",
+    "prettier-plugin-space-before-function-paren": "0.1.0",
+    "roadroller": "2.1.0",
+    "vite": "8.2.1",
+    "vite-bundle-visualizer": "1.2.1"
+  },
+  "prettier": "linter-config/prettier",
+  "scripts": {
+    "analyse": "cd src && vite-bundle-visualizer --config ../vite.config.mjs --template sunburst",
+    "dev": "vite --config ./vite.config.mjs src",
+    "build": "vite build --config ./vite.config.mjs src",
+    "format": "linter-config -f '**/*.json' 'src/**/*.mjs'",
+    "test": "node --import ./setup/flow-hook.mjs --test"
+  }
+}
