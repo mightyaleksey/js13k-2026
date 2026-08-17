@@ -55,7 +55,7 @@ export function clear () {
 export function circle (mode: DrawMode, x: number, y: number, radius: number) {
   const c = _state.context
   c.beginPath()
-  c.arc(x, y, radius, 0, 2 * Math.PI)
+  c.arc(Math.floor(x), Math.floor(y), Math.floor(radius), 0, 2 * Math.PI)
   mode === 'fill' ? c.fill() : c.stroke()
 }
 
@@ -90,7 +90,15 @@ export function ellipse (
 ) {
   const c = _state.context
   c.beginPath()
-  c.ellipse(x, y, radiusX, radiusY, (rotation * Math.PI) / 180, 0, 2 * Math.PI)
+  c.ellipse(
+    Math.floor(x),
+    Math.floor(y),
+    Math.floor(radiusX),
+    Math.floor(radiusY),
+    (rotation * Math.PI) / 180,
+    0,
+    2 * Math.PI
+  )
   mode === 'fill' ? c.fill() : c.stroke()
 }
 
@@ -102,8 +110,8 @@ export function getTextWidth (text: string): number {
 export function line (x0: number, y0: number, x1: number, y1: number) {
   const c = _state.context
   c.beginPath()
-  c.moveTo(x0, y0)
-  c.lineTo(x1, y1)
+  c.moveTo(Math.floor(x0), Math.floor(y0))
+  c.lineTo(Math.floor(x1), Math.floor(y1))
   c.stroke()
 }
 
@@ -148,7 +156,7 @@ export function rect (
     Math.floor(y),
     Math.floor(width),
     Math.floor(height),
-    radius ?? 0
+    Math.floor(radius ?? 0)
   )
   mode === 'fill' ? c.fill() : c.stroke()
 }

@@ -1,11 +1,42 @@
 /* @flow */
 
+import { TILE_SIZE } from '../../constants.mjs'
 import { BaseState } from '../BaseState.mjs'
 
+export type EntityProps = Readonly<{
+  x: number,
+  y: number,
+  width: number,
+  height: number
+}>
+
 export class EntityState extends BaseState {
+  x: number
+  y: number
+  width: number
+  height: number
+
+  dx: number
+  dy: number
+
+  constructor (props: EntityProps) {
+    super()
+
+    this.x = props?.x ?? 0
+    this.y = props?.y ?? 0
+    this.width = props?.width ?? TILE_SIZE
+    this.height = props?.height ?? TILE_SIZE
+
+    this.dx = 0
+    this.dy = 0
+  }
+
   enter () {}
 
   render () {}
 
-  update () {}
+  update (delta: number) {
+    this.x += this.dx * delta
+    this.y += this.dy * delta
+  }
 }
