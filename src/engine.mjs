@@ -11,10 +11,24 @@ const _state: { buffer: HTMLCanvasElement, context: CanvasRenderingContext2D } =
   { buffer: null, context: null }
 
 const _input: {
+  // keeps information about keys that were checked for the "pressed" state so
+  // we can update its state on the next tick
+  checked: { [string]: boolean },
+  // keeps keyboard state
+  holding: { [string]: boolean },
+  pressed: { [string]: boolean },
+
   resized: boolean,
   touched: boolean,
   touches: { [string]: [number, number] }
-} = { resized: false, touched: false, touches: {} }
+} = {
+  checked: {},
+  holding: {},
+  pressed: {},
+  resized: false,
+  touched: false,
+  touches: {}
+}
 
 type AlignMode = 'center' | 'left' | 'right'
 
@@ -29,6 +43,24 @@ type DrawMode = 'fill' | 'line'
  * Returns virtual resolution.
  */
 export const Dimentions = { width: 0, height: 0 }
+
+/**
+ * Handles I/O
+ */
+export const Keys = {
+  wasHolding (key: string): boolean {
+    return _input.holding[key] === true
+  },
+
+  wasPressed (key: string): boolean {
+    if (_input.pressed[key] === true) {
+      _input.checked[key] = true
+      return true
+    }
+
+    return false
+  }
+}
 
 export const Touch = {
   getPosition (id?: ?string): ?[number, number] {
@@ -234,6 +266,12 @@ export async function createEngine (
       render()
       _state.context.restore()
 
+      // reset I/O
+      Object.keys(_input.checked).forEach((key) => {
+        delete _input.checked[key]
+        delete _input.pressed[key]
+      })
+
       _input.resized = false
       _input.touched = false
     }
@@ -244,6 +282,8 @@ export async function createEngine (
   })(_getTime())
 
   document.addEventListener('click', onClick)
+  document.addEventListener('keydown', onKeydown)
+  document.addEventListener('keyup', onKeyup)
   document.addEventListener('touchstart', onTouch)
   document.addEventListener('touchmove', onTouch)
   document.addEventListener('touchend', onTouchEnd)
@@ -256,6 +296,22 @@ export async function createEngine (
       _input.touched = true
       _input.touches.mouse = [event.pageX / _scale, event.pageY / _scale]
     }
+  }
+
+  function onKeydown (event: KeyboardEvent) {
+    _preventDefault(event)
+
+    const key = event.key
+    _input.holding[key] = true
+    _input.pressed[key] = true
+  }
+
+  function onKeyup (event: KeyboardEvent) {
+    _preventDefault(event)
+
+    const key = event.key
+    delete _input.holding[key]
+    delete _input.pressed[key]
   }
 
   function onTouch (event: TouchEvent) {

@@ -6,9 +6,15 @@ import { BaseState } from '../BaseState.mjs'
 import { PlayerState } from '../entities/PlayerState.mjs'
 
 export class GamePlayState extends BaseState {
+  cameraX: number
+  cameraY: number
+
   player: PlayerState
 
   enter () {
+    this.cameraX = 0
+    this.cameraY = 0
+
     this.player = new PlayerState({
       x: 0.5 * (Dimentions.width - TILE_SIZE),
       y: Dimentions.height - 2 * TILE_SIZE

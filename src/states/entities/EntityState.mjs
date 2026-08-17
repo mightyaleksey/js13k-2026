@@ -2,15 +2,16 @@
 
 import { TILE_SIZE } from '../../constants.mjs'
 import { BaseState } from '../BaseState.mjs'
+import { StateMachine } from '../StateMachine.mjs'
 
 export type EntityProps = Readonly<{
-  x: number,
-  y: number,
-  width: number,
-  height: number
+  x?: number,
+  y?: number,
+  width?: number,
+  height?: number
 }>
 
-export class EntityState extends BaseState {
+export class EntityState<T> extends BaseState {
   x: number
   y: number
   width: number
@@ -18,6 +19,8 @@ export class EntityState extends BaseState {
 
   dx: number
   dy: number
+
+  state: StateMachine<T>
 
   constructor (props: EntityProps) {
     super()
@@ -36,7 +39,14 @@ export class EntityState extends BaseState {
   render () {}
 
   update (delta: number) {
+    this.state.update(delta)
     this.x += this.dx * delta
     this.y += this.dy * delta
+  }
+
+  /* helpers */
+
+  changeState (stateName: T, input: unknown) {
+    this.state.change(stateName, input)
   }
 }
