@@ -32,6 +32,8 @@ export class EntityState<T> extends BaseState {
 
     this.dx = 0
     this.dy = 0
+
+    this.state = new StateMachine({})
   }
 
   enter () {}

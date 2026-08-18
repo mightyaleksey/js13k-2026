@@ -1,6 +1,7 @@
 /* @flow */
 
 export const TILE_SIZE = 16
+export const CAMERA_SPEED = 40
 export const MOVEMENT_SPEED = 100
 
 // array index reflects corresponding direction, i.e. top, right, bottom, left

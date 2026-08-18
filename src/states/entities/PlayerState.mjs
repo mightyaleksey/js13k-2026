@@ -4,10 +4,11 @@ import { rect, setColor } from '../../engine.mjs'
 import { StateMachine } from '../StateMachine.mjs'
 import { PlayerIdleState } from './characters/PlayerIdleState.mjs'
 import { PlayerWalkState } from './characters/PlayerWalkState.mjs'
+import type { EntityProps } from './EntityState.mjs'
 import { EntityState } from './EntityState.mjs'
 
 export class PlayerState extends EntityState<'idle' | 'walk'> {
-  constructor (props) {
+  constructor (props: EntityProps) {
     super(props)
 
     this.state = new StateMachine({
