@@ -1,15 +1,27 @@
 /* @flow */
 
-export const TILE_SIZE = 16
-export const CAMERA_SPEED = 40
-export const MOVEMENT_SPEED = 100
+export const TILE_SIZE: number = 16
+export const CAMERA_SPEED: number = 20
+export const MINION_SPEED: number = 20
+export const PLAYER_SPEED: number = 100
 
 // array index reflects corresponding direction, i.e. top, right, bottom, left
-export const MOVEMENT_KEYS = ['w', 'd', 's', 'a', 'ц', 'в', 'ы', 'ф']
+export const MOVEMENT_KEYS: ReadonlyArray<string> = [
+  'w',
+  'd',
+  's',
+  'a',
+  'ц',
+  'в',
+  'ы',
+  'ф'
+]
 // array index reflects corresponding direction, i.e. top, right, bottom, left
-export const UNIT_VECTORS = [
+export const UNIT_VECTORS: ReadonlyArray<ReadonlyArray<number>> = [
   [0, -1],
   [1, 0],
   [0, 1],
   [-1, 0]
 ]
+
+export const DEBUG_PANEL = true

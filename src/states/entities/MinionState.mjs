@@ -8,34 +8,23 @@ import { PlayerWalkState } from './characters/PlayerWalkState.mjs'
 import type { EntityProps } from './EntityState.mjs'
 import { EntityState } from './EntityState.mjs'
 
-export class PlayerState extends EntityState<'idle' | 'walk'> {
-  constructor (props: EntityProps) {
-    super(props)
-
-    this.state = new StateMachine({
-      idle: () => new PlayerIdleState(this),
-      walk: () => new PlayerWalkState(this)
-    }).change('idle')
-  }
-
+export class MinionState extends EntityState<'idle' | 'walk'> {
   render () {
-    setColor('#83ccd2')
+    setColor('#ffadad')
+    pixel(this.x, this.y)
     pixel(this.x, this.y + 4)
     pixel(this.x, this.y + 8)
-    pixel(this.x, this.y + 12)
 
-    pixel(this.x + 4, this.y)
+    pixel(this.x + 4, this.y + 4)
     pixel(this.x + 4, this.y + 8)
+    pixel(this.x + 4, this.y + 12)
 
-    pixel(this.x + 8, this.y)
+    pixel(this.x + 8, this.y + 4)
     pixel(this.x + 8, this.y + 8)
+    pixel(this.x + 8, this.y + 12)
 
+    pixel(this.x + 12, this.y)
     pixel(this.x + 12, this.y + 4)
     pixel(this.x + 12, this.y + 8)
-    pixel(this.x + 12, this.y + 12)
-  }
-
-  update (delta: number) {
-    super.update(delta)
   }
 }

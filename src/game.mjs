@@ -1,6 +1,6 @@
 /* @flow */
 
-import { createEngine } from './engine.mjs'
+import { createEngine, setFont } from './engine.mjs'
 import { gameState } from './gameState.mjs'
 import { GamePlayState } from './states/game/GamePlayState.mjs'
 import { StateMachine } from './states/StateMachine.mjs'
@@ -19,6 +19,7 @@ function updateGame (delta: number) {
 }
 
 function renderGame () {
+  setFont('12px/1.3 Consolas, monaco, monospace')
   gameState.render()
 }
 

@@ -2,7 +2,7 @@
 
 import {
   MOVEMENT_KEYS,
-  MOVEMENT_SPEED,
+  PLAYER_SPEED,
   UNIT_VECTORS
 } from '../../../constants.mjs'
 import { Keys } from '../../../engine.mjs'
@@ -23,8 +23,8 @@ export class PlayerWalkState<T extends PlayerState> extends BaseState {
     const entity = this.entity
 
     if (direction > -1) {
-      entity.dx = UNIT_VECTORS[direction][0] * MOVEMENT_SPEED
-      entity.dy = UNIT_VECTORS[direction][1] * MOVEMENT_SPEED
+      entity.dx = UNIT_VECTORS[direction][0] * PLAYER_SPEED
+      entity.dy = UNIT_VECTORS[direction][1] * PLAYER_SPEED
     } else {
       entity.changeState('idle')
     }
