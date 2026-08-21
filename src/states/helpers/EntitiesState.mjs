@@ -28,20 +28,22 @@ export class EntitiesState extends BaseState {
   enter () {}
 
   render () {
-    for (const entity of this.list) {
-      if (entity instanceof PlayerState) continue
-      entity.render()
-    }
+    this.list.forEach((entity) => entity.render())
   }
 
   update (delta: number) {
-    for (const entity of this.list) {
-      if (entity instanceof PlayerState) continue
-      entity.update(delta)
+    const viewport: CollidableType = {
+      x: -(deadZone - this.cameraX),
+      y: -(deadZone - this.cameraY),
+      width: Dimentions.width + 2 * deadZone,
+      height: Dimentions.height + 2 * deadZone
     }
 
-    // check for collisions
-    const entities = this.list
+    // update entities
+    this.list.forEach((entity) => entity.update(delta))
+
+    // check for collisions (mainly those that are in the viewport)
+    const entities = this.list.filter((entity) => collides(entity, viewport))
     entities.forEach((left, i) => {
       for (let j = i + 1; j < entities.length; ++j) {
         const right = entities[j]
@@ -52,21 +54,8 @@ export class EntitiesState extends BaseState {
       }
     })
 
-    this.collectGarbage()
-  }
-
-  /* helpers */
-
-  collectGarbage () {
-    // remove entities from the list that are out of viewport,
-    // i.e. not in the camera range.
-    const viewport: CollidableType = {
-      x: -(deadZone - this.cameraX),
-      y: -(deadZone - this.cameraY),
-      width: Dimentions.width + 2 * deadZone,
-      height: Dimentions.height + 2 * deadZone
-    }
-
+    // collect garbage, i.e. remove entities from the list that are out
+    // of viewport, i.e. not in the camera range.
     for (var j = this.list.length - 1; j > -1; --j) {
       const entity = this.list[j]
       if (entity instanceof PlayerState) continue

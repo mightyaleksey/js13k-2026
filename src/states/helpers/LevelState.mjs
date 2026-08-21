@@ -62,13 +62,10 @@ export class LevelState extends BaseState {
     this.length = 1000
 
     this.counter = 0
-
-    // // proto
-    // genHShape(this.entities.list)
   }
 
   update (delta: number) {
-    if (100 * this.counter + this.cameraY < 0) {
+    if (100 * this.counter + this.cameraY < -Dimentions.height) {
       const pattern = patterns[this.counter % patterns.length]
       pattern(this.entities.list, this.cameraY)
       this.counter++
