@@ -2,6 +2,7 @@
 
 import { TILE_SIZE } from '../../constants.mjs'
 import { BaseState } from '../BaseState.mjs'
+import type { EntitiesState } from '../helpers/EntitiesState.mjs'
 import { StateMachine } from '../StateMachine.mjs'
 
 export type EntityProps = Readonly<{
@@ -21,6 +22,11 @@ export class EntityState<T> extends BaseState {
   dy: number
 
   state: StateMachine<T>
+  statuses: Array<any>
+
+  entities: EntitiesState
+
+  isDestroyed: boolean
 
   constructor (props: EntityProps) {
     super()
@@ -34,6 +40,12 @@ export class EntityState<T> extends BaseState {
     this.dy = 0
 
     this.state = new StateMachine({})
+    this.statuses = []
+
+    // dependency injection
+    this.entities = null
+
+    this.isDestroyed = false
   }
 
   enter () {}
@@ -42,6 +54,7 @@ export class EntityState<T> extends BaseState {
 
   update (delta: number) {
     this.state.update(delta)
+    this.statuses.forEach((status) => status.update(this, delta))
     this.x += this.dx * delta
     this.y += this.dy * delta
   }

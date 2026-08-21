@@ -5,6 +5,7 @@ import { pixel } from '../../libs/render.mjs'
 import { StateMachine } from '../StateMachine.mjs'
 import type { EntityProps } from './EntityState.mjs'
 import { EntityState } from './EntityState.mjs'
+import { ProjectileState } from './ProjectileState.mjs'
 
 export class MinionState extends EntityState<'idle' | 'walk'> {
   render () {
@@ -26,11 +27,15 @@ export class MinionState extends EntityState<'idle' | 'walk'> {
     pixel(this.x + 12, this.y + 8)
   }
 
-  onCollide (target, delta: number) {
+  onCollide (target: EntityState<any>, delta: number) {
     if (target instanceof MinionState) {
       this.dx = -this.dx
       this.dy = -this.dy
       this.update(delta)
+    }
+
+    if (target instanceof ProjectileState) {
+      target.isDestroyed = true
     }
   }
 }

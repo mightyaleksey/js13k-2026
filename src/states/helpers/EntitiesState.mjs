@@ -60,7 +60,7 @@ export class EntitiesState extends BaseState {
       const entity = this.list[j]
       if (entity instanceof PlayerState) continue
 
-      if (!collides(entity, viewport)) {
+      if (!collides(entity, viewport) || entity.isDestroyed) {
         this.list.splice(j, 1)
       }
     }

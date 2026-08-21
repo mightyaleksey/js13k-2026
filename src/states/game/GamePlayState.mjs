@@ -43,6 +43,7 @@ export class GamePlayState extends BaseState {
 
     this.level = new LevelState(this.entities)
     this.entities.list.push(this.player)
+    this.player.entities = this.entities
 
     this.isCameraMoving = true
 

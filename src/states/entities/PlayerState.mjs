@@ -2,6 +2,7 @@
 
 import { rect, setColor } from '../../engine.mjs'
 import { pixel } from '../../libs/render.mjs'
+import { ShootingStatus } from '../../statuses/ShootingStatus.mjs'
 import { StateMachine } from '../StateMachine.mjs'
 import { PlayerIdleState } from './characters/PlayerIdleState.mjs'
 import { PlayerWalkState } from './characters/PlayerWalkState.mjs'
@@ -16,6 +17,8 @@ export class PlayerState extends EntityState<'idle' | 'walk'> {
       idle: () => new PlayerIdleState(this),
       walk: () => new PlayerWalkState(this)
     }).change('idle')
+
+    this.statuses.push(new ShootingStatus([0.2, 0]))
   }
 
   render () {

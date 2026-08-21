@@ -9,7 +9,7 @@ import type { EntitiesState } from './EntitiesState.mjs'
 
 const workspace = 8 * TILE_SIZE
 
-function genHShape (list: Array<EntityState<any>>, offsetY: number) {
+function genHShape (entities: EntitiesState, offsetY: number) {
   const left = new MinionState({
     x: 0.5 * (Dimentions.width - workspace) - TILE_SIZE,
     y: -TILE_SIZE + offsetY
@@ -20,12 +20,14 @@ function genHShape (list: Array<EntityState<any>>, offsetY: number) {
   })
 
   left.dx = MINION_SPEED
+  left.entities = entities
   right.dx = -MINION_SPEED
+  right.entities = entities
 
-  list.push(left, right)
+  entities.list.push(left, right)
 }
 
-function genTShape (list: Array<EntityState<any>>, offsetY: number) {
+function genTShape (entities: EntitiesState, offsetY: number) {
   const left = new MinionState({
     x: 0.5 * Dimentions.width - TILE_SIZE,
     y: -TILE_SIZE + offsetY
@@ -36,9 +38,11 @@ function genTShape (list: Array<EntityState<any>>, offsetY: number) {
   })
 
   left.dx = -MINION_SPEED
+  left.entities = entities
   right.dx = MINION_SPEED
+  right.entities = entities
 
-  list.push(left, right)
+  entities.list.push(left, right)
 }
 
 const patterns = [genHShape, genTShape]
@@ -67,7 +71,7 @@ export class LevelState extends BaseState {
   update (delta: number) {
     if (100 * this.counter + this.cameraY < -Dimentions.height) {
       const pattern = patterns[this.counter % patterns.length]
-      pattern(this.entities.list, this.cameraY)
+      pattern(this.entities, this.cameraY)
       this.counter++
     }
   }
