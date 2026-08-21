@@ -40,6 +40,18 @@ export class EntitiesState extends BaseState {
       entity.update(delta)
     }
 
+    // check for collisions
+    const entities = this.list
+    entities.forEach((left, i) => {
+      for (let j = i + 1; j < entities.length; ++j) {
+        const right = entities[j]
+        if (!collides(left, right)) continue
+
+        left.onCollide(right, delta)
+        right.onCollide(left, delta)
+      }
+    })
+
     this.collectGarbage()
   }
 

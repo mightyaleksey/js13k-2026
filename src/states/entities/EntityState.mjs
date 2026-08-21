@@ -51,4 +51,8 @@ export class EntityState<T> extends BaseState {
   changeState (stateName: T, input: unknown) {
     this.state.change(stateName, input)
   }
+
+  onCollide (target: EntityState<any>, delta: number) {
+    // abstract
+  }
 }
