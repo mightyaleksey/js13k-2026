@@ -22,6 +22,8 @@ export class PlayerState extends EntityState<'idle' | 'walk'> {
   }
 
   render () {
+    super.render()
+
     setColor('#83ccd2')
     pixel(this.x, this.y + 4)
     pixel(this.x, this.y + 8)

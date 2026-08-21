@@ -25,4 +25,5 @@ export const UNIT_VECTORS: ReadonlyArray<ReadonlyArray<number>> = [
   [-1, 0]
 ]
 
-export const DEBUG_PANEL = true
+export const DEBUG_BB: boolean = false
+export const DEBUG_PANEL: boolean = true

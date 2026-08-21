@@ -1,6 +1,7 @@
 /* @flow */
 
-import { TILE_SIZE } from '../../constants.mjs'
+import { DEBUG_BB, TILE_SIZE } from '../../constants.mjs'
+import { rect, setColor } from '../../engine.mjs'
 import { BaseState } from '../BaseState.mjs'
 import type { EntitiesState } from '../helpers/EntitiesState.mjs'
 import { StateMachine } from '../StateMachine.mjs'
@@ -50,7 +51,12 @@ export class EntityState<T> extends BaseState {
 
   enter () {}
 
-  render () {}
+  render () {
+    if (DEBUG_BB) {
+      setColor('#dedaf4')
+      rect('line', this.x, this.y, this.width, this.height)
+    }
+  }
 
   update (delta: number) {
     this.state.update(delta)

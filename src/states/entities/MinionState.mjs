@@ -6,9 +6,12 @@ import { StateMachine } from '../StateMachine.mjs'
 import type { EntityProps } from './EntityState.mjs'
 import { EntityState } from './EntityState.mjs'
 import { ProjectileState } from './ProjectileState.mjs'
+import { WallState } from './WallState.mjs'
 
 export class MinionState extends EntityState<'idle' | 'walk'> {
   render () {
+    super.render()
+
     setColor('#ffadad')
     pixel(this.x, this.y)
     pixel(this.x, this.y + 4)
@@ -28,7 +31,7 @@ export class MinionState extends EntityState<'idle' | 'walk'> {
   }
 
   onCollide (target: EntityState<any>, delta: number) {
-    if (target instanceof MinionState) {
+    if (target instanceof MinionState || target instanceof WallState) {
       this.dx = -this.dx
       this.dy = -this.dy
       this.update(delta)

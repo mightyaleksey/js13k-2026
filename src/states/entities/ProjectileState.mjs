@@ -20,6 +20,8 @@ export class ProjectileState extends EntityState<any> {
   }
 
   render () {
+    super.render()
+
     setColor('#ade1ef')
     pixel(this.x, this.y)
   }

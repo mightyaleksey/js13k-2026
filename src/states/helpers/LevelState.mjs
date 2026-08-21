@@ -5,6 +5,7 @@ import { Dimentions } from '../../engine.mjs'
 import { BaseState } from '../BaseState.mjs'
 import type { EntityState } from '../entities/EntityState.mjs'
 import { MinionState } from '../entities/MinionState.mjs'
+import { WallState } from '../entities/WallState.mjs'
 import type { EntitiesState } from './EntitiesState.mjs'
 
 const workspace = 8 * TILE_SIZE
@@ -66,6 +67,21 @@ export class LevelState extends BaseState {
     this.length = 1000
 
     this.counter = 0
+
+    this.entities.list.push(
+      new WallState({
+        x: 0.5 * (Dimentions.width - workspace) - 2 * TILE_SIZE,
+        y: -1000,
+        width: TILE_SIZE,
+        height: 1000
+      }),
+      new WallState({
+        x: 0.5 * (Dimentions.width + workspace) + TILE_SIZE,
+        y: -1000,
+        width: TILE_SIZE,
+        height: 1000
+      })
+    )
   }
 
   update (delta: number) {
