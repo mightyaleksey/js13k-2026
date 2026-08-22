@@ -14,7 +14,7 @@ export class EntitiesState extends BaseState {
   cameraX: number
   cameraY: number
 
-  list: Array<EntityState<any>>
+  list: Array<EntityState<>>
 
   constructor () {
     super()
@@ -56,7 +56,7 @@ export class EntitiesState extends BaseState {
 
     // collect garbage, i.e. remove entities from the list that are out
     // of viewport, i.e. not in the camera range.
-    for (var j = this.list.length - 1; j > -1; --j) {
+    for (let j = this.list.length - 1; j > -1; --j) {
       const entity = this.list[j]
       if (entity instanceof PlayerState) continue
 
@@ -64,5 +64,13 @@ export class EntitiesState extends BaseState {
         this.list.splice(j, 1)
       }
     }
+  }
+
+  /* helpers */
+
+  append (entity: EntityState<any>) {
+    // inject dependency
+    entity.entities = this
+    this.list.push(entity)
   }
 }

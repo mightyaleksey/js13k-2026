@@ -1,10 +1,8 @@
 /* @flow */
 
 import { PROJECTILE_SPEED } from '../../constants.mjs'
-import { rect, setColor } from '../../engine.mjs'
+import { setColor } from '../../engine.mjs'
 import { pixel } from '../../libs/render.mjs'
-import { StateMachine } from '../StateMachine.mjs'
-import type { EntityProps } from './EntityState.mjs'
 import { EntityState } from './EntityState.mjs'
 
 export type ProjectileProps = Readonly<{ x: number, y: number, a: number }>

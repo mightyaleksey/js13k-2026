@@ -1,6 +1,6 @@
 /* @flow */
 
-import { rect, setColor } from '../../engine.mjs'
+import { setColor } from '../../engine.mjs'
 import { pixel } from '../../libs/render.mjs'
 import { ShootingStatus } from '../../statuses/ShootingStatus.mjs'
 import { StateMachine } from '../StateMachine.mjs'

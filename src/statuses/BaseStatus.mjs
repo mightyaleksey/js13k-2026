@@ -2,7 +2,7 @@
 
 import type { EntityState } from '../states/entities/EntityState.mjs'
 
-export type StatusProps = ReadonlyArray<[number, number]>
+export type StatusProps = [number, number]
 
 export class BaseStatus {
   interval: number
@@ -11,7 +11,7 @@ export class BaseStatus {
 
   isExpired: boolean
 
-  constructor (props) {
+  constructor (props: StatusProps) {
     this.interval = props[0]
     this.duration = props[1]
     this.timePassed = 0
@@ -19,7 +19,7 @@ export class BaseStatus {
     this.isExpired = false
   }
 
-  update (target: EntityState<any>, delta: number) {
+  update (target: EntityState<>, delta: number) {
     this.timePassed = this.timePassed + delta
 
     if (this.interval > 0 && this.timePassed >= this.interval) {
@@ -34,11 +34,11 @@ export class BaseStatus {
     }
   }
 
-  onTick (target: EntityState<any>) {
+  onTick (target: EntityState<>) {
     // abstract
   }
 
-  onEnd (target: EntityState<any>) {
+  onEnd (target: EntityState<>) {
     // abstract
   }
 }

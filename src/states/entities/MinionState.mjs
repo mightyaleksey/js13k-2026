@@ -1,9 +1,7 @@
 /* @flow */
 
-import { rect, setColor } from '../../engine.mjs'
+import { setColor } from '../../engine.mjs'
 import { pixel } from '../../libs/render.mjs'
-import { StateMachine } from '../StateMachine.mjs'
-import type { EntityProps } from './EntityState.mjs'
 import { EntityState } from './EntityState.mjs'
 import { ProjectileState } from './ProjectileState.mjs'
 import { WallState } from './WallState.mjs'

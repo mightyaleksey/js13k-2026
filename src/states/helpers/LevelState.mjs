@@ -3,7 +3,6 @@
 import { MINION_SPEED, TILE_SIZE } from '../../constants.mjs'
 import { Dimentions } from '../../engine.mjs'
 import { BaseState } from '../BaseState.mjs'
-import type { EntityState } from '../entities/EntityState.mjs'
 import { MinionState } from '../entities/MinionState.mjs'
 import { WallState } from '../entities/WallState.mjs'
 import type { EntitiesState } from './EntitiesState.mjs'
@@ -21,11 +20,10 @@ function genHShape (entities: EntitiesState, offsetY: number) {
   })
 
   left.dx = MINION_SPEED
-  left.entities = entities
   right.dx = -MINION_SPEED
-  right.entities = entities
 
-  entities.list.push(left, right)
+  entities.append(left)
+  entities.append(right)
 }
 
 function genTShape (entities: EntitiesState, offsetY: number) {
@@ -39,11 +37,10 @@ function genTShape (entities: EntitiesState, offsetY: number) {
   })
 
   left.dx = -MINION_SPEED
-  left.entities = entities
   right.dx = MINION_SPEED
-  right.entities = entities
 
-  entities.list.push(left, right)
+  entities.append(left)
+  entities.append(right)
 }
 
 const patterns = [genHShape, genTShape]
@@ -68,13 +65,15 @@ export class LevelState extends BaseState {
 
     this.counter = 0
 
-    this.entities.list.push(
+    this.entities.append(
       new WallState({
         x: 0.5 * (Dimentions.width - workspace) - 2 * TILE_SIZE,
         y: -1000,
         width: TILE_SIZE,
         height: 1000
-      }),
+      })
+    )
+    this.entities.append(
       new WallState({
         x: 0.5 * (Dimentions.width + workspace) + TILE_SIZE,
         y: -1000,

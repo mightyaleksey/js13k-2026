@@ -13,7 +13,7 @@ export type EntityProps = Readonly<{
   height?: number
 }>
 
-export class EntityState<T> extends BaseState {
+export class EntityState<T = unknown> extends BaseState {
   x: number
   y: number
   width: number
@@ -44,6 +44,9 @@ export class EntityState<T> extends BaseState {
     this.statuses = []
 
     // dependency injection
+    // note: make sure to use EntitiesState.append() to add it to the list,
+    // so the dependency will provided
+    // $FlowExpectedError[incompatible-type]
     this.entities = null
 
     this.isDestroyed = false
