@@ -7,21 +7,20 @@ import { collides } from '../../libs/collides.mjs'
 import { BaseState } from '../BaseState.mjs'
 import type { EntityState } from '../entities/EntityState.mjs'
 import { PlayerState } from '../entities/PlayerState.mjs'
+import type { CameraState } from './CameraState.mjs'
 
 const deadZone = 2 * TILE_SIZE
 
-export class EntitiesState extends BaseState {
-  cameraX: number
-  cameraY: number
+export type EntitiesProps = Readonly<{ camera: CameraState }>
 
+export class EntitiesState extends BaseState {
+  camera: CameraState
   list: Array<EntityState<>>
 
-  constructor () {
+  constructor (props: EntitiesProps) {
     super()
 
-    this.cameraX = 0
-    this.cameraY = 0
-
+    this.camera = props.camera
     this.list = []
   }
 
@@ -33,8 +32,8 @@ export class EntitiesState extends BaseState {
 
   update (delta: number) {
     const viewport: CollidableType = {
-      x: -(deadZone - this.cameraX),
-      y: -(deadZone - this.cameraY),
+      x: -(deadZone - this.camera.x),
+      y: -(deadZone - this.camera.y),
       width: Dimentions.width + 2 * deadZone,
       height: Dimentions.height + 2 * deadZone
     }

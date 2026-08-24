@@ -5,6 +5,7 @@ import { Dimentions, translate } from '../../engine.mjs'
 import { Console } from '../../ui/Console.mjs'
 import { BaseState } from '../BaseState.mjs'
 import { PlayerState } from '../entities/PlayerState.mjs'
+import { CameraState } from '../helpers/CameraState.mjs'
 import { EntitiesState } from '../helpers/EntitiesState.mjs'
 import { LevelState } from '../helpers/LevelState.mjs'
 
@@ -20,31 +21,29 @@ import { LevelState } from '../helpers/LevelState.mjs'
  */
 
 export class GamePlayState extends BaseState {
-  cameraX: number
-  cameraY: number
-
+  camera: CameraState
   level: LevelState
   entities: EntitiesState
   player: PlayerState
 
+  startY: number
+
   console: Console
 
-  isCameraMoving: boolean
-
   enter () {
-    this.cameraX = 0
-    this.cameraY = -Dimentions.height
-
-    this.entities = new EntitiesState()
+    this.camera = new CameraState()
+    this.entities = new EntitiesState({ camera: this.camera })
+    this.level = new LevelState({
+      camera: this.camera,
+      entities: this.entities
+    })
     this.player = new PlayerState({
       x: 0.5 * (Dimentions.width - TILE_SIZE),
       y: -3 * TILE_SIZE
     })
 
-    this.level = new LevelState(this.entities)
     this.entities.append(this.player)
-
-    this.isCameraMoving = true
+    this.startY = this.camera.y
 
     // $FlowExpectedError[constant-condition]
     if (DEBUG_PANEL) {
@@ -54,43 +53,36 @@ export class GamePlayState extends BaseState {
 
   render () {
     // emulate camera effect
-    translate(-this.cameraX, -this.cameraY)
+    translate(-this.camera.x, -this.camera.y)
     // terrain & enemies
     this.entities.render()
     // restore camera
-    translate(this.cameraX, this.cameraY)
+    translate(this.camera.x, this.camera.y)
 
     // $FlowExpectedError[constant-condition]
     if (DEBUG_PANEL) {
       this.console.render({
         vw: Dimentions.width,
         vh: Dimentions.height,
-        cameraX: this.cameraX,
-        cameraY: this.cameraY,
+        camera: this.camera.y,
         entities: this.entities.list.length
       })
     }
   }
 
   update (delta: number) {
-    if (this.isCameraMoving) {
-      this.cameraY = this.cameraY - CAMERA_SPEED * delta
-      this.player.y = this.player.y - CAMERA_SPEED * delta
+    this.camera.update(delta)
 
-      if (this.cameraY + this.level.length < 0) {
-        // dy is likely negative
-        const dy = this.cameraY + this.level.length
-        this.cameraY = this.cameraY - dy
-        this.player.y = this.player.y - dy
+    if (this.camera.isMoving) {
+      this.player.y += this.camera.dy * delta
 
-        this.isCameraMoving = false
+      if (this.level.distance < this.startY - this.camera.y) {
+        const dy = this.startY - this.camera.y - this.level.distance
+        this.player.y += dy
+        this.camera.y += dy
+        this.camera.isMoving = false
       }
     }
-
-    this.level.cameraX = this.cameraX
-    this.level.cameraY = this.cameraY
-    this.entities.cameraX = this.cameraX
-    this.entities.cameraY = this.cameraY
 
     this.level.update(delta)
     this.entities.update(delta)
