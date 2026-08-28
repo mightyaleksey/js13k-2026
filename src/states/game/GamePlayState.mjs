@@ -55,6 +55,7 @@ export class GamePlayState extends BaseState {
     // emulate camera effect
     translate(-this.camera.x, -this.camera.y)
     // terrain & enemies
+    this.level.render()
     this.entities.render()
     // restore camera
     translate(this.camera.x, this.camera.y)

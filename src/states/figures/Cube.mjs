@@ -35,15 +35,16 @@ export class Cube extends EntityState {
   render () {
     const c = this.getCubeCoords()
 
-    setColor('#69c')
+    setColor('#c8afb9')
     if (c[1] > c[5])
       shape('fill', c[4], c[5], c[6], c[5], c[2], c[1], c[0], c[1])
     if (c[3] < c[7])
       shape('fill', c[4], c[7], c[6], c[7], c[2], c[3], c[0], c[3])
 
+    setColor('#a493a4')
     shape('fill', c[2], c[1], c[6], c[5], c[6], c[7], c[2], c[3])
 
-    setColor('#48a')
+    setColor('#2a4062')
     shape('fill', c[0], c[1], c[2], c[1], c[2], c[3], c[0], c[3])
   }
 

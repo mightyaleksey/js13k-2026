@@ -147,6 +147,19 @@ export function line (x0: number, y0: number, x1: number, y1: number) {
   c.stroke()
 }
 
+export function pattern (
+  img: HTMLImageElement,
+  x: number,
+  y: number,
+  w: number,
+  h: number
+) {
+  const c = _state.context
+  const p = c.createPattern(img, 'repeat')
+  c.fillStyle = p
+  c.fillRect(x, y, w, h)
+}
+
 export function printf (
   text: string,
   x: number,
@@ -387,6 +400,17 @@ export function newImage (url: string): Promise<HTMLImageElement> {
     image.onerror = () => reject(new Error(`Failed to load image: '${url}'`))
     image.src = url
   })
+}
+
+export async function scaleQuad (
+  img: HTMLImageElement,
+  scale: number
+): Promise<HTMLImageElement> {
+  const w = img.width * scale
+  const h = img.height * scale
+  const [c, t] = createCanvas(w, h)
+  t.drawImage(img, 0, 0, img.width, img.height, 0, 0, w, h)
+  return window.createImageBitmap(t.getImageData(0, 0, w, h))
 }
 
 /**

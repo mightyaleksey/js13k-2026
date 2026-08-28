@@ -1,7 +1,8 @@
 /* @flow */
 
 import { TILE_SIZE } from '../../constants.mjs'
-import { Dimentions } from '../../engine.mjs'
+import { Dimentions, draw, pattern } from '../../engine.mjs'
+import { gameTiles } from '../../gameTiles.mjs'
 import { BaseState } from '../BaseState.mjs'
 import { Cube } from '../figures/Cube.mjs'
 import type { CameraState } from './CameraState.mjs'
@@ -31,6 +32,16 @@ export class LevelState extends BaseState {
     this.currentY = this.camera.y
   }
 
+  render () {
+    pattern(
+      gameTiles[1],
+      0,
+      this.camera.y,
+      Dimentions.width + 1,
+      Dimentions.height + 1
+    )
+  }
+
   update (delta: number) {
     if (this.currentY - this.camera.y >= this.interval) {
       this.currentY -= this.interval
@@ -48,7 +59,7 @@ export class LevelState extends BaseState {
       0,
       2 * TILE_SIZE,
       3 * TILE_SIZE,
-      Math.random(1) + 1.1
+      Math.random() + 1.1
     ])
 
     this.entities.append(cube)
