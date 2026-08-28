@@ -6,12 +6,17 @@ import { BaseState } from '../BaseState.mjs'
 import type { EntitiesState } from '../helpers/EntitiesState.mjs'
 import { StateMachine } from '../StateMachine.mjs'
 
-export type EntityProps = Readonly<{
-  x?: number,
-  y?: number,
-  width?: number,
-  height?: number
-}>
+// [ x, y, width, height, dx, dy ]
+export type EntityProps = Readonly<
+  [
+    x?: ?number,
+    y?: ?number,
+    width?: ?number,
+    height?: ?number,
+    dx?: ?number,
+    dy?: ?number
+  ]
+>
 
 export class EntityState<T = unknown> extends BaseState {
   x: number
@@ -32,13 +37,13 @@ export class EntityState<T = unknown> extends BaseState {
   constructor (props: EntityProps) {
     super()
 
-    this.x = props?.x ?? 0
-    this.y = props?.y ?? 0
-    this.width = props?.width ?? TILE_SIZE
-    this.height = props?.height ?? TILE_SIZE
+    this.x = props?.[0] ?? 0
+    this.y = props?.[1] ?? 0
+    this.width = props?.[2] ?? TILE_SIZE
+    this.height = props?.[3] ?? TILE_SIZE
 
-    this.dx = 0
-    this.dy = 0
+    this.dx = props?.[4] ?? 0
+    this.dy = props?.[5] ?? 0
 
     this.state = new StateMachine({})
     this.statuses = []

@@ -8,7 +8,7 @@ export class CameraState extends EntityState {
   isMoving: boolean
 
   constructor () {
-    super({ x: 0, y: -Dimentions.height, width: 0, height: 0 })
+    super([0, -Dimentions.height, 0, 0])
 
     this.dx = 0
     this.dy = -CAMERA_SPEED

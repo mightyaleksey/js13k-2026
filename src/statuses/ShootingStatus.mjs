@@ -6,11 +6,11 @@ import { BaseStatus } from './BaseStatus.mjs'
 
 export class ShootingStatus extends BaseStatus {
   onTick (target: EntityState<>) {
-    const projectile = new ProjectileState({
-      x: target.x + 0.5 * target.width - 2,
-      y: target.y - 4,
-      a: -90
-    })
+    const projectile = new ProjectileState([
+      target.x + 0.5 * target.width - 2,
+      target.y - 4,
+      -90
+    ])
 
     target.entities.append(projectile)
   }

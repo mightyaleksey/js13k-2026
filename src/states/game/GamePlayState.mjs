@@ -37,10 +37,10 @@ export class GamePlayState extends BaseState {
       camera: this.camera,
       entities: this.entities
     })
-    this.player = new PlayerState({
-      x: 0.5 * (Dimentions.width - TILE_SIZE),
-      y: -3 * TILE_SIZE
-    })
+    this.player = new PlayerState([
+      0.5 * (Dimentions.width - TILE_SIZE),
+      -3 * TILE_SIZE
+    ])
 
     this.entities.append(this.player)
     this.startY = this.camera.y

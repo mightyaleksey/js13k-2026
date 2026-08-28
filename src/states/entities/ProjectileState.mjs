@@ -5,14 +5,14 @@ import { setColor } from '../../engine.mjs'
 import { pixel } from '../../libs/render.mjs'
 import { EntityState } from './EntityState.mjs'
 
-export type ProjectileProps = Readonly<{ x: number, y: number, a: number }>
+export type ProjectileProps = Readonly<[x: number, y: number, a: number]>
 
-export class ProjectileState extends EntityState<any> {
+export class ProjectileState extends EntityState<> {
   constructor (props: ProjectileProps) {
-    super({ x: props.x, y: props.y, width: 4, height: 4 })
+    super([props[0], props[1], 4, 4])
 
     // tg(a) = y/x
-    const angle = (props.a * Math.PI) / 180
+    const angle = (props[2] * Math.PI) / 180
     this.dx = Math.floor(Math.cos(angle) * PROJECTILE_SPEED)
     this.dy = Math.floor(Math.sin(angle) * PROJECTILE_SPEED)
   }

@@ -6,7 +6,7 @@ import { EntityState } from './EntityState.mjs'
 import { ProjectileState } from './ProjectileState.mjs'
 import { WallState } from './WallState.mjs'
 
-export class MinionState extends EntityState<'idle' | 'walk'> {
+export class MinionState extends EntityState<> {
   render () {
     super.render()
 

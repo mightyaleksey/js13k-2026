@@ -4,7 +4,7 @@ import { TILE_SIZE } from '../../constants.mjs'
 import { Dimentions, draw, pattern } from '../../engine.mjs'
 import { gameTiles } from '../../gameTiles.mjs'
 import { BaseState } from '../BaseState.mjs'
-import { Cube } from '../figures/Cube.mjs'
+import { HouseState } from '../entities/HouseState.mjs'
 import type { CameraState } from './CameraState.mjs'
 import type { EntitiesState } from './EntitiesState.mjs'
 
@@ -34,7 +34,7 @@ export class LevelState extends BaseState {
 
   render () {
     pattern(
-      gameTiles[1],
+      gameTiles[0],
       0,
       this.camera.y,
       Dimentions.width + 1,
@@ -52,16 +52,16 @@ export class LevelState extends BaseState {
   /* helpers */
 
   onInterval () {
-    const cube = new Cube([
+    const house = new HouseState([
       this.camera,
       0.5 * (Dimentions.width - 14 * TILE_SIZE),
       this.camera.y - 3 * TILE_SIZE,
       0,
       2 * TILE_SIZE,
       3 * TILE_SIZE,
-      Math.random() + 1.1
+      0.1 * (10 * Math.random() + 11)
     ])
 
-    this.entities.append(cube)
+    this.entities.append(house)
   }
 }

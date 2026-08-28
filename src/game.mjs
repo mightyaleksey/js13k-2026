@@ -14,8 +14,8 @@ import { GamePlayState } from './states/game/GamePlayState.mjs'
 import { StateMachine } from './states/StateMachine.mjs'
 
 async function initGame () {
-  const assetScale = 8
-  const assets = await scaleQuad(await newImage('./bg.png'), assetScale)
+  const assetScale = 16
+  const assets = await scaleQuad(await newImage('./bg2.png'), assetScale)
   // $FlowExpectedError[prop-missing]
   gameTiles.push(
     ...genQuads(assets, assetScale * TILE_SIZE, assetScale * TILE_SIZE)
