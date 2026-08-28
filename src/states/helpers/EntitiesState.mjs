@@ -9,7 +9,8 @@ import type { EntityState } from '../entities/EntityState.mjs'
 import { PlayerState } from '../entities/PlayerState.mjs'
 import type { CameraState } from './CameraState.mjs'
 
-const deadZone = 2 * TILE_SIZE
+const offsetX = 2 * TILE_SIZE
+const offsetY = 8 * TILE_SIZE
 
 export type EntitiesProps = Readonly<{ camera: CameraState }>
 
@@ -32,10 +33,10 @@ export class EntitiesState extends BaseState {
 
   update (delta: number) {
     const viewport: CollidableType = {
-      x: -(deadZone - this.camera.x),
-      y: -(deadZone - this.camera.y),
-      width: Dimentions.width + 2 * deadZone,
-      height: Dimentions.height + 2 * deadZone
+      x: -(offsetX - this.camera.x),
+      y: -(offsetY - this.camera.y),
+      width: Dimentions.width + 2 * offsetX,
+      height: Dimentions.height + 2 * offsetY
     }
 
     // update entities

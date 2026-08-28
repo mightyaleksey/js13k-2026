@@ -1,6 +1,9 @@
 /* @flow */
 
+import { TILE_SIZE } from '../../constants.mjs'
+import { Dimentions } from '../../engine.mjs'
 import { BaseState } from '../BaseState.mjs'
+import { Cube } from '../figures/Cube.mjs'
 import type { CameraState } from './CameraState.mjs'
 import type { EntitiesState } from './EntitiesState.mjs'
 
@@ -23,8 +26,8 @@ export class LevelState extends BaseState {
     this.camera = props.camera
     this.entities = props.entities
 
-    this.distance = 300
-    this.interval = 50
+    this.distance = 500
+    this.interval = 100
     this.currentY = this.camera.y
   }
 
@@ -38,6 +41,16 @@ export class LevelState extends BaseState {
   /* helpers */
 
   onInterval () {
-    console.log('interval')
+    const cube = new Cube([
+      this.camera,
+      0.5 * (Dimentions.width - 14 * TILE_SIZE),
+      this.camera.y - 3 * TILE_SIZE,
+      0,
+      2 * TILE_SIZE,
+      3 * TILE_SIZE,
+      Math.random(1) + 1.1
+    ])
+
+    this.entities.append(cube)
   }
 }

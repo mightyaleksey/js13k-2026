@@ -219,6 +219,17 @@ export function setLine (width: number) {
   c.lineWidth = width
 }
 
+export function shape (mode: DrawMode, ...coords: ReadonlyArray<number>) {
+  const c = _state.context
+  c.beginPath()
+  c.moveTo(Math.floor(coords[0]), Math.floor(coords[1]))
+  for (let i = 2; i < coords.length; i += 2) {
+    c.lineTo(Math.floor(coords[i]), Math.floor(coords[i + 1]))
+  }
+  c.closePath()
+  mode === 'fill' ? c.fill() : c.stroke()
+}
+
 export function translate (dx: number, dy: number) {
   const c = _state.context
   c.translate(Math.floor(dx), Math.floor(dy))

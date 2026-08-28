@@ -18,7 +18,7 @@ export class PlayerState extends EntityState<'idle' | 'walk'> {
       walk: () => new PlayerWalkState(this)
     }).change('idle')
 
-    this.statuses.push(new ShootingStatus([0.2, 0]))
+    // this.statuses.push(new ShootingStatus([0.2, 0]))
   }
 
   render () {
