@@ -15,17 +15,15 @@ export class PlayerIdleState<T extends PlayerState> extends BaseState {
 
   enter () {
     const entity = this.entity
-
     entity.dx = 0
     entity.dy = 0
   }
 
   update (delta: number) {
     const direction = MOVEMENT_KEYS.findIndex((key) => Keys.wasHolding(key)) % 4
-    const entity = this.entity
 
     if (direction > -1) {
-      entity.changeState('walk')
+      this.entity.changeState('walk')
     }
   }
 }

@@ -5,7 +5,8 @@ import { Dimentions, rect, setColor, shape } from '../../engine.mjs'
 import type { CameraState } from '../helpers/CameraState.mjs'
 import { WallState } from './WallState.mjs'
 
-const t0 = 1.2
+const tb = 1.2
+const tw = 0.04
 
 function getDimentions (
   type: number,
@@ -49,7 +50,7 @@ export class BuildingState extends WallState {
   }
 
   renderOne () {
-    const t1 = (t0 - 1) * 1.4 + 1
+    const t1 = (tb - 1) * 1.4 + 1
     const ox = this.camera.x + 0.5 * Dimentions.width
     const oy = this.camera.y + 0.5 * Dimentions.height
 
@@ -58,10 +59,10 @@ export class BuildingState extends WallState {
     const bx1 = this.x + this.width
     const by1 = this.y + this.height
 
-    const tx0 = v(ox, bx0, t0)
-    const ty0 = v(oy, by0, t0)
-    const tx1 = v(ox, bx1, t0)
-    const ty1 = v(oy, by1, t0)
+    const tx0 = v(ox, bx0, tb)
+    const ty0 = v(oy, by0, tb)
+    const tx1 = v(ox, bx1, tb)
+    const ty1 = v(oy, by1, tb)
 
     const tx2 = v(ox, bx0 + 0.5 * this.width, t1)
     const ty2 = v(oy, by0, t1)
@@ -71,14 +72,14 @@ export class BuildingState extends WallState {
     // top
     if (by0 < ty0) {
       shape('fill', tx2, ty2, tx1, ty0, bx1, by0, bx0, by0, tx0, ty0)
-      this.renderFrontWindow(bx0 + 0.5 * this.width, by0, (t0 - 1) * 0.4 + 1)
-      this.renderFrontWindow(bx0 + 0.5 * this.width, by0, (t0 - 1) * 0.9 + 1)
+      this.renderFrontWindow(bx0 + 0.5 * this.width, by0, (tb - 1) * 0.4 + 1)
+      this.renderFrontWindow(bx0 + 0.5 * this.width, by0, (tb - 1) * 0.9 + 1)
     }
     // bottom
     if (by1 > ty1) {
       shape('fill', tx2, ty3, tx1, ty1, bx1, by1, bx0, by1, tx0, ty1)
-      this.renderFrontWindow(bx0 + 0.5 * this.width, by1, (t0 - 1) * 0.4 + 1)
-      this.renderFrontWindow(bx0 + 0.5 * this.width, by1, (t0 - 1) * 0.9 + 1)
+      this.renderFrontWindow(bx0 + 0.5 * this.width, by1, (tb - 1) * 0.4 + 1)
+      this.renderFrontWindow(bx0 + 0.5 * this.width, by1, (tb - 1) * 0.9 + 1)
     }
 
     setColor('#a493a4')
@@ -95,7 +96,6 @@ export class BuildingState extends WallState {
   }
 
   renderFrontWindow (x: number, y: number, t: number) {
-    const dt = (t0 - 1) * 0.2
     const ox = this.camera.x + 0.5 * Dimentions.width
     const oy = this.camera.y + 0.5 * Dimentions.height
     const left = x - 0.5 * TILE_SIZE
@@ -103,10 +103,10 @@ export class BuildingState extends WallState {
 
     const x0 = v(ox, left, t)
     const x1 = v(ox, right, t)
-    const x2 = v(ox, right, t + dt)
-    const x3 = v(ox, left, t + dt)
+    const x2 = v(ox, right, t + tw)
+    const x3 = v(ox, left, t + tw)
     const y0 = v(oy, y, t)
-    const y2 = v(oy, y, t + dt)
+    const y2 = v(oy, y, t + tw)
 
     setColor('#2a4062')
     shape('fill', x0, y0, x1, y0, x2, y2, x3, y2)
