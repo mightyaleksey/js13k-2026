@@ -1,6 +1,6 @@
 /* @flow */
 
-import { FREE_AREA, TILE_SIZE } from '../../constants.mjs'
+import { FREE_AREA, PLAY_AREA, TILE_SIZE } from '../../constants.mjs'
 import { Dimentions, draw, pattern } from '../../engine.mjs'
 import { gameTiles } from '../../gameTiles.mjs'
 import { BaseState } from '../BaseState.mjs'
@@ -31,15 +31,15 @@ export class LevelState extends BaseState {
     this.currentYs = [this.camera.y, this.camera.y]
     this.intervals = [0, 0]
 
-    this.distance = 500
+    this.distance = 5000
   }
 
   render () {
     pattern(
       gameTiles[0],
-      0,
+      -0.5 * PLAY_AREA * TILE_SIZE,
       this.camera.y,
-      Dimentions.width + 1,
+      Dimentions.width + PLAY_AREA * TILE_SIZE + 1,
       Dimentions.height + 1
     )
   }

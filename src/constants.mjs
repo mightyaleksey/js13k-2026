@@ -4,7 +4,9 @@ export const TILE_SIZE: number = 16
 export const PLAY_AREA: number = 10
 export const FREE_AREA: number = 3
 
-export const CAMERA_SPEED: number = 20
+export const CAMERA_MX: number = (PLAY_AREA - 1) / PLAY_AREA
+
+export const CAMERA_SPEED: number = 90
 export const MINION_SPEED: number = 20
 export const PLAYER_SPEED: number = 100
 export const PROJECTILE_SPEED: number = 140

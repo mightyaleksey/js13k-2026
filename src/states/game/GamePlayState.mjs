@@ -1,9 +1,11 @@
 /* @flow */
 
 import {
+  CAMERA_MX,
   CAMERA_SPEED,
   DEBUG_BB,
   DEBUG_PANEL,
+  PLAY_AREA,
   TILE_SIZE
 } from '../../constants.mjs'
 import { Dimentions, translate } from '../../engine.mjs'
@@ -88,6 +90,9 @@ export class GamePlayState extends BaseState {
 
   update (delta: number) {
     this.camera.update(delta)
+
+    this.camera.x =
+      CAMERA_MX * (this.player.x - 0.5 * (Dimentions.width - TILE_SIZE))
 
     if (this.camera.isMoving) {
       this.player.y += this.camera.dy * delta
