@@ -28,6 +28,8 @@ export class MinionState extends EntityState<> {
     pixel(this.x + 12, this.y + 8)
   }
 
+  /* helpers */
+
   onCollide (target: EntityState<any>, delta: number) {
     if (target instanceof MinionState || target instanceof WallState) {
       this.dx = -this.dx

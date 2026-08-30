@@ -10,7 +10,6 @@ export class PlayerIdleState<T extends PlayerState> extends BaseState {
 
   constructor (entity: T) {
     super()
-
     this.entity = entity
   }
 

@@ -1,5 +1,6 @@
 /* @flow */
 
+import { TILE_SIZE } from '../../constants.mjs'
 import { setColor } from '../../engine.mjs'
 import { pixel } from '../../libs/render.mjs'
 import { ShootingStatus } from '../../statuses/ShootingStatus.mjs'
@@ -8,10 +9,11 @@ import { PlayerIdleState } from './characters/PlayerIdleState.mjs'
 import { PlayerWalkState } from './characters/PlayerWalkState.mjs'
 import type { EntityProps } from './EntityState.mjs'
 import { EntityState } from './EntityState.mjs'
+import { WallState } from './WallState.mjs'
 
 export class PlayerState extends EntityState<'idle' | 'walk'> {
   constructor (props: EntityProps) {
-    super(props)
+    super([props[0], props[1], TILE_SIZE, TILE_SIZE])
 
     this.state = new StateMachine({
       idle: () => new PlayerIdleState(this),
@@ -42,5 +44,16 @@ export class PlayerState extends EntityState<'idle' | 'walk'> {
 
   update (delta: number) {
     super.update(delta)
+  }
+
+  /* helpers */
+
+  onCollide (target: EntityState<>, delta: number) {
+    if (target instanceof WallState) {
+      this.dx = -this.dx
+      this.dy = -this.dy
+      this.x += this.dx * delta
+      this.y += this.dy * delta
+    }
   }
 }

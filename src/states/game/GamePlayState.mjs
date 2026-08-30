@@ -1,12 +1,18 @@
 /* @flow */
 
-import { CAMERA_SPEED, DEBUG_PANEL, TILE_SIZE } from '../../constants.mjs'
+import {
+  CAMERA_SPEED,
+  DEBUG_BB,
+  DEBUG_PANEL,
+  TILE_SIZE
+} from '../../constants.mjs'
 import { Dimentions, translate } from '../../engine.mjs'
 import { Console } from '../../ui/Console.mjs'
 import { BaseState } from '../BaseState.mjs'
 import { PlayerState } from '../entities/PlayerState.mjs'
 import { CameraState } from '../helpers/CameraState.mjs'
 import { EntitiesState } from '../helpers/EntitiesState.mjs'
+import { GridState } from '../helpers/GridState.mjs'
 import { LevelState } from '../helpers/LevelState.mjs'
 
 /**
@@ -29,6 +35,7 @@ export class GamePlayState extends BaseState {
   startY: number
 
   console: Console
+  grid: GridState
 
   enter () {
     this.camera = new CameraState()
@@ -49,6 +56,10 @@ export class GamePlayState extends BaseState {
     if (DEBUG_PANEL) {
       this.console = new Console({ x: 8, y: 16 })
     }
+    // $FlowExpectedError[constant-condition]
+    if (DEBUG_BB) {
+      this.grid = new GridState()
+    }
   }
 
   render () {
@@ -60,6 +71,10 @@ export class GamePlayState extends BaseState {
     // restore camera
     translate(this.camera.x, this.camera.y)
 
+    // $FlowExpectedError[constant-condition]
+    if (DEBUG_BB) {
+      this.grid.render()
+    }
     // $FlowExpectedError[constant-condition]
     if (DEBUG_PANEL) {
       this.console.render({

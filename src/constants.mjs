@@ -1,6 +1,9 @@
 /* @flow */
 
 export const TILE_SIZE: number = 16
+export const PLAY_AREA: number = 10
+export const FREE_AREA: number = 3
+
 export const CAMERA_SPEED: number = 20
 export const MINION_SPEED: number = 20
 export const PLAYER_SPEED: number = 100

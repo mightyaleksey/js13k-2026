@@ -37,13 +37,13 @@ export class EntityState<T = unknown> extends BaseState {
   constructor (props: EntityProps) {
     super()
 
-    this.x = props?.[0] ?? 0
-    this.y = props?.[1] ?? 0
-    this.width = props?.[2] ?? TILE_SIZE
-    this.height = props?.[3] ?? TILE_SIZE
+    this.x = props[0] ?? 0
+    this.y = props[1] ?? 0
+    this.width = props[2] ?? 0
+    this.height = props[3] ?? 0
 
-    this.dx = props?.[4] ?? 0
-    this.dy = props?.[5] ?? 0
+    this.dx = props[4] ?? 0
+    this.dy = props[5] ?? 0
 
     this.state = new StateMachine({})
     this.statuses = []

@@ -1,10 +1,10 @@
 /* @flow */
 
-import { TILE_SIZE } from '../../constants.mjs'
+import { FREE_AREA, TILE_SIZE } from '../../constants.mjs'
 import { Dimentions, draw, pattern } from '../../engine.mjs'
 import { gameTiles } from '../../gameTiles.mjs'
 import { BaseState } from '../BaseState.mjs'
-import { HouseState } from '../entities/HouseState.mjs'
+import { BuildingState } from '../entities/BuildingState.mjs'
 import type { CameraState } from './CameraState.mjs'
 import type { EntitiesState } from './EntitiesState.mjs'
 
@@ -17,9 +17,10 @@ export class LevelState extends BaseState {
   camera: CameraState
   entities: EntitiesState
 
+  currentYs: [number, number]
+  intervals: [number, number]
+
   distance: number
-  interval: number
-  currentY: number
 
   constructor (props: LevelProps) {
     super()
@@ -27,9 +28,10 @@ export class LevelState extends BaseState {
     this.camera = props.camera
     this.entities = props.entities
 
+    this.currentYs = [this.camera.y, this.camera.y]
+    this.intervals = [0, 0]
+
     this.distance = 500
-    this.interval = 100
-    this.currentY = this.camera.y
   }
 
   render () {
@@ -43,25 +45,21 @@ export class LevelState extends BaseState {
   }
 
   update (delta: number) {
-    if (this.currentY - this.camera.y >= this.interval) {
-      this.currentY -= this.interval
-      this.onInterval()
-    }
+    this.currentYs.forEach((currentY, i) => {
+      if (currentY - this.camera.y >= this.intervals[i]) {
+        // $FlowFixMe[invalid-tuple-index]
+        this.currentYs[i] -= this.intervals[i]
+        this.onInterval(i)
+      }
+    })
   }
 
   /* helpers */
 
-  onInterval () {
-    const house = new HouseState([
-      this.camera,
-      0.5 * (Dimentions.width - 14 * TILE_SIZE),
-      this.camera.y - 3 * TILE_SIZE,
-      0,
-      2 * TILE_SIZE,
-      3 * TILE_SIZE,
-      0.1 * (10 * Math.random() + 11)
-    ])
-
-    this.entities.append(house)
+  onInterval (pointer: number) {
+    const building = new BuildingState([this.camera, 0, pointer])
+    this.entities.append(building)
+    // $FlowExpectedError[invalid-tuple-index]
+    this.intervals[pointer] = FREE_AREA * TILE_SIZE + building.height
   }
 }
