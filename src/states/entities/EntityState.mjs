@@ -3,6 +3,7 @@
 import { DEBUG_BB, TILE_SIZE } from '../../constants.mjs'
 import { rect, setColor } from '../../engine.mjs'
 import { BaseState } from '../BaseState.mjs'
+import type { CameraState } from '../helpers/CameraState.mjs'
 import type { EntitiesState } from '../helpers/EntitiesState.mjs'
 import { StateMachine } from '../StateMachine.mjs'
 
@@ -30,6 +31,7 @@ export class EntityState<T = unknown> extends BaseState {
   state: StateMachine<T>
   statuses: Array<any>
 
+  camera: CameraState
   entities: EntitiesState
 
   isDestroyed: boolean
@@ -51,6 +53,8 @@ export class EntityState<T = unknown> extends BaseState {
     // dependency injection
     // note: make sure to use EntitiesState.append() to add it to the list,
     // so the dependency will provided
+    // $FlowExpectedError[incompatible-type]
+    this.camera = null
     // $FlowExpectedError[incompatible-type]
     this.entities = null
 

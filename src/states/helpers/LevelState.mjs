@@ -8,10 +8,9 @@ import { BuildingState } from '../entities/BuildingState.mjs'
 import type { CameraState } from './CameraState.mjs'
 import type { EntitiesState } from './EntitiesState.mjs'
 
-export type LevelProps = Readonly<{
-  camera: CameraState,
-  entities: EntitiesState
-}>
+export type LevelProps = Readonly<
+  [camera: CameraState, entities: EntitiesState]
+>
 
 export class LevelState extends BaseState {
   camera: CameraState
@@ -25,13 +24,21 @@ export class LevelState extends BaseState {
   constructor (props: LevelProps) {
     super()
 
-    this.camera = props.camera
-    this.entities = props.entities
+    this.camera = props[0]
+    this.entities = props[1]
 
     this.currentYs = [this.camera.y, this.camera.y]
     this.intervals = [0, 0]
 
     this.distance = 5000
+  }
+
+  enter () {
+    ;[0, 1].forEach((pointer) => {
+      const building = new BuildingState([this.camera, 0, pointer])
+      building.y += FREE_AREA * TILE_SIZE + building.height
+      this.entities.append(building)
+    })
   }
 
   render () {

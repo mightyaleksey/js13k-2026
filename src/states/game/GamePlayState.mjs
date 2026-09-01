@@ -41,11 +41,8 @@ export class GamePlayState extends BaseState {
 
   enter () {
     this.camera = new CameraState()
-    this.entities = new EntitiesState({ camera: this.camera })
-    this.level = new LevelState({
-      camera: this.camera,
-      entities: this.entities
-    })
+    this.entities = new EntitiesState([this.camera])
+    this.level = new LevelState([this.camera, this.entities])
     this.player = new PlayerState([
       0.5 * (Dimentions.width - TILE_SIZE),
       -3 * TILE_SIZE
@@ -62,6 +59,8 @@ export class GamePlayState extends BaseState {
     if (DEBUG_BB) {
       this.grid = new GridState()
     }
+
+    this.level.enter()
   }
 
   render () {
@@ -95,12 +94,12 @@ export class GamePlayState extends BaseState {
       CAMERA_MX * (this.player.x - 0.5 * (Dimentions.width - TILE_SIZE))
 
     if (this.camera.isMoving) {
-      this.player.y += this.camera.dy * delta
+      // this.player.y += this.camera.dy * delta
 
       if (this.level.distance < this.startY - this.camera.y) {
-        const dy = this.startY - this.camera.y - this.level.distance
-        this.player.y += dy
-        this.camera.y += dy
+        // const dy = this.startY - this.camera.y - this.level.distance
+        // this.player.y += dy
+        // this.camera.y += dy
         this.camera.isMoving = false
       }
     }

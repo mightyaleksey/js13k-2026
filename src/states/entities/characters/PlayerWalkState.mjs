@@ -1,6 +1,7 @@
 /* @flow */
 
 import {
+  CAMERA_SPEED,
   MOVEMENT_KEYS,
   PLAYER_SPEED,
   UNIT_VECTORS
@@ -16,7 +17,9 @@ export class PlayerWalkState extends PlayerIdleState<PlayerState> {
 
     if (direction > -1) {
       entity.dx = UNIT_VECTORS[direction][0] * PLAYER_SPEED
-      entity.dy = UNIT_VECTORS[direction][1] * PLAYER_SPEED
+      entity.dy =
+        UNIT_VECTORS[direction][1] * PLAYER_SPEED +
+        (entity.camera.isMoving ? -CAMERA_SPEED : 0)
     } else {
       entity.changeState('idle')
     }

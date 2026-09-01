@@ -12,7 +12,7 @@ import type { CameraState } from './CameraState.mjs'
 const offsetX = 2 * TILE_SIZE
 const offsetY = 8 * TILE_SIZE
 
-export type EntitiesProps = Readonly<{ camera: CameraState }>
+export type EntitiesProps = Readonly<[camera: CameraState]>
 
 export class EntitiesState extends BaseState {
   camera: CameraState
@@ -21,7 +21,7 @@ export class EntitiesState extends BaseState {
   constructor (props: EntitiesProps) {
     super()
 
-    this.camera = props.camera
+    this.camera = props[0]
     this.list = []
   }
 
@@ -70,6 +70,7 @@ export class EntitiesState extends BaseState {
 
   append (entity: EntityState<any>) {
     // inject dependency
+    entity.camera = this.camera
     entity.entities = this
     this.list.push(entity)
   }

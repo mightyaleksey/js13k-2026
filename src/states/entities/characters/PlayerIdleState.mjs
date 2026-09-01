@@ -1,6 +1,6 @@
 /* @flow */
 
-import { MOVEMENT_KEYS } from '../../../constants.mjs'
+import { CAMERA_SPEED, MOVEMENT_KEYS } from '../../../constants.mjs'
 import { Keys } from '../../../engine.mjs'
 import { BaseState } from '../../BaseState.mjs'
 import type { PlayerState } from '../PlayerState.mjs'
@@ -25,5 +25,8 @@ export class PlayerIdleState<T extends PlayerState> extends BaseState {
     if (direction > -1) {
       this.entity.changeState('walk')
     }
+
+    const entity = this.entity
+    entity.dy = entity.camera.isMoving ? -CAMERA_SPEED : 0
   }
 }
