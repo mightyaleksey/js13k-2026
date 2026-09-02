@@ -1,7 +1,11 @@
 /* @flow */
 
+import type { CharType } from '../../constants.mjs'
 import { DEBUG_BB, TILE_SIZE } from '../../constants.mjs'
-import { rect, setColor } from '../../engine.mjs'
+import { draw, rect, setColor } from '../../engine.mjs'
+import { gameTiles } from '../../gameTiles.mjs'
+import { nullthrows } from '../../libs/nullthrows.mjs'
+import { Animation } from '../Animation.mjs'
 import { BaseState } from '../BaseState.mjs'
 import type { CameraState } from '../helpers/CameraState.mjs'
 import type { EntitiesState } from '../helpers/EntitiesState.mjs'
@@ -31,6 +35,10 @@ export class EntityState<T = unknown> extends BaseState {
   state: StateMachine<T>
   statuses: Array<any>
 
+  animations: ?ReadonlyArray<Animation>
+  currentAnimation: ?Animation
+  frameID: ?number
+
   camera: CameraState
   entities: EntitiesState
 
@@ -50,6 +58,10 @@ export class EntityState<T = unknown> extends BaseState {
     this.state = new StateMachine({})
     this.statuses = []
 
+    this.animations = null
+    this.currentAnimation = null
+    this.frameID = null
+
     // dependency injection
     // note: make sure to use EntitiesState.append() to add it to the list,
     // so the dependency will provided
@@ -68,11 +80,21 @@ export class EntityState<T = unknown> extends BaseState {
       setColor('#dedaf4')
       rect('line', this.x, this.y, this.width, this.height)
     }
+
+    const frameID = this.frameID
+    if (frameID != null) {
+      setColor('#fff')
+      draw(gameTiles[frameID], this.x, this.y, this.width, this.height)
+    }
   }
 
   update (delta: number) {
     this.state.update(delta)
     this.statuses.forEach((status) => status.update(this, delta))
+    if (this.currentAnimation != null) {
+      this.currentAnimation.update(delta)
+      this.frameID = this.currentAnimation?.getCurrentFrame()
+    }
     this.x += this.dx * delta
     this.y += this.dy * delta
   }
@@ -81,6 +103,14 @@ export class EntityState<T = unknown> extends BaseState {
 
   changeState (stateName: T, input: unknown) {
     this.state.change(stateName, input)
+  }
+
+  changeAnimation (animationID: number) {
+    this.currentAnimation = nullthrows(this.animations)[animationID]
+  }
+
+  genAnimations (def: CharType): ReadonlyArray<Animation> {
+    return def.frames.map((frames) => new Animation(frames, def.frameInterval))
   }
 
   onCollide (target: EntityState<>, self: EntityState<>, delta: number) {

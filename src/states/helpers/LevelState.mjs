@@ -3,8 +3,10 @@
 import { FREE_AREA, PLAY_AREA, TILE_SIZE } from '../../constants.mjs'
 import { Dimentions, draw, pattern } from '../../engine.mjs'
 import { gameTiles } from '../../gameTiles.mjs'
+import { random } from '../../libs/random.mjs'
 import { BaseState } from '../BaseState.mjs'
 import { BuildingState } from '../entities/BuildingState.mjs'
+import { MinionState } from '../entities/MinionState.mjs'
 import type { CameraState } from './CameraState.mjs'
 import type { EntitiesState } from './EntitiesState.mjs'
 
@@ -31,6 +33,7 @@ export class LevelState extends BaseState {
     this.intervals = [0, 0]
 
     this.distance = 5000
+    this.minions = []
   }
 
   enter () {
@@ -39,6 +42,10 @@ export class LevelState extends BaseState {
       building.y += FREE_AREA * TILE_SIZE + building.height
       this.entities.append(building)
     })
+
+    this.entities.append(
+      new MinionState([0.5 * Dimentions.width - 8, this.camera.y - 10])
+    )
   }
 
   render () {

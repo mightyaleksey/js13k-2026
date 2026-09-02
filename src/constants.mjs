@@ -39,5 +39,6 @@ export type CharType = Readonly<{
 }>
 
 export const FRAMES: Readonly<{ [string]: CharType }> = {
+  minion: { frames: [[5]], frameInterval: 0.2 },
   player: { frames: [[3], [4, 3, 2, 3]], frameInterval: 0.2 }
 }

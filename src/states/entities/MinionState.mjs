@@ -1,30 +1,20 @@
 /* @flow */
 
+import { FRAMES, TILE_SIZE } from '../../constants.mjs'
 import { setColor } from '../../engine.mjs'
 import { pixel } from '../../libs/render.mjs'
+import { ShootingStatus } from '../../statuses/ShootingStatus.mjs'
 import { EntityState } from './EntityState.mjs'
 import { ProjectileState } from './ProjectileState.mjs'
 import { WallState } from './WallState.mjs'
 
 export class MinionState extends EntityState<> {
-  render () {
-    super.render()
+  constructor (props: [number, number]) {
+    super([props[0], props[1], TILE_SIZE, TILE_SIZE])
 
-    setColor('#ffadad')
-    pixel(this.x, this.y)
-    pixel(this.x, this.y + 4)
-    pixel(this.x, this.y + 8)
+    this.animations = this.genAnimations(FRAMES.minion)
+    this.currentAnimation = this.animations[0]
 
-    pixel(this.x + 4, this.y + 4)
-    pixel(this.x + 4, this.y + 8)
-    pixel(this.x + 4, this.y + 12)
-
-    pixel(this.x + 8, this.y + 4)
-    pixel(this.x + 8, this.y + 8)
-    pixel(this.x + 8, this.y + 12)
-
-    pixel(this.x + 12, this.y)
-    pixel(this.x + 12, this.y + 4)
-    pixel(this.x + 12, this.y + 8)
+    this.statuses.push(new ShootingStatus([0.6, 0, 90]))
   }
 }
