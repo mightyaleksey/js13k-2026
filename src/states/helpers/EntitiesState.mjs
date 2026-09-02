@@ -8,6 +8,7 @@ import { BaseState } from '../BaseState.mjs'
 import type { EntityState } from '../entities/EntityState.mjs'
 import { PlayerState } from '../entities/PlayerState.mjs'
 import type { CameraState } from './CameraState.mjs'
+import { handleCollision } from './handleCollision.mjs'
 
 const offsetX = 2 * TILE_SIZE
 const offsetY = 8 * TILE_SIZE
@@ -49,8 +50,8 @@ export class EntitiesState extends BaseState {
         const right = entities[j]
         if (!collides(left, right)) continue
 
-        left.onCollide(right, delta)
-        right.onCollide(left, delta)
+        left.onCollide(right, left, delta)
+        right.onCollide(left, right, delta)
       }
     })
 
@@ -72,6 +73,8 @@ export class EntitiesState extends BaseState {
     // inject dependency
     entity.camera = this.camera
     entity.entities = this
+    // $FlowExpectedError[cannot-write]
+    entity.onCollide = handleCollision
     this.list.push(entity)
   }
 }

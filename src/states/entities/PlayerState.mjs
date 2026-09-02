@@ -1,9 +1,12 @@
 /* @flow */
 
-import { TILE_SIZE } from '../../constants.mjs'
-import { Dimentions, setColor } from '../../engine.mjs'
+import type { CharType } from '../../constants.mjs'
+import { FRAMES, TILE_SIZE } from '../../constants.mjs'
+import { Dimentions, draw, setColor } from '../../engine.mjs'
+import { gameTiles } from '../../gameTiles.mjs'
 import { pixel } from '../../libs/render.mjs'
 import { ShootingStatus } from '../../statuses/ShootingStatus.mjs'
+import { Animation } from '../Animation.mjs'
 import { StateMachine } from '../StateMachine.mjs'
 import { PlayerIdleState } from './characters/PlayerIdleState.mjs'
 import { PlayerWalkState } from './characters/PlayerWalkState.mjs'
@@ -12,48 +15,43 @@ import { EntityState } from './EntityState.mjs'
 import { WallState } from './WallState.mjs'
 
 export class PlayerState extends EntityState<'idle' | 'walk'> {
+  animations: ReadonlyArray<Animation>
+  currentAnimation: Animation
+
   constructor (props: EntityProps) {
-    super([props[0], props[1], TILE_SIZE, TILE_SIZE])
+    super([props[0], props[1], 19, 32])
+
+    this.animations = this.genAnimations(FRAMES.player)
+    this.currentAnimation = this.animations[0]
 
     this.state = new StateMachine({
       idle: () => new PlayerIdleState(this),
       walk: () => new PlayerWalkState(this)
     }).change('idle')
 
-    // this.statuses.push(new ShootingStatus([0.2, 0]))
+    this.statuses.push(new ShootingStatus([0.4, 0]))
   }
 
   render () {
     super.render()
 
-    setColor('#83ccd2')
-    pixel(this.x, this.y + 4)
-    pixel(this.x, this.y + 8)
-    pixel(this.x, this.y + 12)
-
-    pixel(this.x + 4, this.y)
-    pixel(this.x + 4, this.y + 8)
-
-    pixel(this.x + 8, this.y)
-    pixel(this.x + 8, this.y + 8)
-
-    pixel(this.x + 12, this.y + 4)
-    pixel(this.x + 12, this.y + 8)
-    pixel(this.x + 12, this.y + 12)
+    const tileID = this.currentAnimation.getCurrentFrame()
+    setColor('#fff')
+    draw(gameTiles[tileID], this.x, this.y, this.width, this.height)
   }
 
   update (delta: number) {
     super.update(delta)
+    this.currentAnimation.update(delta)
   }
 
   /* helpers */
 
-  onCollide (target: EntityState<>, delta: number) {
-    if (target instanceof WallState) {
-      this.dx = -this.dx
-      this.dy = -this.dy
-      this.x += this.dx * delta
-      this.y += this.dy * delta
-    }
+  changeAnimation (animationID: number) {
+    this.currentAnimation = this.animations[animationID]
+  }
+
+  genAnimations (def: CharType): ReadonlyArray<Animation> {
+    return def.frames.map((frames) => new Animation(frames, def.frameInterval))
   }
 }

@@ -2,7 +2,7 @@
 
 import type { EntityState } from '../states/entities/EntityState.mjs'
 
-export type StatusProps = [number, number]
+export type StatusProps = [interval: number, duration: number]
 
 export class BaseStatus {
   interval: number

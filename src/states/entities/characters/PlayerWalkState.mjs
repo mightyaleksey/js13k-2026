@@ -11,6 +11,13 @@ import type { PlayerState } from '../PlayerState.mjs'
 import { PlayerIdleState } from './PlayerIdleState.mjs'
 
 export class PlayerWalkState extends PlayerIdleState<PlayerState> {
+  enter () {
+    const entity = this.entity
+    entity.dx = 0
+    entity.dy = 0
+    entity.changeAnimation(1)
+  }
+
   update (delta: number) {
     const direction = MOVEMENT_KEYS.findIndex((key) => Keys.wasHolding(key)) % 4
     const entity = this.entity

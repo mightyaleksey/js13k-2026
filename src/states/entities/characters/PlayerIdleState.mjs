@@ -17,6 +17,7 @@ export class PlayerIdleState<T extends PlayerState> extends BaseState {
     const entity = this.entity
     entity.dx = 0
     entity.dy = 0
+    entity.changeAnimation(0)
   }
 
   update (delta: number) {

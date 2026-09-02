@@ -373,13 +373,22 @@ export async function createEngine (
 export function genQuads (
   atlas: HTMLImageElement,
   width: number,
-  height: number
+  height: number,
+  x0?: number,
+  y0?: number,
+  mw?: number,
+  mh?: number
 ): ReadonlyArray<HTMLImageElement> {
+  x0 = x0 ?? 0
+  y0 = y0 ?? 0
+  mw = mw ?? atlas.width
+  mh = mh ?? atlas.height
+
   const quads = []
   const [canvas, canvasContext] = createCanvas(width, height)
 
-  for (let y = 0; y < atlas.height; y += height) {
-    for (let x = 0; x < atlas.width; x += width) {
+  for (let y = y0; y < mh; y += height) {
+    for (let x = x0; x < mw; x += width) {
       canvasContext.clearRect(0, 0, width, height)
       canvasContext.drawImage(atlas, -x, -y)
 
