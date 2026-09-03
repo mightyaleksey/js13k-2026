@@ -19,8 +19,8 @@ function getDimentions (
       const h = 9 * TILE_SIZE
       const x =
         side === 0
-          ? 0.5 * (Dimentions.width - PLAY_AREA * TILE_SIZE) - w
-          : 0.5 * (Dimentions.width + PLAY_AREA * TILE_SIZE)
+          ? 0.5 * (Dimentions.width - PLAY_AREA * TILE_SIZE - w)
+          : 0.5 * (Dimentions.width + PLAY_AREA * TILE_SIZE + w)
       return [x, cameraY - h, w, h]
     }
   }

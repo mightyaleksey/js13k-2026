@@ -19,7 +19,7 @@ export class ShootingStatus extends BaseStatus {
 
   onTick (target: EntityState<>) {
     const projectile = new ProjectileState([
-      target.x + 0.5 * target.width - 2,
+      target.centerX(),
       this.angle < 0 ? target.y - 8 : target.y + target.height + 8,
       this.angle
     ])

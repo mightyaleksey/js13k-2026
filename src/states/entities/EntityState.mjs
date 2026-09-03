@@ -47,8 +47,12 @@ export class EntityState<T = unknown> extends BaseState {
   constructor (props: EntityProps) {
     super()
 
-    this.x = props[0] ?? 0
-    this.y = props[1] ?? 0
+    this.x = Math.floor(
+      (props[0] ?? 0) - (props[2] != null ? 0.5 * props[2] : 0)
+    )
+    this.y = Math.floor(
+      (props[1] ?? 0) - (props[3] != null ? 0.5 * props[3] : 0)
+    )
     this.width = props[2] ?? 0
     this.height = props[3] ?? 0
 
@@ -100,6 +104,10 @@ export class EntityState<T = unknown> extends BaseState {
   }
 
   /* helpers */
+
+  centerX (): number {
+    return Math.floor(this.x + 0.5 * this.width)
+  }
 
   changeState (stateName: T, input: unknown) {
     this.state.change(stateName, input)

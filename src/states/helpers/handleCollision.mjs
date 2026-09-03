@@ -11,14 +11,22 @@ export function handleCollision (
   self: EntityState<>,
   delta: number
 ) {
-  if (target instanceof ProjectileState) {
-    if (self instanceof MinionState || self instanceof PlayerState) {
-      // take a hit
+  if (self instanceof MinionState) {
+    if (!(target instanceof ProjectileState)) {
+      self.x -= self.dx * delta
+      self.y -= self.dy * delta
+      self.switchDirection()
     }
+  }
 
+  if (self instanceof PlayerState) {
+    if (!(target instanceof ProjectileState)) {
+      self.x -= self.dx * delta
+      self.y -= self.dy * delta
+    }
+  }
+
+  if (target instanceof ProjectileState) {
     target.isDestroyed = true
-  } else {
-    self.x -= self.dx * delta
-    self.y -= self.dy * delta
   }
 }
