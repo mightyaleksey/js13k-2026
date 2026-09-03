@@ -10,11 +10,7 @@ export type ProjectileProps = Readonly<[x: number, y: number, a: number]>
 export class ProjectileState extends EntityState<> {
   constructor (props: ProjectileProps) {
     super([props[0], props[1], 4, 4])
-
-    // tg(a) = y/x
-    const angle = (props[2] * Math.PI) / 180
-    this.dx = Math.floor(Math.cos(angle) * PROJECTILE_SPEED)
-    this.dy = Math.floor(Math.sin(angle) * PROJECTILE_SPEED)
+    this.byAngle(props[2], PROJECTILE_SPEED)
   }
 
   render () {

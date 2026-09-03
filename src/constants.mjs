@@ -1,15 +1,22 @@
 /* @flow */
 
+import { range } from './libs/range.mjs'
+
+export const PARTICLE_SIZE: number = 4
 export const TILE_SIZE: number = 16
-export const PLAY_AREA: number = 10
-export const FREE_AREA: number = 3
+export const PLAY_AREA: number = 10 // x tiles
+export const FREE_AREA: number = 3 // x tiles
 
 export const CAMERA_MX: number = (PLAY_AREA - 1) / PLAY_AREA
 
 export const CAMERA_SPEED: number = 40
 export const MINION_SPEED: number = 20
+export const PARTICLE_SPEED: number = 6
 export const PLAYER_SPEED: number = 100
 export const PROJECTILE_SPEED: number = 140
+
+export const PARTICLE_DURATION: number = 2
+export const PARTICLE_ROTATION: number = 30
 
 // array index reflects corresponding direction, i.e. top, right, bottom, left
 export const MOVEMENT_KEYS: ReadonlyArray<string> = [
@@ -31,7 +38,7 @@ export const UNIT_VECTORS: ReadonlyArray<ReadonlyArray<number>> = [
 ]
 
 export const DEBUG_BB: boolean = false
-export const DEBUG_PANEL: boolean = true
+export const DEBUG_PANEL: boolean = false
 
 export type CharType = Readonly<{
   frames: ReadonlyArray<ReadonlyArray<number>>,

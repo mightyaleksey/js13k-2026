@@ -89,6 +89,7 @@ export class LevelState extends BaseState {
       // $FlowExpectedError[invalid-tuple-index]
       this.intervals[pointer] = FREE_AREA * TILE_SIZE + building.height
     } else {
+      if (this.stages.length === 0) return
       // $FlowExpectedError[prop-missing]
       const stage = nullthrows(this.stages.shift())
       for (let i = 0; i < stage[1]; ++i) {

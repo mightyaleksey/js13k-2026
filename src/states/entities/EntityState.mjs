@@ -42,6 +42,7 @@ export class EntityState<T = unknown> extends BaseState {
   camera: CameraState
   entities: EntitiesState
 
+  isCollidable: boolean
   isDestroyed: boolean
 
   constructor (props: EntityProps) {
@@ -74,6 +75,7 @@ export class EntityState<T = unknown> extends BaseState {
     // $FlowExpectedError[incompatible-type]
     this.entities = null
 
+    this.isCollidable = true
     this.isDestroyed = false
   }
 
@@ -105,8 +107,21 @@ export class EntityState<T = unknown> extends BaseState {
 
   /* helpers */
 
+  byAngle (angle: number, size: number) {
+    // set dx, dy based on angle
+    // tg(a) = y/x
+    const a = (angle * Math.PI) / 180
+    this.dx = Math.floor(Math.cos(a) * size)
+    this.dy = Math.floor(Math.sin(a) * size)
+    return this
+  }
+
   centerX (): number {
     return Math.floor(this.x + 0.5 * this.width)
+  }
+
+  centerY (): number {
+    return Math.floor(this.y + 0.5 * this.height)
   }
 
   changeState (stateName: T, input: unknown) {
@@ -122,6 +137,10 @@ export class EntityState<T = unknown> extends BaseState {
   }
 
   onCollide (target: EntityState<>, self: EntityState<>, delta: number) {
+    // abstract
+  }
+
+  onDeath (self: EntityState<>) {
     // abstract
   }
 }

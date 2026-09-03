@@ -22,7 +22,11 @@ export class BaseStatus<T = EntityState<>> {
   update (target: T, delta: number) {
     this.timePassed = this.timePassed + delta
 
-    if (this.interval > 0 && this.timePassed >= this.interval) {
+    if (
+      this.interval > 0 &&
+      this.timePassed >= this.interval &&
+      !this.isExpired
+    ) {
       this.timePassed = this.timePassed - this.interval
       if (this.duration > 0) this.duration = this.duration - this.interval
       this.onTick(target)

@@ -215,6 +215,10 @@ export function rotate (degree: number) {
   c.rotate((degree * Math.PI) / 180)
 }
 
+export function save () {
+  _state.context.save()
+}
+
 export function setColor (color: string, opacity?: number) {
   const c = _state.context
   c.fillStyle = color

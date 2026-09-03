@@ -1,10 +1,7 @@
 /* @flow */
 
-import { CAMERA_SPEED } from '../constants.mjs'
 import { random } from '../libs/random.mjs'
-import type { EntityState } from '../states/entities/EntityState.mjs'
 import type { MinionState } from '../states/entities/MinionState.mjs'
-import { ProjectileState } from '../states/entities/ProjectileState.mjs'
 import { BaseStatus } from './BaseStatus.mjs'
 
 /**

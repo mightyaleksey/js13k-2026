@@ -44,7 +44,9 @@ export class EntitiesState extends BaseState {
     this.list.forEach((entity) => entity.update(delta))
 
     // check for collisions (mainly those that are in the viewport)
-    const entities = this.list.filter((entity) => collides(entity, viewport))
+    const entities = this.list.filter(
+      (entity) => entity.isCollidable && collides(entity, viewport)
+    )
     entities.forEach((left, i) => {
       for (let j = i + 1; j < entities.length; ++j) {
         const right = entities[j]
@@ -62,6 +64,7 @@ export class EntitiesState extends BaseState {
       if (entity instanceof PlayerState) continue
 
       if (!collides(entity, viewport) || entity.isDestroyed) {
+        entity.onDeath(entity)
         this.list.splice(j, 1)
       }
     }
