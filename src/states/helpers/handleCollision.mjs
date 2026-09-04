@@ -1,5 +1,6 @@
 /* @flow */
 
+import { playSound } from '../../sound.mjs'
 import type { EntityState } from '../entities/EntityState.mjs'
 import { MinionState } from '../entities/MinionState.mjs'
 import { ParticleState } from '../entities/ParticleState.mjs'
@@ -14,6 +15,7 @@ export function handleCollision (
 ) {
   if (self instanceof MinionState) {
     if (target instanceof ProjectileState) {
+      playSound('death')
       self.isDestroyed = true
     } else {
       self.x -= self.dx * delta

@@ -10,6 +10,7 @@ import {
 } from './engine.mjs'
 import { gameState } from './gameState.mjs'
 import { gameTiles } from './gameTiles.mjs'
+import { initSoundBank } from './sound.mjs'
 import { GamePlayState } from './states/game/GamePlayState.mjs'
 import { StateMachine } from './states/StateMachine.mjs'
 
@@ -46,6 +47,8 @@ async function initGame () {
   gameState.push(
     new StateMachine({ play: () => new GamePlayState() }).change('play')
   )
+
+  await initSoundBank()
 }
 
 function updateGame (delta: number) {
