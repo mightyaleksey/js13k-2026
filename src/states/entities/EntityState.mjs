@@ -7,8 +7,8 @@ import { gameTiles } from '../../gameTiles.mjs'
 import { nullthrows } from '../../libs/nullthrows.mjs'
 import { Animation } from '../Animation.mjs'
 import { BaseState } from '../BaseState.mjs'
-import type { CameraState } from '../helpers/CameraState.mjs'
-import type { EntitiesState } from '../helpers/EntitiesState.mjs'
+import type { CameraState } from '../elements/CameraState.mjs'
+import type { EntitiesState } from '../elements/EntitiesState.mjs'
 import { StateMachine } from '../StateMachine.mjs'
 
 // [ x, y, width, height, dx, dy ]
@@ -107,7 +107,7 @@ export class EntityState<T = unknown> extends BaseState {
 
   /* helpers */
 
-  byAngle (angle: number, size: number) {
+  byAngle (angle: number, size: number): this {
     // set dx, dy based on angle
     // tg(a) = y/x
     const a = (angle * Math.PI) / 180

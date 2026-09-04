@@ -2,6 +2,7 @@
 
 import { CAMERA_SPEED } from '../../constants.mjs'
 import { Dimentions } from '../../engine.mjs'
+import { updateAreas } from '../../helpers/viewport.mjs'
 import { EntityState } from '../entities/EntityState.mjs'
 
 export class CameraState extends EntityState {
@@ -17,6 +18,8 @@ export class CameraState extends EntityState {
   }
 
   update (delta: number) {
+    updateAreas(this.x, this.y)
+
     if (this.isMoving) {
       super.update(delta)
     }

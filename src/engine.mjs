@@ -421,7 +421,7 @@ export async function scaleQuad (
 ): Promise<HTMLImageElement> {
   const w = img.width * scale
   const h = img.height * scale
-  const [c, t] = createCanvas(w, h)
+  const [, t] = createCanvas(w, h)
   t.drawImage(img, 0, 0, img.width, img.height, 0, 0, w, h)
   return window.createImageBitmap(t.getImageData(0, 0, w, h))
 }

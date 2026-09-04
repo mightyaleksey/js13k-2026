@@ -1,7 +1,5 @@
 /* @flow */
 
-import { range } from './libs/range.mjs'
-
 export const PARTICLE_SIZE: number = 4
 export const TILE_SIZE: number = 16
 export const PLAY_AREA: number = 10 // x tiles

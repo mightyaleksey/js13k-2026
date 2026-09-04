@@ -11,11 +11,11 @@ import {
 import { Dimentions, translate } from '../../engine.mjs'
 import { Console } from '../../ui/Console.mjs'
 import { BaseState } from '../BaseState.mjs'
+import { CameraState } from '../elements/CameraState.mjs'
+import { EntitiesState } from '../elements/EntitiesState.mjs'
+import { GridState } from '../elements/GridState.mjs'
+import { LevelState } from '../elements/LevelState.mjs'
 import { PlayerState } from '../entities/PlayerState.mjs'
-import { CameraState } from '../helpers/CameraState.mjs'
-import { EntitiesState } from '../helpers/EntitiesState.mjs'
-import { GridState } from '../helpers/GridState.mjs'
-import { LevelState } from '../helpers/LevelState.mjs'
 
 /**
  * Level & Camera logic

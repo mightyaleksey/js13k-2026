@@ -2,13 +2,14 @@
 
 import { TILE_SIZE } from '../../constants.mjs'
 import { Dimentions } from '../../engine.mjs'
+import { collisionHandler } from '../../helpers/collisionHandler.mjs'
+import { playarea } from '../../helpers/viewport.mjs'
 import type { CollidableType } from '../../libs/collides.mjs'
 import { collides } from '../../libs/collides.mjs'
 import { BaseState } from '../BaseState.mjs'
+import type { CameraState } from '../elements/CameraState.mjs'
 import type { EntityState } from '../entities/EntityState.mjs'
 import { PlayerState } from '../entities/PlayerState.mjs'
-import type { CameraState } from './CameraState.mjs'
-import { handleCollision } from './handleCollision.mjs'
 
 const offsetX = 2 * TILE_SIZE
 const offsetY = 8 * TILE_SIZE
@@ -21,7 +22,6 @@ export class EntitiesState extends BaseState {
 
   constructor (props: EntitiesProps) {
     super()
-
     this.camera = props[0]
     this.list = []
   }
@@ -33,19 +33,12 @@ export class EntitiesState extends BaseState {
   }
 
   update (delta: number) {
-    const viewport: CollidableType = {
-      x: -(offsetX - this.camera.x),
-      y: -(offsetY - this.camera.y),
-      width: Dimentions.width + 2 * offsetX,
-      height: Dimentions.height + 2 * offsetY
-    }
-
     // update entities
     this.list.forEach((entity) => entity.update(delta))
 
     // check for collisions (mainly those that are in the viewport)
     const entities = this.list.filter(
-      (entity) => entity.isCollidable && collides(entity, viewport)
+      (entity) => entity.isCollidable && collides(entity, playarea)
     )
     entities.forEach((left, i) => {
       for (let j = i + 1; j < entities.length; ++j) {
@@ -63,7 +56,7 @@ export class EntitiesState extends BaseState {
       const entity = this.list[j]
       if (entity instanceof PlayerState) continue
 
-      if (!collides(entity, viewport) || entity.isDestroyed) {
+      if (!collides(entity, playarea) || entity.isDestroyed) {
         entity.onDeath(entity)
         this.list.splice(j, 1)
       }
@@ -77,7 +70,7 @@ export class EntitiesState extends BaseState {
     entity.camera = this.camera
     entity.entities = this
     // $FlowExpectedError[cannot-write]
-    entity.onCollide = handleCollision
+    entity.onCollide = collisionHandler
     this.list.push(entity)
   }
 }

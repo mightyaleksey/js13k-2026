@@ -1,14 +1,18 @@
 /* @flow */
 
-import { playSound } from '../../sound.mjs'
-import type { EntityState } from '../entities/EntityState.mjs'
-import { MinionState } from '../entities/MinionState.mjs'
-import { ParticleState } from '../entities/ParticleState.mjs'
-import { PlayerState } from '../entities/PlayerState.mjs'
-import { ProjectileState } from '../entities/ProjectileState.mjs'
-import { WallState } from '../entities/WallState.mjs'
+import { playSound } from '../sound.mjs'
+import type { EntityState } from '../states/entities/EntityState.mjs'
+import { MinionState } from '../states/entities/MinionState.mjs'
+import { ParticleState } from '../states/entities/ParticleState.mjs'
+import { PlayerState } from '../states/entities/PlayerState.mjs'
+import { ProjectileState } from '../states/entities/ProjectileState.mjs'
+import { WallState } from '../states/entities/WallState.mjs'
 
-export function handleCollision (
+/**
+ * Generic collision logic for the all entitites.
+ */
+
+export function collisionHandler (
   target: EntityState<>,
   self: EntityState<>,
   delta: number

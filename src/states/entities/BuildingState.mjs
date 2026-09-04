@@ -2,7 +2,7 @@
 
 import { PLAY_AREA, TILE_SIZE } from '../../constants.mjs'
 import { Dimentions, rect, setColor, shape } from '../../engine.mjs'
-import type { CameraState } from '../helpers/CameraState.mjs'
+import type { CameraState } from '../elements/CameraState.mjs'
 import { WallState } from './WallState.mjs'
 
 const tb = 1.2

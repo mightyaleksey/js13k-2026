@@ -6,9 +6,9 @@ import { gameTiles } from '../../gameTiles.mjs'
 import { nullthrows } from '../../libs/nullthrows.mjs'
 import { random } from '../../libs/random.mjs'
 import { BaseState } from '../BaseState.mjs'
+import type { CameraState } from '../elements/CameraState.mjs'
 import { BuildingState } from '../entities/BuildingState.mjs'
 import { MinionState } from '../entities/MinionState.mjs'
-import type { CameraState } from './CameraState.mjs'
 import type { EntitiesState } from './EntitiesState.mjs'
 
 export type LevelProps = Readonly<
