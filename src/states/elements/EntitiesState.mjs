@@ -3,7 +3,7 @@
 import { TILE_SIZE } from '../../constants.mjs'
 import { Dimentions } from '../../engine.mjs'
 import { collisionHandler } from '../../helpers/collisionHandler.mjs'
-import { playarea } from '../../helpers/viewport.mjs'
+import { playarea, viewport } from '../../helpers/viewport.mjs'
 import type { CollidableType } from '../../libs/collides.mjs'
 import { collides } from '../../libs/collides.mjs'
 import { BaseState } from '../BaseState.mjs'

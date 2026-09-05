@@ -46,7 +46,7 @@ export class GamePlayState extends BaseState {
     this.player = new PlayerState([0.5 * Dimentions.width, -3 * TILE_SIZE])
 
     this.entities.append(this.player)
-    this.startY = this.camera.y
+    this.startY = 0
 
     // $FlowExpectedError[constant-condition]
     if (DEBUG_PANEL) {
@@ -86,17 +86,13 @@ export class GamePlayState extends BaseState {
 
   update (delta: number) {
     this.camera.update(delta)
+    this.startY += CAMERA_SPEED * delta
 
     this.camera.x =
       CAMERA_MX * (this.player.x - 0.5 * (Dimentions.width - TILE_SIZE))
 
     if (this.camera.isMoving) {
-      // this.player.y += this.camera.dy * delta
-
-      if (this.level.distance < this.startY - this.camera.y) {
-        // const dy = this.startY - this.camera.y - this.level.distance
-        // this.player.y += dy
-        // this.camera.y += dy
+      if (this.level.distance < this.startY) {
         this.camera.isMoving = false
       }
     }

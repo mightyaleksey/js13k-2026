@@ -4,6 +4,8 @@ import type { CharType } from '../../constants.mjs'
 import { DEBUG_BB, TILE_SIZE } from '../../constants.mjs'
 import { draw, rect, setColor } from '../../engine.mjs'
 import { gameTiles } from '../../gameTiles.mjs'
+import { viewport } from '../../helpers/viewport.mjs'
+import { collides } from '../../libs/collides.mjs'
 import { nullthrows } from '../../libs/nullthrows.mjs'
 import { Animation } from '../Animation.mjs'
 import { BaseState } from '../BaseState.mjs'
@@ -44,6 +46,7 @@ export class EntityState<T = unknown> extends BaseState {
 
   isCollidable: boolean
   isDestroyed: boolean
+  isVisible: boolean
 
   constructor (props: EntityProps) {
     super()
@@ -77,6 +80,7 @@ export class EntityState<T = unknown> extends BaseState {
 
     this.isCollidable = true
     this.isDestroyed = false
+    this.isVisible = true
   }
 
   enter () {}
@@ -103,6 +107,8 @@ export class EntityState<T = unknown> extends BaseState {
     }
     this.x += this.dx * delta
     this.y += this.dy * delta
+
+    this.isVisible = collides(this, viewport)
   }
 
   /* helpers */

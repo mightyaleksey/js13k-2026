@@ -1,6 +1,7 @@
 /* @flow */
 
 import { playSound } from '../sound.mjs'
+import { BossState } from '../states/entities/BossState.mjs'
 import type { EntityState } from '../states/entities/EntityState.mjs'
 import { MinionState } from '../states/entities/MinionState.mjs'
 import { ParticleState } from '../states/entities/ParticleState.mjs'
@@ -17,14 +18,14 @@ export function collisionHandler (
   self: EntityState<>,
   delta: number
 ) {
-  if (self instanceof MinionState) {
-    if (target instanceof ProjectileState) {
+  if (self instanceof MinionState || self instanceof BossState) {
+    if (target instanceof ProjectileState && self.isVisible) {
       playSound('death')
       self.isDestroyed = true
     } else {
       self.x -= self.dx * delta
       self.y -= self.dy * delta
-      self.switchDirection()
+      if (self instanceof MinionState) self.switchDirection()
     }
   }
 

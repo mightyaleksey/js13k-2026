@@ -41,7 +41,9 @@ export class LevelState extends BaseState {
     this.positions = [0]
     this.stages = this.genStages()
 
-    this.distance = this.stages.reduce((t, s) => t + s[0], 0)
+    this.distance =
+      this.stages.reduce((t, s) => t + s[0], 0) +
+      Math.max(Math.floor(0.2 * Dimentions.height), 2 * TILE_SIZE)
   }
 
   enter () {
@@ -75,13 +77,16 @@ export class LevelState extends BaseState {
   /* helpers */
 
   genStages (): Array<[interval: number, count: number]> {
-    const stages: Array<[interval: number, count: number]> = [[100, 1]]
-    ;[1, 1, 1].forEach((t, minions) => {
+    const stages: Array<[interval: number, count: number]> = [[TILE_SIZE, 1]]
+    ;[3, 6, 9].forEach((t, minions) => {
       for (let k = 0; k < t; ++k) {
-        stages.push([random(80, 120), random(1, minions + 1)])
+        stages.push([
+          random(5 * TILE_SIZE, 8 * TILE_SIZE),
+          random(1, minions + 1)
+        ])
       }
     })
-    stages.push([150, 1])
+    stages.push([Math.max(Dimentions.height, 8 * TILE_SIZE), 1])
 
     return stages
   }
@@ -110,8 +115,9 @@ export class LevelState extends BaseState {
       for (let i = 0; i < count; ++i) {
         const K = isLast ? BossState : MinionState
         const coords = [
-          0.5 * Dimentions.width + this.getPosition() * TILE_SIZE,
-          this.camera.y - 10
+          0.5 * Dimentions.width +
+            (isLast ? 0 : this.getPosition() * TILE_SIZE),
+          this.camera.y - distance
         ]
 
         this.entities.append(new K(coords))
