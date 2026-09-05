@@ -20,8 +20,18 @@ export function collisionHandler (
 ) {
   if (self instanceof MinionState || self instanceof BossState) {
     if (target instanceof ProjectileState && self.isVisible) {
-      playSound('death')
-      self.isDestroyed = true
+      self.hp -= 1
+
+      if (self.hp <= 0) {
+        self.isDestroyed = true
+      } else {
+        self.onHit()
+      }
+
+      if (self.isDestroyed) {
+        playSound('death')
+        self.onDeath()
+      }
     } else {
       self.x -= self.dx * delta
       self.y -= self.dy * delta

@@ -20,6 +20,9 @@ export class PlayerState extends EntityState<'idle' | 'walk'> {
     this.animations = this.genAnimations(FRAMES.player)
     this.currentAnimation = this.animations[0]
 
+    this.hp = 3
+    this.hpMax = 3
+
     this.state = new StateMachine({
       idle: () => new PlayerIdleState(this),
       walk: () => new PlayerWalkState(this)

@@ -57,7 +57,6 @@ export class EntitiesState extends BaseState {
       if (entity instanceof PlayerState) continue
 
       if (!collides(entity, playarea) || entity.isDestroyed) {
-        entity.onDeath(entity)
         this.list.splice(j, 1)
       }
     }

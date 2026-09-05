@@ -34,15 +34,18 @@ export class EntityState<T = unknown> extends BaseState {
   dx: number
   dy: number
 
-  state: StateMachine<T>
-  statuses: Array<any>
-
   animations: ?ReadonlyArray<Animation>
   currentAnimation: ?Animation
   frameID: ?number
 
   camera: CameraState
   entities: EntitiesState
+
+  hp: number
+  hpMax: number
+
+  state: StateMachine<T>
+  statuses: Array<any>
 
   isCollidable: boolean
   isDestroyed: boolean
@@ -63,9 +66,6 @@ export class EntityState<T = unknown> extends BaseState {
     this.dx = props[4] ?? 0
     this.dy = props[5] ?? 0
 
-    this.state = new StateMachine({})
-    this.statuses = []
-
     this.animations = null
     this.currentAnimation = null
     this.frameID = null
@@ -77,6 +77,14 @@ export class EntityState<T = unknown> extends BaseState {
     this.camera = null
     // $FlowExpectedError[incompatible-type]
     this.entities = null
+
+    /* behaviour logic */
+
+    this.hp = 0
+    this.hpMax = 0
+
+    this.state = new StateMachine({})
+    this.statuses = []
 
     this.isCollidable = true
     this.isDestroyed = false
@@ -146,7 +154,11 @@ export class EntityState<T = unknown> extends BaseState {
     // abstract
   }
 
-  onDeath (self: EntityState<>) {
+  onHit () {
+    // abstract
+  }
+
+  onDeath () {
     // abstract
   }
 }

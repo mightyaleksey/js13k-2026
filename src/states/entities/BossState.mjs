@@ -9,6 +9,9 @@ export type BossProps = Readonly<[x?: ?number, y?: ?number]>
 export class BossState extends EntityState<> {
   constructor (props: BossProps) {
     super([props[0], props[1], 2 * TILE_SIZE, TILE_SIZE])
+
+    this.hp = 9
+    this.hpMax = 9
   }
 
   render () {

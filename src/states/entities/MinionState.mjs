@@ -32,6 +32,9 @@ export class MinionState extends EntityState<> {
     this.directions = shuffle(range(4).concat(range(4)))
     this.switchDirection()
 
+    this.hp = 1
+    this.hpMax = 1
+
     this.statuses.push(new DirectionStatus(), new ShootingStatus([1, 0, 90]))
   }
 
