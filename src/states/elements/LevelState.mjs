@@ -4,9 +4,11 @@ import { FREE_AREA, PLAY_AREA, TILE_SIZE } from '../../constants.mjs'
 import { Dimentions, draw, pattern } from '../../engine.mjs'
 import { gameTiles } from '../../gameTiles.mjs'
 import { nullthrows } from '../../libs/nullthrows.mjs'
-import { random } from '../../libs/random.mjs'
+import { random, shuffle } from '../../libs/random.mjs'
+import { range } from '../../libs/range.mjs'
 import { BaseState } from '../BaseState.mjs'
 import type { CameraState } from '../elements/CameraState.mjs'
+import { BossState } from '../entities/BossState.mjs'
 import { BuildingState } from '../entities/BuildingState.mjs'
 import { MinionState } from '../entities/MinionState.mjs'
 import type { EntitiesState } from './EntitiesState.mjs'
@@ -22,8 +24,10 @@ export class LevelState extends BaseState {
   currentYs: [number, number, number]
   intervals: [number, number, number]
 
+  positions: Array<number>
+  stages: Array<[interval: number, count: number]>
+
   distance: number
-  stages: ReadonlyArray<[interval: number, count: number, position?: number]>
 
   constructor (props: LevelProps) {
     super()
@@ -34,8 +38,10 @@ export class LevelState extends BaseState {
     this.currentYs = [this.camera.y, this.camera.y, this.camera.y]
     this.intervals = [0, 0, 0]
 
-    this.distance = 5000
+    this.positions = [0]
     this.stages = this.genStages()
+
+    this.distance = this.stages.reduce((t, s) => t + s[0], 0)
   }
 
   enter () {
@@ -68,41 +74,49 @@ export class LevelState extends BaseState {
 
   /* helpers */
 
-  genStages (): ReadonlyArray<
-    [interval: number, count: number, position?: number]
-  > {
-    const interval = [80, 120]
-    const stages = [[random(...interval), 1, 0.5]]
-    for (let k = 1; k < 4; ++k) {
-      for (let j = 0; j < 5 * k; ++j) {
-        stages.push([random(...interval), random(1, k)])
+  genStages (): Array<[interval: number, count: number]> {
+    const stages: Array<[interval: number, count: number]> = [[100, 1]]
+    ;[1, 1, 1].forEach((t, minions) => {
+      for (let k = 0; k < t; ++k) {
+        stages.push([random(80, 120), random(1, minions + 1)])
       }
-    }
+    })
+    stages.push([150, 1])
 
     return stages
   }
 
+  getPosition (): number {
+    if (this.positions.length === 0) {
+      const border = Math.ceil(0.5 * PLAY_AREA)
+      this.positions = shuffle(range(1 - border, border))
+    }
+
+    return nullthrows(this.positions.shift())
+  }
+
   onInterval (pointer: number) {
-    if (pointer <= 1) {
+    if (pointer === 0 || pointer === 1) {
       const building = new BuildingState([this.camera, 0, pointer])
       this.entities.append(building)
-      // $FlowExpectedError[invalid-tuple-index]
       this.intervals[pointer] = FREE_AREA * TILE_SIZE + building.height
-    } else {
-      if (this.stages.length === 0) return
-      // $FlowExpectedError[prop-missing]
-      const stage = nullthrows(this.stages.shift())
-      for (let i = 0; i < stage[1]; ++i) {
-        const x =
-          0.5 * Dimentions.width +
-          (stage[2] == null
-            ? random(-0.4 * PLAY_AREA, 0.4 * PLAY_AREA) * TILE_SIZE
-            : stage[2])
 
-        this.entities.append(new MinionState([x, this.camera.y - 10]))
+      return
+    }
+
+    if (this.stages.length > 0) {
+      const [distance, count] = nullthrows(this.stages.shift())
+      const isLast = this.stages.length === 0
+      for (let i = 0; i < count; ++i) {
+        const K = isLast ? BossState : MinionState
+        const coords = [
+          0.5 * Dimentions.width + this.getPosition() * TILE_SIZE,
+          this.camera.y - 10
+        ]
+
+        this.entities.append(new K(coords))
+        this.intervals[2] = distance
       }
-
-      this.intervals[2] = stage[0]
     }
   }
 }
