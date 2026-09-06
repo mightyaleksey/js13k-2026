@@ -2,7 +2,7 @@
 
 import { S_CONE_DURATION, S_CONE_INTERVAL } from '../constants.mjs'
 import type { BossState } from '../states/entities/BossState.mjs'
-import { ProjectileState } from '../states/entities/ProjectileState.mjs'
+import { BulletState } from '../states/entities/BulletState.mjs'
 import { BaseStatus } from './BaseStatus.mjs'
 
 export class ConeShootingStatus extends BaseStatus<BossState> {
@@ -16,7 +16,7 @@ export class ConeShootingStatus extends BaseStatus<BossState> {
   onTick (target: BossState) {
     const da = 90 / (this.count - 1)
     for (let angle = 45; angle <= 135; angle += da) {
-      const projectile = new ProjectileState([
+      const projectile = new BulletState([
         target.centerX(),
         target.centerY(),
         angle,

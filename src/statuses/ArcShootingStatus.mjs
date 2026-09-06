@@ -2,7 +2,7 @@
 
 import { S_ARC_DURATION, S_ARC_INTERVAL } from '../constants.mjs'
 import type { BossState } from '../states/entities/BossState.mjs'
-import { ProjectileState } from '../states/entities/ProjectileState.mjs'
+import { BulletState } from '../states/entities/BulletState.mjs'
 import { BaseStatus } from './BaseStatus.mjs'
 
 const startAngle = 195
@@ -18,7 +18,7 @@ export class ArcShootingStatus extends BaseStatus<BossState> {
 
   onTick (target: BossState) {
     for (let angle = this.angle; angle > this.angle - 45; angle -= 15) {
-      const projectile = new ProjectileState([
+      const projectile = new BulletState([
         target.centerX(),
         target.centerY(),
         angle,

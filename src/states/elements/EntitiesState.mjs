@@ -38,7 +38,7 @@ export class EntitiesState extends BaseState {
     entities.forEach((left, i) => {
       for (let j = i + 1; j < entities.length; ++j) {
         const right = entities[j]
-        if (!collides(left, right)) continue
+        if (!collides(left, right, 1)) continue
 
         left.onCollide(right, left, delta)
         right.onCollide(left, right, delta)

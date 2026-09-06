@@ -1,8 +1,8 @@
 /* @flow */
 
 import { CAMERA_SPEED } from '../constants.mjs'
+import { BulletState } from '../states/entities/BulletState.mjs'
 import type { EntityState } from '../states/entities/EntityState.mjs'
-import { ProjectileState } from '../states/entities/ProjectileState.mjs'
 import { BaseStatus } from './BaseStatus.mjs'
 
 export type FrontShootingProps = Readonly<
@@ -18,7 +18,7 @@ export class FrontShootingStatus extends BaseStatus {
   }
 
   onTick (target: EntityState<>) {
-    const projectile = new ProjectileState([
+    const projectile = new BulletState([
       target.centerX(),
       target.centerY(),
       this.angle,

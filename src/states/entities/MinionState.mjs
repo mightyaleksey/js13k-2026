@@ -11,7 +11,6 @@ import { range } from '../../libs/range.mjs'
 import { DirectionStatus } from '../../statuses/DirectionStatus.mjs'
 import { FrontShootingStatus } from '../../statuses/FrontShootingStatus.mjs'
 import { CharacterState } from './archetypes/CharacterState.mjs'
-import { ProjectileState } from './ProjectileState.mjs'
 
 export type MinionProps = Readonly<[x: number, y: number]>
 

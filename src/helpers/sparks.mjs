@@ -13,7 +13,7 @@ export function genExplosion (x: number, y: number): ReadonlyArray<SparkState> {
   return angles.map((a, i) => {
     const spark = new SparkState([x, y, i % 3])
     spark.directByAngle(a + shift, SPARK_SPEED)
-    spark.shiftByAngle(a + shift, SPARK_SIZE)
+    spark.shiftByAngle(a + shift, 0.5 * SPARK_SIZE)
     return spark
   })
 }

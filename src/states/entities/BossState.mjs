@@ -3,8 +3,8 @@
 import { TILE_SIZE } from '../../constants.mjs'
 import { rect, setColor } from '../../engine.mjs'
 import { ArcShootingStatus } from '../../statuses/ArcShootingStatus.mjs'
-import { AreaShootingStatus } from '../../statuses/AreaShootingStatus.mjs'
 import { ConeShootingStatus } from '../../statuses/ConeShootingStatus.mjs'
+import { ExplosionShootingStatus } from '../../statuses/ExplosionShootingStatus.mjs'
 import { CharacterState } from './archetypes/CharacterState.mjs'
 
 export type BossProps = Readonly<[x?: ?number, y?: ?number]>
@@ -24,7 +24,7 @@ export class BossState extends CharacterState<> {
       ConeShootingStatus,
       ArcShootingStatus,
       ConeShootingStatus,
-      AreaShootingStatus
+      ExplosionShootingStatus
     ]
   }
 

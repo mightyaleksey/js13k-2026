@@ -2,10 +2,10 @@
 
 import { playSound } from '../sound.mjs'
 import { CharacterState } from '../states/entities/archetypes/CharacterState.mjs'
+import { ProjectileState } from '../states/entities/archetypes/ProjectileState.mjs'
 import type { EntityState } from '../states/entities/EntityState.mjs'
 import { MinionState } from '../states/entities/MinionState.mjs'
 import { PlayerState } from '../states/entities/PlayerState.mjs'
-import { ProjectileState } from '../states/entities/ProjectileState.mjs'
 
 /**
  * Generic collision logic for the all entitites.
