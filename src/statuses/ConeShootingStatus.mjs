@@ -10,7 +10,7 @@ export class ConeShootingStatus extends BaseStatus<BossState> {
 
   constructor () {
     super([S_CONE_INTERVAL, S_CONE_DURATION])
-    this.count = 4
+    this.count = 5
   }
 
   onTick (target: BossState) {
