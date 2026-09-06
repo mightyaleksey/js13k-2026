@@ -1,9 +1,9 @@
 /* @flow */
 
 import { PLAY_AREA, TILE_SIZE } from '../../constants.mjs'
-import { Dimentions, rect, setColor, shape } from '../../engine.mjs'
+import { Dimentions, setColor, shape } from '../../engine.mjs'
 import type { CameraState } from '../elements/CameraState.mjs'
-import { WallState } from './WallState.mjs'
+import { ObstacleState } from './archetypes/ObstacleState.mjs'
 
 const tb = 1.2
 const tw = 0.04
@@ -34,7 +34,7 @@ function v (x1: number, x2: number, t: number): number {
 
 type BuildingProps = Readonly<[camera: CameraState, type: number, side: number]>
 
-export class BuildingState extends WallState {
+export class BuildingState extends ObstacleState {
   camera: CameraState
   type: number
 

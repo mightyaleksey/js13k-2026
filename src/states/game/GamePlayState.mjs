@@ -5,7 +5,6 @@ import {
   CAMERA_SPEED,
   DEBUG_BB,
   DEBUG_PANEL,
-  PLAY_AREA,
   TILE_SIZE
 } from '../../constants.mjs'
 import { Dimentions, translate } from '../../engine.mjs'

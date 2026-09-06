@@ -1,12 +1,7 @@
 /* @flow */
 
-import {
-  CAMERA_SPEED,
-  S_CONE_DURATION,
-  S_CONE_INTERVAL
-} from '../constants.mjs'
+import { S_CONE_DURATION, S_CONE_INTERVAL } from '../constants.mjs'
 import type { BossState } from '../states/entities/BossState.mjs'
-import type { EntityState } from '../states/entities/EntityState.mjs'
 import { ProjectileState } from '../states/entities/ProjectileState.mjs'
 import { BaseStatus } from './BaseStatus.mjs'
 

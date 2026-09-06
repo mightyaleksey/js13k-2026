@@ -13,8 +13,9 @@ export class ProjectileState extends EntityState<> {
   constructor (props: ProjectileProps) {
     super([props[0], props[1], PROJECTILE_SIZE, PROJECTILE_SIZE])
     this.directByAngle(props[2], PROJECTILE_SPEED)
-    if (props[3] != null)
+    if (props[3] != null) {
       this.shiftByAngle(props[2], props[3] + PROJECTILE_SIZE)
+    }
   }
 
   render () {

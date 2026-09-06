@@ -39,8 +39,8 @@ importers:
         specifier: 4.0.0
         version: 4.0.0
       linter-config:
-        specifier: github:mightyaleksey/linter-config#1d60907cfc7710fd29db842ade8dbb48c07ffd75
-        version: https://codeload.github.com/mightyaleksey/linter-config/tar.gz/1d60907cfc7710fd29db842ade8dbb48c07ffd75(supports-color@7.2.0)
+        specifier: github:mightyaleksey/linter-config#1a06e2b64913dd797ad6c0ddbbd72d726e6dac16
+        version: https://codeload.github.com/mightyaleksey/linter-config/tar.gz/1a06e2b64913dd797ad6c0ddbbd72d726e6dac16(supports-color@7.2.0)
       posthtml:
         specifier: 0.16.7
         version: 0.16.7
@@ -1561,8 +1561,8 @@ packages:
     resolution: {integrity: sha512-WkUDrojuJs0xkgGf2udWxa3yGBRxPtxUkB79i6aCZLRgc7PM8fZe9TosfPDcvEpQZbuFASnHYmRLBLUbmLOIIA==}
     engines: {node: '>= 12.0.0'}
 
-  linter-config@https://codeload.github.com/mightyaleksey/linter-config/tar.gz/1d60907cfc7710fd29db842ade8dbb48c07ffd75:
-    resolution: {gitHosted: true, integrity: sha512-gKQ/AhLc8uvFnmKltGlaU2TOK9309ZAcQU23lRgjDWTiZQBxtc2squCIrBO0tNIv5LXuS19NM9uBtoxYQdjr2w==, tarball: https://codeload.github.com/mightyaleksey/linter-config/tar.gz/1d60907cfc7710fd29db842ade8dbb48c07ffd75}
+  linter-config@https://codeload.github.com/mightyaleksey/linter-config/tar.gz/1a06e2b64913dd797ad6c0ddbbd72d726e6dac16:
+    resolution: {gitHosted: true, integrity: sha512-mxhlANDNNE3vYb8w412Fm+IXk6PaK2YdvjX/R5NDDJna0GpmjUSOFPihK/jUps9lW4/2fh8lJfNYiw+EDy+pcg==, tarball: https://codeload.github.com/mightyaleksey/linter-config/tar.gz/1a06e2b64913dd797ad6c0ddbbd72d726e6dac16}
     version: 1.0.0
     hasBin: true
 
@@ -4099,7 +4099,7 @@ snapshots:
       lightningcss-win32-arm64-msvc: 1.33.0
       lightningcss-win32-x64-msvc: 1.33.0
 
-  linter-config@https://codeload.github.com/mightyaleksey/linter-config/tar.gz/1d60907cfc7710fd29db842ade8dbb48c07ffd75(supports-color@7.2.0):
+  linter-config@https://codeload.github.com/mightyaleksey/linter-config/tar.gz/1a06e2b64913dd797ad6c0ddbbd72d726e6dac16(supports-color@7.2.0):
     dependencies:
       '@eslint/config-helpers': 0.7.0
       eslint: 10.8.1(supports-color@7.2.0)

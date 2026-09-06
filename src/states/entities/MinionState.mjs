@@ -6,23 +6,20 @@ import {
   TILE_SIZE,
   UNIT_VECTORS
 } from '../../constants.mjs'
-import { setColor } from '../../engine.mjs'
-import { random } from '../../libs/random.mjs'
 import { shuffle } from '../../libs/random.mjs'
 import { range } from '../../libs/range.mjs'
-import { pixel } from '../../libs/render.mjs'
 import { DirectionStatus } from '../../statuses/DirectionStatus.mjs'
 import { FrontShootingStatus } from '../../statuses/FrontShootingStatus.mjs'
-import { EntityState } from './EntityState.mjs'
-import { genParticles } from './ParticleState.mjs'
+import { CharacterState } from './archetypes/CharacterState.mjs'
 import { ProjectileState } from './ProjectileState.mjs'
-import { WallState } from './WallState.mjs'
 
-export class MinionState extends EntityState<> {
+export type MinionProps = Readonly<[x: number, y: number]>
+
+export class MinionState extends CharacterState<> {
   directionIndex: number
   directions: Array<number>
 
-  constructor (props: [number, number]) {
+  constructor (props: MinionProps) {
     super([props[0], props[1], TILE_SIZE, TILE_SIZE])
 
     this.animations = this.genAnimations(FRAMES.minion)
@@ -48,14 +45,5 @@ export class MinionState extends EntityState<> {
     const vector = UNIT_VECTORS[this.directions[this.directionIndex]]
     this.dx = vector[0] * MINION_SPEED
     this.dy = vector[1] * MINION_SPEED
-  }
-
-  onDeath () {
-    genParticles(this.centerX(), this.centerY(), random(0, 4)).forEach((
-      particle
-    ) => {
-      particle.update(0.2)
-      this.entities.append(particle)
-    })
   }
 }

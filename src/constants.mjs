@@ -11,10 +11,10 @@ export const CAMERA_SPEED: number = 40
 export const MINION_SPEED: number = 20
 export const PLAYER_SPEED: number = 100
 
-export const PARTICLE_DURATION: number = 2
-export const PARTICLE_ROTATION: number = 30
-export const PARTICLE_SIZE: number = 4
-export const PARTICLE_SPEED: number = 6
+export const SPARK_DURATION: number = 2
+export const SPARK_ROTATION: number = 30
+export const SPARK_SIZE: number = 4
+export const SPARK_SPEED: number = 6
 
 export const PROJECTILE_SIZE: number = 4
 export const PROJECTILE_SPEED: number = 140

@@ -1,18 +1,13 @@
 /* @flow */
 
 import { TILE_SIZE } from '../../constants.mjs'
-import { Dimentions } from '../../engine.mjs'
 import { collisionHandler } from '../../helpers/collisionHandler.mjs'
-import { playarea, viewport } from '../../helpers/viewport.mjs'
-import type { CollidableType } from '../../libs/collides.mjs'
+import { playarea } from '../../helpers/viewport.mjs'
 import { collides } from '../../libs/collides.mjs'
 import { BaseState } from '../BaseState.mjs'
 import type { CameraState } from '../elements/CameraState.mjs'
 import type { EntityState } from '../entities/EntityState.mjs'
 import { PlayerState } from '../entities/PlayerState.mjs'
-
-const offsetX = 2 * TILE_SIZE
-const offsetY = 8 * TILE_SIZE
 
 export type EntitiesProps = Readonly<[camera: CameraState]>
 

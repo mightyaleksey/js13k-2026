@@ -3,24 +3,29 @@
 import { TILE_SIZE } from '../../constants.mjs'
 import { rect, setColor } from '../../engine.mjs'
 import { ArcShootingStatus } from '../../statuses/ArcShootingStatus.mjs'
-import type { BaseStatus } from '../../statuses/BaseStatus.mjs'
+import { AreaShootingStatus } from '../../statuses/AreaShootingStatus.mjs'
 import { ConeShootingStatus } from '../../statuses/ConeShootingStatus.mjs'
-import { EntityState } from './EntityState.mjs'
+import { CharacterState } from './archetypes/CharacterState.mjs'
 
 export type BossProps = Readonly<[x?: ?number, y?: ?number]>
 
-export class BossState extends EntityState<> {
+export class BossState extends CharacterState<> {
   sequenceIndex: number
   sequence: Array<any>
 
   constructor (props: BossProps) {
     super([props[0], props[1], 2 * TILE_SIZE, TILE_SIZE])
 
-    this.hp = 9
-    this.hpMax = 9
+    this.hp = 20
+    this.hpMax = 20
 
     this.sequenceIndex = -1
-    this.sequence = [ConeShootingStatus, ArcShootingStatus, ConeShootingStatus]
+    this.sequence = [
+      ConeShootingStatus,
+      ArcShootingStatus,
+      ConeShootingStatus,
+      AreaShootingStatus
+    ]
   }
 
   render () {

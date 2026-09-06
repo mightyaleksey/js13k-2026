@@ -1,7 +1,7 @@
 /* @flow */
 
 import type { CharType } from '../../constants.mjs'
-import { DEBUG_BB, TILE_SIZE } from '../../constants.mjs'
+import { DEBUG_BB } from '../../constants.mjs'
 import { draw, rect, setColor } from '../../engine.mjs'
 import { gameTiles } from '../../gameTiles.mjs'
 import { viewport } from '../../helpers/viewport.mjs'

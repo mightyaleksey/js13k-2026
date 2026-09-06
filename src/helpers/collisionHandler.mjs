@@ -1,13 +1,11 @@
 /* @flow */
 
 import { playSound } from '../sound.mjs'
-import { BossState } from '../states/entities/BossState.mjs'
+import { CharacterState } from '../states/entities/archetypes/CharacterState.mjs'
 import type { EntityState } from '../states/entities/EntityState.mjs'
 import { MinionState } from '../states/entities/MinionState.mjs'
-import { ParticleState } from '../states/entities/ParticleState.mjs'
 import { PlayerState } from '../states/entities/PlayerState.mjs'
 import { ProjectileState } from '../states/entities/ProjectileState.mjs'
-import { WallState } from '../states/entities/WallState.mjs'
 
 /**
  * Generic collision logic for the all entitites.
@@ -18,7 +16,7 @@ export function collisionHandler (
   self: EntityState<>,
   delta: number
 ) {
-  if (self instanceof MinionState || self instanceof BossState) {
+  if (self instanceof CharacterState && !(self instanceof PlayerState)) {
     if (target instanceof ProjectileState && self.isVisible) {
       self.hp -= 1
 

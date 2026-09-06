@@ -13,7 +13,7 @@
     "flow-bin": "0.327.0",
     "flow-remove-types": "2.327.0",
     "html-minifier": "4.0.0",
-    "linter-config": "github:mightyaleksey/linter-config#1d60907cfc7710fd29db842ade8dbb48c07ffd75",
+    "linter-config": "github:mightyaleksey/linter-config#1a06e2b64913dd797ad6c0ddbbd72d726e6dac16",
     "posthtml": "0.16.7",
     "prettier": "3.9.6",
     "prettier-plugin-space-before-function-paren": "0.1.0",

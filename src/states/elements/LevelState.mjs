@@ -1,7 +1,7 @@
 /* @flow */
 
 import { FREE_AREA, PLAY_AREA, TILE_SIZE } from '../../constants.mjs'
-import { Dimentions, draw, pattern } from '../../engine.mjs'
+import { Dimentions, pattern } from '../../engine.mjs'
 import { gameTiles } from '../../gameTiles.mjs'
 import { nullthrows } from '../../libs/nullthrows.mjs'
 import { random, shuffle } from '../../libs/random.mjs'
