@@ -108,11 +108,20 @@ export class EntityState<T = unknown> extends BaseState {
 
   update (delta: number) {
     this.state.update(delta)
-    this.statuses.forEach((status) => status.update(this, delta))
+
+    if (this.isVisible) {
+      for (let j = this.statuses.length - 1; j > -1; --j) {
+        const status = this.statuses[j]
+        status.update(this, delta)
+        if (status.isExpired) this.statuses.splice(j, 1)
+      }
+    }
+
     if (this.currentAnimation != null) {
       this.currentAnimation.update(delta)
       this.frameID = this.currentAnimation?.getCurrentFrame()
     }
+
     this.x += this.dx * delta
     this.y += this.dy * delta
 
@@ -121,12 +130,19 @@ export class EntityState<T = unknown> extends BaseState {
 
   /* helpers */
 
-  byAngle (angle: number, size: number): this {
+  directByAngle (angle: number, speed: number): this {
     // set dx, dy based on angle
     // tg(a) = y/x
     const a = (angle * Math.PI) / 180
-    this.dx = Math.floor(Math.cos(a) * size)
-    this.dy = Math.floor(Math.sin(a) * size)
+    this.dx = Math.floor(Math.cos(a) * speed)
+    this.dy = Math.floor(Math.sin(a) * speed)
+    return this
+  }
+
+  shiftByAngle (angle: number, distance: number): this {
+    const a = (angle * Math.PI) / 180
+    this.x += Math.floor(Math.cos(a) * distance)
+    this.y += Math.floor(Math.sin(a) * distance)
     return this
   }
 

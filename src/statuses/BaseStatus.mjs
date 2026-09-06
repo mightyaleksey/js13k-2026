@@ -10,6 +10,7 @@ export class BaseStatus<T = EntityState<>> {
   timePassed: number
 
   isExpired: boolean
+  isFinite: boolean
 
   constructor (props: StatusProps) {
     this.interval = props[0]
@@ -17,6 +18,7 @@ export class BaseStatus<T = EntityState<>> {
     this.timePassed = 0
 
     this.isExpired = false
+    this.isFinite = this.duration > 0
   }
 
   update (target: T, delta: number) {
@@ -28,11 +30,11 @@ export class BaseStatus<T = EntityState<>> {
       !this.isExpired
     ) {
       this.timePassed = this.timePassed - this.interval
-      if (this.duration > 0) this.duration = this.duration - this.interval
+      if (this.isFinite) this.duration = this.duration - this.interval
       this.onTick(target)
     }
 
-    if (this.duration > 0 && this.timePassed >= this.duration) {
+    if (this.isFinite && this.timePassed >= this.duration) {
       this.isExpired = true
       this.onEnd(target)
     }

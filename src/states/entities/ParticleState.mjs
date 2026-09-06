@@ -43,7 +43,7 @@ export function genParticles (
 ): ReadonlyArray<ParticleState> {
   const offset = random(30)
   return angles.map((a) =>
-    new ParticleState([x, y, t]).byAngle(a + offset, PARTICLE_SPEED))
+    new ParticleState([x, y, t]).directByAngle(a + offset, PARTICLE_SPEED))
 }
 
 export type ParticleProps = Readonly<[x: number, y: number, t: number]>

@@ -1,20 +1,28 @@
 /* @flow */
 
-export const PARTICLE_SIZE: number = 4
 export const TILE_SIZE: number = 16
 export const PLAY_AREA: number = 10 // x tiles
 export const FREE_AREA: number = 3 // x tiles
 
+// extra multiplier to calculate horizontal camera offset
 export const CAMERA_MX: number = (PLAY_AREA - 1) / PLAY_AREA
-
 export const CAMERA_SPEED: number = 40
+
 export const MINION_SPEED: number = 20
-export const PARTICLE_SPEED: number = 6
 export const PLAYER_SPEED: number = 100
-export const PROJECTILE_SPEED: number = 140
 
 export const PARTICLE_DURATION: number = 2
 export const PARTICLE_ROTATION: number = 30
+export const PARTICLE_SIZE: number = 4
+export const PARTICLE_SPEED: number = 6
+
+export const PROJECTILE_SIZE: number = 4
+export const PROJECTILE_SPEED: number = 140
+
+export const S_ARC_DURATION: number = 1 // x5
+export const S_ARC_INTERVAL: number = 0.2
+export const S_CONE_DURATION: number = 3
+export const S_CONE_INTERVAL: number = 0.5
 
 // array index reflects corresponding direction, i.e. top, right, bottom, left
 export const MOVEMENT_KEYS: ReadonlyArray<string> = [

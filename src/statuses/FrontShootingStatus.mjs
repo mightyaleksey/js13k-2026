@@ -5,14 +5,14 @@ import type { EntityState } from '../states/entities/EntityState.mjs'
 import { ProjectileState } from '../states/entities/ProjectileState.mjs'
 import { BaseStatus } from './BaseStatus.mjs'
 
-export type ShootingProps = Readonly<
+export type FrontShootingProps = Readonly<
   [interval: number, duration: number, angle: number]
 >
 
-export class ShootingStatus extends BaseStatus {
+export class FrontShootingStatus extends BaseStatus {
   angle: number
 
-  constructor (props: ShootingProps) {
+  constructor (props: FrontShootingProps) {
     super([props[0], props[1]])
     this.angle = props[2]
   }
@@ -20,8 +20,9 @@ export class ShootingStatus extends BaseStatus {
   onTick (target: EntityState<>) {
     const projectile = new ProjectileState([
       target.centerX(),
-      this.angle < 0 ? target.y - 8 : target.y + target.height + 8,
-      this.angle
+      target.centerY(),
+      this.angle,
+      0.6 * target.height
     ])
 
     if (target.camera.isMoving) {

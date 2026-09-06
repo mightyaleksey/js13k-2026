@@ -12,7 +12,7 @@ import { shuffle } from '../../libs/random.mjs'
 import { range } from '../../libs/range.mjs'
 import { pixel } from '../../libs/render.mjs'
 import { DirectionStatus } from '../../statuses/DirectionStatus.mjs'
-import { ShootingStatus } from '../../statuses/ShootingStatus.mjs'
+import { FrontShootingStatus } from '../../statuses/FrontShootingStatus.mjs'
 import { EntityState } from './EntityState.mjs'
 import { genParticles } from './ParticleState.mjs'
 import { ProjectileState } from './ProjectileState.mjs'
@@ -35,7 +35,10 @@ export class MinionState extends EntityState<> {
     this.hp = 1
     this.hpMax = 1
 
-    this.statuses.push(new DirectionStatus(), new ShootingStatus([1, 0, 90]))
+    this.statuses.push(
+      new DirectionStatus(),
+      new FrontShootingStatus([1, 0, 90])
+    )
   }
 
   /* helpers */
