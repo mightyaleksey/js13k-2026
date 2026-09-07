@@ -1,0 +1,18 @@
+/* @flow */
+
+import { TILE_SIZE } from '../../constants.mjs'
+import { Dimentions } from '../../engine.mjs'
+import { EntityState } from './EntityState.mjs'
+
+const scale = 4
+const w = scale * 18
+const h = scale * 2 * TILE_SIZE
+
+export type ToastyProps = Readonly<[x: number, y: number]>
+
+export class ToastyState extends EntityState {
+  constructor (props) {
+    super([Dimentions.width - 0.5 * w, Dimentions.height - 0.5 * h, w, h])
+    this.frameID = 10
+  }
+}

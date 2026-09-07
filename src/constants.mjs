@@ -50,6 +50,7 @@ export const UNIT_VECTORS: ReadonlyArray<ReadonlyArray<number>> = [
   [-1, 0]
 ]
 
+// adds 412 kb
 export const DEBUG_BB: boolean = false
 export const DEBUG_PANEL: boolean = false
 

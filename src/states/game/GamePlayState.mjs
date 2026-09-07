@@ -16,6 +16,7 @@ import { GridState } from '../elements/GridState.mjs'
 import { InterfaceState } from '../elements/InterfaceState.mjs'
 import { LevelState } from '../elements/LevelState.mjs'
 import { PlayerState } from '../entities/PlayerState.mjs'
+import { ToastyState } from '../entities/ToastyState.mjs'
 
 /**
  * Level & Camera logic
