@@ -71,3 +71,12 @@ export const BUILDING_PALETTE: ReadonlyArray<string> = [
   '#a493a4',
   '#c8afb9'
 ]
+export const RAINBOW_PALETTE: ReadonlyArray<string> = [
+  '#e84036',
+  '#fbaf3e',
+  '#fbe731',
+  '#36b54c',
+  '#4cb8ec',
+  '#1a74bc',
+  '#652c93'
+]

@@ -7,6 +7,7 @@ import { ArcShootingStatus } from '../../statuses/ArcShootingStatus.mjs'
 import { ConeShootingStatus } from '../../statuses/ConeShootingStatus.mjs'
 import { ExplosionShootingStatus } from '../../statuses/ExplosionShootingStatus.mjs'
 import { CharacterState } from './archetypes/CharacterState.mjs'
+import { CrystalState } from './CrystalState.mjs'
 
 export type BossProps = Readonly<[x?: ?number, y?: ?number]>
 
@@ -59,5 +60,13 @@ export class BossState extends CharacterState<> {
       this.currentAnimation =
         S === ConeShootingStatus ? this.animations[0] : this.animations[1]
     }
+  }
+
+  onDeath () {
+    super.onDeath()
+
+    // todo: add animation
+    const crystal = new CrystalState([this.centerX(), this.centerY()])
+    this.entities.append(crystal)
   }
 }

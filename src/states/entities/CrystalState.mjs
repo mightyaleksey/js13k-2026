@@ -11,11 +11,4 @@ export class CrystalState extends ObstacleState {
     super([props[0], props[1], TILE_SIZE, TILE_SIZE])
     this.frameID = 2
   }
-
-  render () {
-    super.render()
-
-    setColor('#369')
-    rect('fill', this.x, this.y, this.width, this.height)
-  }
 }

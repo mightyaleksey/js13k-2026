@@ -100,12 +100,17 @@ export class GamePlayState extends BaseState {
 
     if (this.camera.isMoving) {
       if (this.level.distance < this.startY) {
-        this.level.levelUp()
         this.camera.isMoving = false
       }
     }
 
     this.level.update(delta)
     this.entities.update(delta)
+  }
+
+  /* helpers */
+
+  nextLevel () {
+    this.level.levelUp()
   }
 }

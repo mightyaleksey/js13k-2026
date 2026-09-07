@@ -1,5 +1,6 @@
 /* @flow */
 
+import { RAINBOW_PALETTE } from '../../constants.mjs'
 import { arc, setColor, setLine } from '../../engine.mjs'
 import { BaseState } from '../BaseState.mjs'
 
@@ -12,15 +13,6 @@ const monochrome = [
   '#9e9e9e',
   '#616161',
   '#494949'
-]
-const palette = [
-  '#e84036',
-  '#fbaf3e',
-  '#fbe731',
-  '#36b54c',
-  '#4cb8ec',
-  '#1a74bc',
-  '#652c93'
 ]
 
 export type RainbowProps = Readonly<[x: number, y: number, filled?: number]>
@@ -44,7 +36,7 @@ export class RainbowState extends BaseState {
     setLine(size)
 
     for (let i = 0; i < 7; ++i) {
-      const color = (this.filled > i ? palette : monochrome)[i]
+      const color = (this.filled > i ? RAINBOW_PALETTE : monochrome)[i]
       setColor(color)
       arc('line', this.x, this.y, 86 - i * size, 180, 360)
     }
