@@ -78,6 +78,26 @@ export const Touch = {
   }
 }
 
+export function arc (
+  mode: DrawMode,
+  x: number,
+  y: number,
+  radius: number,
+  a0: number,
+  a1: number
+) {
+  const c = _state.context
+  c.beginPath()
+  c.arc(
+    Math.floor(x),
+    Math.floor(y),
+    Math.floor(radius),
+    (a0 * Math.PI) / 180,
+    (a1 * Math.PI) / 180
+  )
+  mode === 'fill' ? c.fill() : c.stroke()
+}
+
 export function clear () {
   const b = _state.buffer
   const c = _state.context

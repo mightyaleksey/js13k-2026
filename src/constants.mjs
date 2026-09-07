@@ -29,6 +29,8 @@ export const S_AREA_INTERVAL: number = 0.4
 export const S_CONE_DURATION: number = 3
 export const S_CONE_INTERVAL: number = 0.5
 
+export const TRANSITION_DURATION = 0.3
+
 // array index reflects corresponding direction, i.e. top, right, bottom, left
 export const MOVEMENT_KEYS: ReadonlyArray<string> = [
   'w',
@@ -57,6 +59,14 @@ export type CharType = Readonly<{
 }>
 
 export const FRAMES: Readonly<{ [string]: CharType }> = {
-  minion: { frames: [[5]], frameInterval: 0.2 },
-  player: { frames: [[3], [4, 3, 2, 3]], frameInterval: 0.2 }
+  boss: { frames: [[8], [7, 8, 7]], frameInterval: 0.3 },
+  minion: { frames: [[1]], frameInterval: 0.2 },
+  player: { frames: [[5], [6, 5, 4, 5]], frameInterval: 0.2 }
 }
+
+export const BUILDING_PALETTE: ReadonlyArray<string> = [
+  '#2a4062',
+  '#5a668c',
+  '#a493a4',
+  '#c8afb9'
+]

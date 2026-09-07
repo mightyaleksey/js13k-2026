@@ -12,12 +12,13 @@ import { BossState } from '../entities/BossState.mjs'
 import { BuildingState } from '../entities/BuildingState.mjs'
 import { MinionState } from '../entities/MinionState.mjs'
 import type { EntitiesState } from './EntitiesState.mjs'
+import { StatusState } from './StatusState.mjs'
 
 export type LevelProps = Readonly<
   [camera: CameraState, entities: EntitiesState]
 >
 
-export class LevelState extends BaseState {
+export class LevelState extends StatusState {
   camera: CameraState
   entities: EntitiesState
 
@@ -28,6 +29,7 @@ export class LevelState extends BaseState {
   stages: Array<[interval: number, count: number]>
 
   distance: number
+  level: number
 
   constructor (props: LevelProps) {
     super()
@@ -44,11 +46,12 @@ export class LevelState extends BaseState {
     this.distance =
       this.stages.reduce((t, s) => t + s[0], 0) +
       Math.max(Math.floor(0.2 * Dimentions.height), 2 * TILE_SIZE)
+    this.level = 0
   }
 
   enter () {
     ;[0, 1].forEach((pointer) => {
-      const building = new BuildingState([this.camera, 0, pointer])
+      const building = new BuildingState([this.camera, pointer, this.level])
       building.y += FREE_AREA * TILE_SIZE + building.height
       this.entities.append(building)
     })
@@ -78,7 +81,7 @@ export class LevelState extends BaseState {
 
   genStages (): Array<[interval: number, count: number]> {
     const stages: Array<[interval: number, count: number]> = [[TILE_SIZE, 1]]
-    ;[1, 2, 3].forEach((t, minions) => {
+    ;[0, 0, 0].forEach((t, minions) => {
       for (let k = 0; k < t; ++k) {
         stages.push([
           random(5 * TILE_SIZE, 8 * TILE_SIZE),
@@ -101,9 +104,18 @@ export class LevelState extends BaseState {
     return nullthrows(this.positions.shift())
   }
 
+  levelUp () {
+    this.level++
+    this.entities.list.forEach((entity) => {
+      if (entity instanceof BuildingState) {
+        entity.setGloominess(this.level)
+      }
+    })
+  }
+
   onInterval (pointer: number) {
     if (pointer === 0 || pointer === 1) {
-      const building = new BuildingState([this.camera, 0, pointer])
+      const building = new BuildingState([this.camera, pointer, this.level])
       this.entities.append(building)
       this.intervals[pointer] = FREE_AREA * TILE_SIZE + building.height
 

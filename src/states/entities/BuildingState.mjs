@@ -1,48 +1,50 @@
 /* @flow */
 
-import { PLAY_AREA, TILE_SIZE } from '../../constants.mjs'
+import {
+  BUILDING_PALETTE,
+  PLAY_AREA,
+  TILE_SIZE,
+  TRANSITION_DURATION
+} from '../../constants.mjs'
 import { Dimentions, setColor, shape } from '../../engine.mjs'
+import { desaturate } from '../../libs/color.mjs'
+import { TransitionStatus } from '../../statuses/TransitionStatus.mjs'
 import type { CameraState } from '../elements/CameraState.mjs'
 import { ObstacleState } from './archetypes/ObstacleState.mjs'
 
 const tb = 1.2
 const tw = 0.04
-
-function getDimentions (
-  type: number,
-  side: number,
-  cameraY: number
-): Readonly<[number, number, number, number]> {
-  switch (type) {
-    case 0: {
-      const w = 7 * TILE_SIZE
-      const h = 9 * TILE_SIZE
-      const x =
-        side === 0
-          ? 0.5 * (Dimentions.width - PLAY_AREA * TILE_SIZE - w)
-          : 0.5 * (Dimentions.width + PLAY_AREA * TILE_SIZE + w)
-      return [x, cameraY - h, w, h]
-    }
-  }
-
-  throw new Error('Unknown type')
-}
+const buildingWidth = 7 * TILE_SIZE
+const buildingHeight = 9 * TILE_SIZE
 
 function v (x1: number, x2: number, t: number): number {
   return x1 + t * (x2 - x1)
 }
 
-type BuildingProps = Readonly<[camera: CameraState, type: number, side: number]>
+type BuildingProps = Readonly<
+  [camera: CameraState, side: number, level?: number]
+>
 
 export class BuildingState extends ObstacleState {
   camera: CameraState
-  type: number
+  level: number
+  gloominess: number
+  palette: ReadonlyArray<string>
 
   constructor (props: BuildingProps) {
-    super(getDimentions(props[1], props[2], props[0].y))
+    super([
+      props[1] === 0
+        ? 0.5 * (Dimentions.width - PLAY_AREA * TILE_SIZE - buildingWidth)
+        : 0.5 * (Dimentions.width + PLAY_AREA * TILE_SIZE + buildingWidth),
+      props[0].y - buildingHeight,
+      buildingWidth,
+      buildingHeight
+    ])
 
     this.camera = props[0]
-    this.type = props[1]
+    this.level = props[2] ?? 0
+    this.gloominess = getGloominess(this.level)
+    this.palette = this.genPalette()
   }
 
   render () {
@@ -68,7 +70,7 @@ export class BuildingState extends ObstacleState {
     const ty2 = v(oy, by0, t1)
     const ty3 = v(oy, by1, t1)
 
-    setColor('#c8afb9')
+    setColor(this.palette[3])
     // top
     if (by0 < ty0) {
       shape('fill', tx2, ty2, tx1, ty0, bx1, by0, bx0, by0, tx0, ty0)
@@ -82,16 +84,16 @@ export class BuildingState extends ObstacleState {
       this.renderFrontWindow(bx0 + 0.5 * this.width, by1, (tb - 1) * 0.9 + 1)
     }
 
-    setColor('#a493a4')
+    setColor(this.palette[2])
     // left side
     if (bx1 > tx1) shape('fill', tx1, ty0, bx1, by0, bx1, by1, tx1, ty1)
     // right side
     if (bx0 < tx0) shape('fill', tx0, ty0, bx0, by0, bx0, by1, tx0, ty1)
 
     // roof
-    setColor('#2a4062')
+    setColor(this.palette[0])
     shape('fill', tx2, ty2, tx1, ty0, tx1, ty1, tx2, ty3)
-    setColor('#5A668C')
+    setColor(this.palette[1])
     shape('fill', tx0, ty0, tx2, ty2, tx2, ty3, tx0, ty1)
   }
 
@@ -108,7 +110,32 @@ export class BuildingState extends ObstacleState {
     const y0 = v(oy, y, t)
     const y2 = v(oy, y, t + tw)
 
-    setColor('#2a4062')
+    setColor(this.palette[0])
     shape('fill', x0, y0, x1, y0, x2, y2, x3, y2)
   }
+
+  genPalette (): ReadonlyArray<string> {
+    return BUILDING_PALETTE.map((color) => desaturate(color, this.gloominess))
+  }
+
+  setGloominess (level: number) {
+    // level = [0, 6]
+    this.statuses.push(
+      new TransitionStatus([
+        this.gloominess,
+        getGloominess(level),
+        TRANSITION_DURATION,
+        updateGlominess
+      ])
+    )
+  }
+}
+
+function getGloominess (level: number): number {
+  return level / 6
+}
+
+function updateGlominess (target: BuildingState, value: number) {
+  target.gloominess = value
+  target.palette = target.genPalette()
 }

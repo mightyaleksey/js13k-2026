@@ -27,17 +27,29 @@ async function initGame () {
       0,
       0,
       bgScale * 2 * TILE_SIZE,
-      bgScale * TILE_SIZE
+      bgScale * 2 * TILE_SIZE
     ),
-    ...genQuads(asset, 19, 32, 2 * TILE_SIZE, 0, 89, 2 * TILE_SIZE),
+    // unicorn
+    ...genQuads(asset, 19, 2 * TILE_SIZE, 2 * TILE_SIZE, 0, 89, 2 * TILE_SIZE),
+    // boss tail
     ...genQuads(
       asset,
-      TILE_SIZE,
-      TILE_SIZE,
-      89,
+      2 * TILE_SIZE,
       16,
-      89 + TILE_SIZE,
-      16 + TILE_SIZE
+      0,
+      2 * TILE_SIZE,
+      2 * TILE_SIZE,
+      4 * TILE_SIZE
+    ),
+    // boss body
+    ...genQuads(
+      asset,
+      28,
+      2 * TILE_SIZE,
+      2 * TILE_SIZE,
+      2 * TILE_SIZE,
+      60,
+      4 * 2 * TILE_SIZE
     )
   )
 
