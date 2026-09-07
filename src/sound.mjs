@@ -144,7 +144,7 @@ export function playMusic () {
   }
 }
 
-function _renderSond (song: Array<unknown>): Promise<empty> {
+function _renderSong (song: Array<unknown>): Promise<empty> {
   return new Promise((resolve) => {
     setTimeout(() => resolve(zzfxM(...song)), 20)
   })

@@ -1,7 +1,11 @@
 /* @flow */
 
-import { EXPLOSION_SIZE, PLAY_AREA, TILE_SIZE } from '../constants.mjs'
-import { S_AREA_INTERVAL } from '../constants.mjs'
+import {
+  EXPLOSION_SIZE,
+  PLAY_AREA,
+  S_AREA_INTERVAL,
+  TILE_SIZE
+} from '../constants.mjs'
 import { Dimentions } from '../engine.mjs'
 import { viewport } from '../helpers/viewport.mjs'
 import { nullthrows } from '../libs/nullthrows.mjs'

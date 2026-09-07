@@ -5,7 +5,6 @@ import { CharacterState } from '../states/entities/archetypes/CharacterState.mjs
 import { ProjectileState } from '../states/entities/archetypes/ProjectileState.mjs'
 import type { EntityState } from '../states/entities/EntityState.mjs'
 import { MinionState } from '../states/entities/MinionState.mjs'
-import { PlayerState } from '../states/entities/PlayerState.mjs'
 
 /**
  * Generic collision logic for the all entitites.
@@ -16,7 +15,7 @@ export function collisionHandler (
   self: EntityState<>,
   delta: number
 ) {
-  if (self instanceof CharacterState && !(self instanceof PlayerState)) {
+  if (self instanceof CharacterState) {
     if (target instanceof ProjectileState && self.isVisible) {
       self.hp -= 1
 
@@ -34,13 +33,6 @@ export function collisionHandler (
       self.x -= self.dx * delta
       self.y -= self.dy * delta
       if (self instanceof MinionState) self.switchDirection()
-    }
-  }
-
-  if (self instanceof PlayerState) {
-    if (!(target instanceof ProjectileState)) {
-      self.x -= self.dx * delta
-      self.y -= self.dy * delta
     }
   }
 

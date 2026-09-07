@@ -1,6 +1,5 @@
 /* @flow */
 
-import { TILE_SIZE } from '../../constants.mjs'
 import { collisionHandler } from '../../helpers/collisionHandler.mjs'
 import { playarea } from '../../helpers/viewport.mjs'
 import { collides } from '../../libs/collides.mjs'

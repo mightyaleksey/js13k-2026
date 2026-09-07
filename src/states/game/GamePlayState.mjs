@@ -13,6 +13,7 @@ import { BaseState } from '../BaseState.mjs'
 import { CameraState } from '../elements/CameraState.mjs'
 import { EntitiesState } from '../elements/EntitiesState.mjs'
 import { GridState } from '../elements/GridState.mjs'
+import { InterfaceState } from '../elements/InterfaceState.mjs'
 import { LevelState } from '../elements/LevelState.mjs'
 import { PlayerState } from '../entities/PlayerState.mjs'
 
@@ -43,6 +44,7 @@ export class GamePlayState extends BaseState {
     this.entities = new EntitiesState([this.camera])
     this.level = new LevelState([this.camera, this.entities])
     this.player = new PlayerState([0.5 * Dimentions.width, -3 * TILE_SIZE])
+    this.interface = new InterfaceState([this.player])
 
     this.entities.append(this.player)
     this.startY = 0
@@ -67,6 +69,8 @@ export class GamePlayState extends BaseState {
     this.entities.render()
     // restore camera
     translate(this.camera.x, this.camera.y)
+
+    this.interface.render()
 
     // $FlowExpectedError[constant-condition]
     if (DEBUG_BB) {
