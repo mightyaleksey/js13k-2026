@@ -8,6 +8,8 @@ import type { PlayerState } from '../entities/PlayerState.mjs'
 export type InterfaceProps = Readonly<[player: PlayerState]>
 
 export class InterfaceState extends BaseState {
+  player: PlayerState
+
   constructor (props: InterfaceProps) {
     super()
     this.player = props[0]

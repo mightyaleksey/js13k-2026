@@ -30,9 +30,11 @@ import { PlayerState } from '../entities/PlayerState.mjs'
 
 export class GamePlayState extends BaseState {
   camera: CameraState
-  level: LevelState
-  entities: EntitiesState
   player: PlayerState
+
+  entities: EntitiesState
+  interface: InterfaceState
+  level: LevelState
 
   startY: number
 
@@ -41,9 +43,10 @@ export class GamePlayState extends BaseState {
 
   enter () {
     this.camera = new CameraState()
+    this.player = new PlayerState([0.5 * Dimentions.width, -3 * TILE_SIZE])
+
     this.entities = new EntitiesState([this.camera])
     this.level = new LevelState([this.camera, this.entities])
-    this.player = new PlayerState([0.5 * Dimentions.width, -3 * TILE_SIZE])
     this.interface = new InterfaceState([this.player])
 
     this.entities.append(this.player)
