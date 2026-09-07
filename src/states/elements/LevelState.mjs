@@ -77,9 +77,8 @@ export class LevelState extends BaseState {
   /* helpers */
 
   genStages (): Array<[interval: number, count: number]> {
-    const stages: Array<[interval: number, count: number]> = []
-    // const stages: Array<[interval: number, count: number]> = [[TILE_SIZE, 1]]
-    ;[0, 0, 0].forEach((t, minions) => {
+    const stages: Array<[interval: number, count: number]> = [[TILE_SIZE, 1]]
+    ;[1, 2, 3].forEach((t, minions) => {
       for (let k = 0; k < t; ++k) {
         stages.push([
           random(5 * TILE_SIZE, 8 * TILE_SIZE),
@@ -87,8 +86,8 @@ export class LevelState extends BaseState {
         ])
       }
     })
-    stages.push([10, 1])
-    // stages.push([Math.max(Dimentions.height, 8 * TILE_SIZE), 1])
+
+    stages.push([Math.max(Dimentions.height, 8 * TILE_SIZE), 1])
 
     return stages
   }
