@@ -22,6 +22,7 @@ export function collisionHandler (
     if (target instanceof CrystalState) {
       // display progress, move to next level
       target.isDestroyed = true
+      // $FlowExpectedError[prop-missing]
       gameState.stack[0].current.nextLevel()
     } else if (target instanceof ProjectileState && self.isVisible) {
       // take hit

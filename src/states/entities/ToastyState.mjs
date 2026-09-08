@@ -8,10 +8,8 @@ const scale = 4
 const w = scale * 18
 const h = scale * 2 * TILE_SIZE
 
-export type ToastyProps = Readonly<[x: number, y: number]>
-
 export class ToastyState extends EntityState {
-  constructor (props) {
+  constructor () {
     super([Dimentions.width - 0.5 * w, Dimentions.height - 0.5 * h, w, h])
     this.frameID = 10
   }

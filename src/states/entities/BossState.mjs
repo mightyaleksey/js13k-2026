@@ -3,6 +3,7 @@
 import { FRAMES, TILE_SIZE } from '../../constants.mjs'
 import { draw, rect, setColor } from '../../engine.mjs'
 import { gameTiles } from '../../gameTiles.mjs'
+import { nullthrows } from '../../libs/nullthrows.mjs'
 import { ArcShootingStatus } from '../../statuses/ArcShootingStatus.mjs'
 import { ConeShootingStatus } from '../../statuses/ConeShootingStatus.mjs'
 import { ExplosionShootingStatus } from '../../statuses/ExplosionShootingStatus.mjs'
@@ -36,7 +37,7 @@ export class BossState extends CharacterState<> {
   render () {
     setColor('#fff')
     draw(
-      gameTiles[this.frameID],
+      gameTiles[nullthrows(this.frameID)],
       this.x,
       this.y + TILE_SIZE,
       2 * TILE_SIZE,
@@ -57,8 +58,9 @@ export class BossState extends CharacterState<> {
       this.sequenceIndex = (this.sequenceIndex + 1) % this.sequence.length
       const S = this.sequence[this.sequenceIndex]
       this.statuses.push(new S())
-      this.currentAnimation =
-        S === ConeShootingStatus ? this.animations[0] : this.animations[1]
+      this.currentAnimation = nullthrows(this.animations)[
+        S === ConeShootingStatus ? 0 : 1
+      ]
     }
   }
 
