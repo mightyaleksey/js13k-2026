@@ -1,5 +1,94 @@
 /* @flow */
 
-import { BaseState } from '../BaseState.mjs'
+import { TILE_SIZE } from '../../constants.mjs'
+import {
+  circle,
+  Dimentions,
+  line,
+  printf,
+  rect,
+  setColor,
+  setFont,
+  shape
+} from '../../engine.mjs'
+import { gameState, getLevel, nextlevel } from '../../gameState.mjs'
+import { RainbowState } from '../elements/RainbowState.mjs'
+import { TransitionState } from '../elements/TransitionState.mjs'
+import { GameStageState } from './GameStageState.mjs'
 
-export class GameProgressState extends BaseState {}
+const colors = ['Red', 'Orange', 'Yellow', 'Green', 'Blue', 'Indigo', 'Violet']
+
+export class GameProgressState extends TransitionState {
+  level: number
+  x: number
+  y: number
+
+  bgOpacity: number
+  rainbowOpacity: number
+  textOpacity: number
+
+  rainbow: RainbowState
+
+  enter (input: unknown) {
+    this.x = 200
+    this.y = 100
+    this.level = getLevel()
+
+    this.bgOpacity = 0
+    this.rainbowOpacity = 0
+    this.textOpacity = 0
+
+    this.rainbow = new RainbowState([
+      0.5 * Dimentions.width,
+      0.4 * Dimentions.height,
+      this.level
+    ])
+
+    this.setTransition(1, { bgOpacity: 0.5 })
+    this.setTransition(1, { rainbowOpacity: 1 })
+    this.setTransition(1, { level: this.level + 1 })
+    this.setTransition(1, { textOpacity: 1 })
+    this.setTransition(1, {}) // artificial delay
+    this.setTransitionEnd(() => {
+      gameState.pop()
+      nextlevel()
+      gameState.push(new GameStageState(), [
+        getLevel(),
+        () => {
+          // switch level
+          gameState.pop()
+        }
+      ])
+    })
+  }
+
+  render () {
+    super.render()
+
+    if (this.bgOpacity > 0) {
+      setColor('#000', this.bgOpacity)
+      rect('fill', 0, 0, Dimentions.width + 1, Dimentions.height + 1)
+    }
+
+    if (this.rainbowOpacity > 0) {
+      this.rainbow.render()
+    }
+
+    if (this.textOpacity > 0) {
+      setColor('#fff', this.textOpacity)
+      printf(
+        `${colors[(this.level - 1) >> 0]} crystal returned.`,
+        0,
+        0.5 * Dimentions.height,
+        Dimentions.width,
+        'center'
+      )
+    }
+  }
+
+  update (delta: number) {
+    super.update(delta)
+    this.rainbow.level = this.level
+    this.rainbow.opacity = this.rainbowOpacity
+  }
+}

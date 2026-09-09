@@ -8,6 +8,7 @@ import {
   TILE_SIZE
 } from '../../constants.mjs'
 import { Dimentions, translate } from '../../engine.mjs'
+import { gameState } from '../../gameState.mjs'
 import { Console } from '../../ui/Console.mjs'
 import { BaseState } from '../BaseState.mjs'
 import { CameraState } from '../elements/CameraState.mjs'
@@ -17,6 +18,7 @@ import { InterfaceState } from '../elements/InterfaceState.mjs'
 import { LevelState } from '../elements/LevelState.mjs'
 import { PlayerState } from '../entities/PlayerState.mjs'
 import { ToastyState } from '../entities/ToastyState.mjs'
+import { GameStageState } from './GameStageState.mjs'
 
 /**
  * Level & Camera logic
@@ -36,6 +38,7 @@ export class GamePlayState extends BaseState {
   entities: EntitiesState
   interface: InterfaceState
   level: LevelState
+  toasty: ToastyState
 
   startY: number
 
@@ -49,6 +52,7 @@ export class GamePlayState extends BaseState {
     this.entities = new EntitiesState([this.camera])
     this.level = new LevelState([this.camera, this.entities])
     this.interface = new InterfaceState([this.player])
+    this.toasty = new ToastyState()
 
     this.entities.append(this.player)
     this.startY = 0
@@ -63,6 +67,13 @@ export class GamePlayState extends BaseState {
     }
 
     this.level.enter()
+
+    gameState.push(new GameStageState(), [
+      this.level.level,
+      () => {
+        gameState.pop()
+      }
+    ])
   }
 
   render () {
@@ -75,6 +86,7 @@ export class GamePlayState extends BaseState {
     translate(this.camera.x, this.camera.y)
 
     this.interface.render()
+    this.toasty.render()
 
     // $FlowExpectedError[constant-condition]
     if (DEBUG_BB) {
@@ -106,6 +118,7 @@ export class GamePlayState extends BaseState {
 
     this.level.update(delta)
     this.entities.update(delta)
+    this.toasty.update(delta)
   }
 
   /* helpers */

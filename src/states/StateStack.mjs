@@ -14,8 +14,8 @@ export class StateStack {
     this.stack.pop()
   }
 
-  push (state: State) {
-    state.enter()
+  push (state: State, input: unknown) {
+    state.enter(input)
     this.stack.push(state)
   }
 

@@ -1,7 +1,7 @@
 /* @flow */
 
 import { FRAMES, TILE_SIZE } from '../../constants.mjs'
-import { draw, rect, setColor } from '../../engine.mjs'
+import { draw, setColor } from '../../engine.mjs'
 import { gameTiles } from '../../gameTiles.mjs'
 import { nullthrows } from '../../libs/nullthrows.mjs'
 import { ArcShootingStatus } from '../../statuses/ArcShootingStatus.mjs'

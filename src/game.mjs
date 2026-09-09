@@ -83,9 +83,9 @@ async function initGame () {
   // reset global game state
   gameState.stack = []
   // sets all the screens
-  gameState.push(
-    new StateMachine({ play: () => new GamePlayState() }).change('play')
-  )
+  gameState.push(new StateMachine({ play: () => new GamePlayState() }))
+  // $FlowFixMe[prop-missing]
+  gameState.stack[0]?.change('play')
 
   await initSoundBank()
 }

@@ -1,12 +1,16 @@
 /* @flow */
 
-import { FREE_AREA, PLAY_AREA, TILE_SIZE } from '../../constants.mjs'
+import {
+  DEBUG_BOSS_ONLY,
+  FREE_AREA,
+  PLAY_AREA,
+  TILE_SIZE
+} from '../../constants.mjs'
 import { Dimentions, pattern } from '../../engine.mjs'
 import { gameTiles } from '../../gameTiles.mjs'
 import { nullthrows } from '../../libs/nullthrows.mjs'
 import { random, shuffle } from '../../libs/random.mjs'
 import { range } from '../../libs/range.mjs'
-import { BaseState } from '../BaseState.mjs'
 import type { CameraState } from '../elements/CameraState.mjs'
 import { BossState } from '../entities/BossState.mjs'
 import { BuildingState } from '../entities/BuildingState.mjs'
@@ -80,15 +84,19 @@ export class LevelState extends StatusState {
   /* helpers */
 
   genStages (): Array<[interval: number, count: number]> {
-    const stages: Array<[interval: number, count: number]> = [[TILE_SIZE, 1]]
-    ;[0, 0, 0].forEach((t, minions) => {
-      for (let k = 0; k < t; ++k) {
-        stages.push([
-          random(5 * TILE_SIZE, 8 * TILE_SIZE),
-          random(1, minions + 1)
-        ])
-      }
-    })
+    const stages: Array<[interval: number, count: number]> = []
+
+    if (DEBUG_BOSS_ONLY !== true) {
+      stages.push([TILE_SIZE, 1])
+      ;[2, 3, 4].forEach((t, minions) => {
+        for (let k = 0; k < t; ++k) {
+          stages.push([
+            random(5 * TILE_SIZE, 8 * TILE_SIZE),
+            random(1, minions + 1)
+          ])
+        }
+      })
+    }
 
     stages.push([Math.max(Dimentions.height, 8 * TILE_SIZE), 1])
 

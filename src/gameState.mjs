@@ -13,3 +13,17 @@ import { StateStack } from './states/StateStack.mjs'
  * Note: All states are rendered, however, only the top one is updated.
  */
 export const gameState: StateStack = new StateStack()
+
+/**
+ * Helpers
+ */
+
+export function getLevel (): number {
+  // $FlowFixMe[prop-missing]
+  return gameState.stack[0].current.level.level
+}
+
+export function nextlevel () {
+  // $FlowFixMe[prop-missing]
+  gameState.stack[0].current.nextLevel()
+}

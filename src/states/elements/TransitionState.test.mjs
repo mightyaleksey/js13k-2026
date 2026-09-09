@@ -27,9 +27,11 @@ test('TransitionState', () => {
   testState.update(0.1)
   assert.equal(testState.opacity.toPrecision(1), 1)
   assert.equal(testState.visibility.toPrecision(1), 0)
-  assert.equal(testState.transitionQueue.length, 2)
+  assert.equal(testState.tQueue.length, 2)
 
   testState.update(0.1)
   assert.equal(testState.visibility.toPrecision(1), 0.2)
-  assert.equal(testState.transitionQueue.length, 1)
+  assert.equal(testState.tQueue.length, 1)
+  testState.update(0.1)
+  assert.equal(testState.visibility.toPrecision(1), 0.4)
 })

@@ -7,6 +7,7 @@ import { ProjectileState } from '../states/entities/archetypes/ProjectileState.m
 import { CrystalState } from '../states/entities/CrystalState.mjs'
 import type { EntityState } from '../states/entities/EntityState.mjs'
 import { MinionState } from '../states/entities/MinionState.mjs'
+import { GameProgressState } from '../states/game/GameProgressState.mjs'
 
 /**
  * Generic collision logic for the all entitites.
@@ -20,10 +21,9 @@ export function collisionHandler (
 ) {
   if (self instanceof CharacterState) {
     if (target instanceof CrystalState) {
+      gameState.push(new GameProgressState())
       // display progress, move to next level
       target.isDestroyed = true
-      // $FlowExpectedError[prop-missing]
-      gameState.stack[0].current.nextLevel()
     } else if (target instanceof ProjectileState && self.isVisible) {
       // take hit
       self.hp -= 1

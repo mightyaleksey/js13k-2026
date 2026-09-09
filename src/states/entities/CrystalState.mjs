@@ -1,7 +1,6 @@
 /* @flow */
 
 import { TILE_SIZE } from '../../constants.mjs'
-import { rect, setColor } from '../../engine.mjs'
 import { ObstacleState } from './archetypes/ObstacleState.mjs'
 
 export type CrystalProps = Readonly<[x: number, y: number]>

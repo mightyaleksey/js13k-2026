@@ -50,10 +50,6 @@ export const UNIT_VECTORS: ReadonlyArray<ReadonlyArray<number>> = [
   [-1, 0]
 ]
 
-// adds 412 kb
-export const DEBUG_BB: boolean = false
-export const DEBUG_PANEL: boolean = false
-
 export type CharType = Readonly<{
   frames: ReadonlyArray<ReadonlyArray<number>>,
   frameInterval: number
@@ -80,3 +76,8 @@ export const RAINBOW_PALETTE: ReadonlyArray<string> = [
   '#1a74bc',
   '#652c93'
 ]
+
+// adds 412 kb
+export const DEBUG_BB: boolean = false
+export const DEBUG_PANEL: boolean = false
+export const DEBUG_BOSS_ONLY: boolean = true
