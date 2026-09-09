@@ -46,11 +46,9 @@ export class LevelState extends StatusState {
 
     this.positions = [0]
     this.stages = this.genStages()
-
-    this.distance =
-      this.stages.reduce((t, s) => t + s[0], 0) +
-      Math.max(Math.floor(0.2 * Dimentions.height), 2 * TILE_SIZE)
     this.level = 0
+
+    this.distance = this.getDistance()
   }
 
   enter () {
@@ -103,6 +101,15 @@ export class LevelState extends StatusState {
     return stages
   }
 
+  getDistance (): number {
+    const extra =
+      this.level === 0
+        ? Math.floor(Math.max(0.2 * Dimentions.height, 2 * TILE_SIZE))
+        : Dimentions.height
+
+    return this.stages.reduce((t, s) => t + s[0], 0) + extra
+  }
+
   getPosition (): number {
     if (this.positions.length === 0) {
       const border = Math.ceil(0.5 * PLAY_AREA)
@@ -119,6 +126,9 @@ export class LevelState extends StatusState {
         entity.setGloominess(this.level)
       }
     })
+
+    this.stages = this.genStages()
+    this.distance += this.getDistance()
   }
 
   onInterval (pointer: number) {

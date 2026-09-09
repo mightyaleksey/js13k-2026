@@ -106,12 +106,12 @@ export class GamePlayState extends BaseState {
 
   update (delta: number) {
     this.camera.update(delta)
-    this.startY += CAMERA_SPEED * delta
-
     this.camera.x =
       CAMERA_MX * (this.player.x - 0.5 * (Dimentions.width - TILE_SIZE))
 
     if (this.camera.isMoving) {
+      this.startY += CAMERA_SPEED * delta
+
       if (this.level.distance < this.startY) {
         this.camera.isMoving = false
       }
@@ -126,5 +126,6 @@ export class GamePlayState extends BaseState {
 
   nextLevel () {
     this.level.levelUp()
+    this.camera.isMoving = true
   }
 }

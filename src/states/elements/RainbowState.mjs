@@ -33,7 +33,7 @@ export class RainbowState extends BaseState {
     this.radius = this.genRadius()
 
     this.x = 0.5 * Dimentions.width
-    this.y = 0.35 * Dimentions.height
+    this.y = Math.max(0.35 * Dimentions.height, this.radius + TILE_SIZE)
   }
 
   render () {
@@ -68,7 +68,7 @@ export class RainbowState extends BaseState {
   genRadius (): number {
     return Math.min(
       Dimentions.width - 4 * TILE_SIZE,
-      0.5 * Dimentions.height - 2 * TILE_SIZE,
+      0.5 * Dimentions.height - 3 * TILE_SIZE,
       86
     )
   }
