@@ -1,16 +1,6 @@
 /* @flow */
 
-import { TILE_SIZE } from '../../constants.mjs'
-import {
-  circle,
-  Dimentions,
-  line,
-  printf,
-  rect,
-  setColor,
-  setFont,
-  shape
-} from '../../engine.mjs'
+import { Dimentions, printf, rect, setColor } from '../../engine.mjs'
 import { gameState, getLevel, nextlevel } from '../../gameState.mjs'
 import { RainbowState } from '../elements/RainbowState.mjs'
 import { TransitionState } from '../elements/TransitionState.mjs'
@@ -38,11 +28,7 @@ export class GameProgressState extends TransitionState {
     this.rainbowOpacity = 0
     this.textOpacity = 0
 
-    this.rainbow = new RainbowState([
-      0.5 * Dimentions.width,
-      0.4 * Dimentions.height,
-      this.level
-    ])
+    this.rainbow = new RainbowState([this.level])
 
     this.setTransition(1, { bgOpacity: 0.5 })
     this.setTransition(1, { rainbowOpacity: 1 })

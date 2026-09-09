@@ -1,21 +1,9 @@
 /* @flow */
 
 import { TILE_SIZE } from '../../constants.mjs'
-import {
-  circle,
-  Dimentions,
-  line,
-  printf,
-  rect,
-  setColor,
-  setFont,
-  shape
-} from '../../engine.mjs'
+import { Dimentions, printf, setColor } from '../../engine.mjs'
 import { inCubic, outCubic } from '../../libs/easing.mjs'
-import { RainbowState } from '../elements/RainbowState.mjs'
 import { TransitionState } from '../elements/TransitionState.mjs'
-
-const colors = ['Red', 'Orange', 'Yellow', 'Green', 'Blue', 'Indigo', 'Violet']
 
 export class GameStageState extends TransitionState {
   level: number

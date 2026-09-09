@@ -13,4 +13,8 @@ export class ToastyState extends EntityState {
     super([Dimentions.width + 0.5 * w + 1, Dimentions.height - 0.5 * h, w, h])
     this.frameID = 10
   }
+
+  update (delta: number) {
+    this.x = Dimentions.width + 1
+  }
 }

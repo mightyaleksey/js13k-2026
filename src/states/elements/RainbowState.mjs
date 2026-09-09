@@ -1,7 +1,7 @@
 /* @flow */
 
-import { RAINBOW_PALETTE } from '../../constants.mjs'
-import { arc, setColor, setLine } from '../../engine.mjs'
+import { RAINBOW_PALETTE, TILE_SIZE } from '../../constants.mjs'
+import { arc, Dimentions, setColor, setLine } from '../../engine.mjs'
 import { BaseState } from '../BaseState.mjs'
 
 const size = 6
@@ -15,7 +15,7 @@ const monochrome = [
   '#494949'
 ]
 
-export type RainbowProps = Readonly<[x: number, y: number, level?: number]>
+export type RainbowProps = Readonly<[level?: number]>
 
 export class RainbowState extends BaseState {
   x: number
@@ -23,15 +23,17 @@ export class RainbowState extends BaseState {
 
   level: number
   opacity: number
+  radius: number
 
   constructor (props: RainbowProps) {
     super()
 
-    this.x = props[0]
-    this.y = props[1]
-
-    this.level = props[2] ?? 0
+    this.level = props[0] ?? 0
     this.opacity = 1
+    this.radius = this.genRadius()
+
+    this.x = 0.5 * Dimentions.width
+    this.y = 0.35 * Dimentions.height
   }
 
   render () {
@@ -39,17 +41,35 @@ export class RainbowState extends BaseState {
 
     const earned = this.level >> 0
     const progress = this.level % 1
+    const radius = this.radius
 
     for (let i = 0; i < 7; ++i) {
       setColor((earned > i ? RAINBOW_PALETTE : monochrome)[i], this.opacity)
-      arc('line', this.x, this.y, 86 - i * size, 180, 360)
+      arc('line', this.x, this.y, radius - i * size, 180, 360)
     }
 
     if (progress !== 0) {
       setColor(RAINBOW_PALETTE[earned])
-      arc('line', this.x, this.y, 86 - earned * size, 180, 180 * (1 + progress))
+      arc(
+        'line',
+        this.x,
+        this.y,
+        radius - earned * size,
+        180,
+        180 * (1 + progress)
+      )
     }
 
     setLine(1)
+  }
+
+  /* helpers */
+
+  genRadius (): number {
+    return Math.min(
+      Dimentions.width - 4 * TILE_SIZE,
+      0.5 * Dimentions.height - 2 * TILE_SIZE,
+      86
+    )
   }
 }
