@@ -1,5 +1,6 @@
 /* @flow */
 
+import { NO_SOUND } from './constants.mjs'
 import { nullthrows } from './libs/nullthrows.mjs'
 import { zzfx, zzfxP, zzfxSV } from './libs/zzfxm/zzfx.mjs'
 import { zzfxM } from './libs/zzfxm/zzfxm.min.mjs'
@@ -169,12 +170,14 @@ export async function initSoundBank () {
 }
 
 export function playSound (name: SoundType) {
+  if (NO_SOUND) return
   const sound = nullthrows(_soundBank[name])
   zzfxSV(0.1)
   zzfx(...sound)
 }
 
 export function playMusic () {
+  if (NO_SOUND) return
   if (_music.current == null) {
     zzfxSV(0.4)
     _music.current = zzfxP(..._music.buffer)
