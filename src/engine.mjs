@@ -2,7 +2,7 @@
 
 import emptyFunction from './libs/emptyFunction.mjs'
 
-const _frameRate = 60
+const _frameRate = 240
 const _minFrameTime = 1 / _frameRate
 const _maxFrameTime = 1
 const _scale = window.innerWidth <= 440 ? 1.6 : 3
