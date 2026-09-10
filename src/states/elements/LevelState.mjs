@@ -52,10 +52,14 @@ export class LevelState extends StatusState {
   }
 
   enter () {
-    ;[0, 1].forEach((pointer) => {
-      const building = new BuildingState([this.camera, pointer, this.level])
-      building.y += FREE_AREA * TILE_SIZE + building.height
-      this.entities.append(building)
+    const sample = [0, 1]
+    sample.forEach((pointer) => {
+      sample.forEach((multiplier) => {
+        const building = new BuildingState([this.camera, pointer, this.level])
+        building.y +=
+          (FREE_AREA * TILE_SIZE + building.height) * (multiplier + 1)
+        this.entities.append(building)
+      })
     })
   }
 

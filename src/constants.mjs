@@ -80,4 +80,4 @@ export const RAINBOW_PALETTE: ReadonlyArray<string> = [
 // adds 412 kb
 export const DEBUG_BB: boolean = false
 export const DEBUG_PANEL: boolean = false
-export const DEBUG_BOSS_ONLY: boolean = true
+export const DEBUG_BOSS_ONLY: boolean = false
