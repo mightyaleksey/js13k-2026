@@ -62,7 +62,7 @@ export class LevelState extends StatusState {
   render () {
     pattern(
       gameTiles[0],
-      -0.5 * PLAY_AREA * TILE_SIZE,
+      -0.5 * (PLAY_AREA * TILE_SIZE + Dimentions.width),
       this.camera.y,
       Dimentions.width + PLAY_AREA * TILE_SIZE + 1,
       Dimentions.height + 1
@@ -146,8 +146,7 @@ export class LevelState extends StatusState {
       for (let i = 0; i < count; ++i) {
         const K = isLast ? BossState : MinionState
         const coords = [
-          0.5 * Dimentions.width +
-            (isLast ? 0 : this.getPosition() * TILE_SIZE),
+          isLast ? 0 : this.getPosition() * TILE_SIZE,
           this.camera.y - distance
         ]
 

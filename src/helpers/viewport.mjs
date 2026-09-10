@@ -13,13 +13,13 @@ export function updateAreas (cameraX: number, cameraY: number) {
   // should be high enough, so the generated monsters won't be deleted
   const margin = Math.max(Dimentions.height, 12 * TILE_SIZE)
 
-  playarea.x = cameraX - padding
-  playarea.y = cameraY - margin
-  playarea.width = Dimentions.width + 2 * padding
-  playarea.height = Dimentions.height + margin + padding
-
-  viewport.x = cameraX
+  viewport.x = cameraX - 0.5 * Dimentions.width
   viewport.y = cameraY
   viewport.width = Dimentions.width
   viewport.height = Dimentions.height
+
+  playarea.x = viewport.x - padding
+  playarea.y = viewport.y - margin
+  playarea.width = viewport.width + 2 * padding
+  playarea.height = viewport.height + margin + padding
 }

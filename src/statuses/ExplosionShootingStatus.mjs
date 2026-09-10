@@ -72,7 +72,7 @@ export class ExplosionShootingStatus extends BaseStatus<BossState> {
       Math.max(0.5 * Dimentions.height, 3 * TILE_SIZE) / EXPLOSION_SIZE
     )
 
-    const offsetX = 0.5 * (viewport.width - mx * EXPLOSION_SIZE)
+    const offsetX = -0.5 * mx * EXPLOSION_SIZE
     const offsetY = viewport.y + viewport.height - my * EXPLOSION_SIZE
 
     for (let y = 0; y < my; ++y) {

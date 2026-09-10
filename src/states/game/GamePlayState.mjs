@@ -49,7 +49,7 @@ export class GamePlayState extends BaseState {
 
   enter () {
     this.camera = new CameraState()
-    this.player = new PlayerState([0.5 * Dimentions.width, -3 * TILE_SIZE])
+    this.player = new PlayerState([0, -3 * TILE_SIZE])
 
     this.entities = new EntitiesState([this.camera])
     this.level = new LevelState([this.camera, this.entities])
@@ -70,12 +70,12 @@ export class GamePlayState extends BaseState {
 
     this.level.enter()
 
-    gameState.push(new GameStageState(), [
-      this.level.level,
-      () => {
-        gameState.pop()
-      }
-    ])
+    // gameState.push(new GameStageState(), [
+    //   this.level.level,
+    //   () => {
+    //     gameState.pop()
+    //   }
+    // ])
 
     // todo: fix
     setTimeout(playMusic, 500)
@@ -83,12 +83,12 @@ export class GamePlayState extends BaseState {
 
   render () {
     // emulate camera effect
-    translate(-this.camera.x, -this.camera.y)
+    translate(-this.camera.x - this.camera.offsetX, -this.camera.y)
     // terrain & enemies
     this.level.render()
     this.entities.render()
     // restore camera
-    translate(this.camera.x, this.camera.y)
+    translate(this.camera.x + this.camera.offsetX, this.camera.y)
 
     this.interface.render()
     this.toasty.render()
@@ -110,8 +110,8 @@ export class GamePlayState extends BaseState {
 
   update (delta: number) {
     this.camera.update(delta)
-    this.camera.x =
-      CAMERA_MX * (this.player.x - 0.5 * (Dimentions.width - TILE_SIZE))
+    // this.camera.x =
+    //   CAMERA_MX * (this.player.x - 0.5 * (Dimentions.width - TILE_SIZE))
 
     if (this.camera.isMoving) {
       this.startY += CAMERA_SPEED * delta

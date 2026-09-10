@@ -34,8 +34,8 @@ export class BuildingState extends ObstacleState {
   constructor (props: BuildingProps) {
     super([
       props[1] === 0
-        ? 0.5 * (Dimentions.width - PLAY_AREA * TILE_SIZE - buildingWidth)
-        : 0.5 * (Dimentions.width + PLAY_AREA * TILE_SIZE + buildingWidth),
+        ? -0.5 * (PLAY_AREA * TILE_SIZE + buildingWidth)
+        : 0.5 * (PLAY_AREA * TILE_SIZE + buildingWidth),
       props[0].y - buildingHeight,
       buildingWidth,
       buildingHeight
@@ -53,7 +53,7 @@ export class BuildingState extends ObstacleState {
 
   renderOne () {
     const t1 = (tb - 1) * 1.4 + 1
-    const ox = this.camera.x + 0.5 * Dimentions.width
+    const ox = this.camera.x
     const oy = this.camera.y + 0.5 * Dimentions.height
 
     const bx0 = this.x
@@ -98,7 +98,7 @@ export class BuildingState extends ObstacleState {
   }
 
   renderFrontWindow (x: number, y: number, t: number) {
-    const ox = this.camera.x + 0.5 * Dimentions.width
+    const ox = this.camera.x
     const oy = this.camera.y + 0.5 * Dimentions.height
     const left = x - 0.5 * TILE_SIZE
     const right = x + 0.5 * TILE_SIZE
