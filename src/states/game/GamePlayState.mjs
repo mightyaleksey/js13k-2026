@@ -9,6 +9,7 @@ import {
 } from '../../constants.mjs'
 import { Dimentions, translate } from '../../engine.mjs'
 import { gameState } from '../../gameState.mjs'
+import { playMusic } from '../../sound.mjs'
 import { Console } from '../../ui/Console.mjs'
 import { BaseState } from '../BaseState.mjs'
 import { CameraState } from '../elements/CameraState.mjs'
@@ -75,6 +76,9 @@ export class GamePlayState extends BaseState {
         gameState.pop()
       }
     ])
+
+    // todo: fix
+    setTimeout(playMusic, 500)
   }
 
   render () {
