@@ -1,6 +1,7 @@
 /* @flow */
 
 import { collisionHandler } from '../../helpers/collisionHandler.mjs'
+import { sortEntities } from '../../helpers/entities.mjs'
 import { playarea } from '../../helpers/viewport.mjs'
 import { collides } from '../../libs/collides.mjs'
 import { BaseState } from '../BaseState.mjs'
@@ -13,11 +14,13 @@ export type EntitiesProps = Readonly<[camera: CameraState]>
 export class EntitiesState extends BaseState {
   camera: CameraState
   list: Array<EntityState<>>
+  shouldSort: boolean
 
   constructor (props: EntitiesProps) {
     super()
     this.camera = props[0]
     this.list = []
+    this.shouldSort = false
   }
 
   enter () {}
@@ -54,6 +57,11 @@ export class EntitiesState extends BaseState {
         this.list.splice(j, 1)
       }
     }
+
+    if (this.shouldSort) {
+      sortEntities(this.list)
+      this.shouldSort = false
+    }
   }
 
   /* helpers */
@@ -65,5 +73,7 @@ export class EntitiesState extends BaseState {
     // $FlowExpectedError[cannot-write]
     entity.onCollide = collisionHandler
     this.list.push(entity)
+
+    this.shouldSort = true
   }
 }

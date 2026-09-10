@@ -17,7 +17,6 @@ import { EntitiesState } from '../elements/EntitiesState.mjs'
 import { GridState } from '../elements/GridState.mjs'
 import { InterfaceState } from '../elements/InterfaceState.mjs'
 import { LevelState } from '../elements/LevelState.mjs'
-import { RainbowState } from '../elements/RainbowState.mjs'
 import { PlayerState } from '../entities/PlayerState.mjs'
 import { ToastyState } from '../entities/ToastyState.mjs'
 import { GameStageState } from './GameStageState.mjs'
@@ -70,12 +69,12 @@ export class GamePlayState extends BaseState {
 
     this.level.enter()
 
-    // gameState.push(new GameStageState(), [
-    //   this.level.level,
-    //   () => {
-    //     gameState.pop()
-    //   }
-    // ])
+    gameState.push(new GameStageState(), [
+      this.level.level,
+      () => {
+        gameState.pop()
+      }
+    ])
 
     // todo: fix
     setTimeout(playMusic, 500)
@@ -110,8 +109,7 @@ export class GamePlayState extends BaseState {
 
   update (delta: number) {
     this.camera.update(delta)
-    // this.camera.x =
-    //   CAMERA_MX * (this.player.x - 0.5 * (Dimentions.width - TILE_SIZE))
+    this.camera.x = CAMERA_MX * (this.player.x + 0.5 * this.player.width)
 
     if (this.camera.isMoving) {
       this.startY += CAMERA_SPEED * delta
