@@ -21,13 +21,14 @@ export class PlayerIdleState<T extends PlayerState> extends BaseState {
   }
 
   update (delta: number) {
+    const entity = this.entity
     const direction = MOVEMENT_KEYS.findIndex((key) => Keys.wasHolding(key)) % 4
+    const touch = entity.getTouchOffset()
 
-    if (direction > -1) {
-      this.entity.changeState('walk')
+    if (direction > -1 || touch != null) {
+      entity.changeState('walk')
     }
 
-    const entity = this.entity
     entity.dy = entity.camera.isMoving ? -CAMERA_SPEED : 0
   }
 }

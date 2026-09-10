@@ -1,6 +1,7 @@
 /* @flow */
 
-import { FRAMES } from '../../constants.mjs'
+import { FRAMES, TILE_SIZE } from '../../constants.mjs'
+import { Touch } from '../../engine.mjs'
 import { FrontShootingStatus } from '../../statuses/FrontShootingStatus.mjs'
 import { StateMachine } from '../StateMachine.mjs'
 import { CharacterState } from './archetypes/CharacterState.mjs'
@@ -10,6 +11,7 @@ import type { EntityProps } from './EntityState.mjs'
 
 export class PlayerState extends CharacterState<'idle' | 'walk'> {
   scores: number
+  touchEnabled: boolean
 
   constructor (props: EntityProps) {
     super([props[0], props[1], 19, 32])
@@ -27,5 +29,26 @@ export class PlayerState extends CharacterState<'idle' | 'walk'> {
     }).change('idle')
 
     this.statuses.push(new FrontShootingStatus([0.4, 0, -90]))
+    this.touchEnabled = false
+  }
+
+  update (delta: number) {
+    super.update(delta)
+    if (Touch.wasTouched()) this.touchEnabled = true
+  }
+
+  /* helpers */
+
+  getTouchOffset (): ?[number, number, number] {
+    const touch = Touch.getPosition()
+    if (touch == null) return null
+
+    const dx = touch[0] - (this.centerX() - this.camera.offsetX - this.camera.x)
+    const dy = touch[1] - (this.centerY() - this.camera.y)
+    const m = Math.hypot(dx, dy)
+    if (m == 0) return null
+    if (m < TILE_SIZE) return null
+
+    return [dx / m, dy / m, m]
   }
 }

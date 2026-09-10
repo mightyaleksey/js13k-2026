@@ -63,14 +63,9 @@ export const Keys = {
 }
 
 export const Touch = {
-  getPosition (id?: ?string): ?[number, number] {
-    if (id == null) id = Object.keys(_input.touches)[0]
+  getPosition (): ?[number, number] {
     // $FlowExpectedError[incompatible-type]: missing null check
-    return _input.touches[id] ?? null
-  },
-
-  getTouches (): ReadonlyArray<string> {
-    return Object.keys(_input.touches)
+    return _input.touches['_'] ?? null
   },
 
   wasTouched (): boolean {
@@ -329,22 +324,12 @@ export async function createEngine (
     })
   })(_getTime())
 
-  document.addEventListener('click', onClick)
   document.addEventListener('keydown', onKeydown)
   document.addEventListener('keyup', onKeyup)
-  document.addEventListener('touchstart', onTouch)
-  document.addEventListener('touchmove', onTouch)
-  document.addEventListener('touchend', onTouchEnd)
+  document.addEventListener('pointerdown', onPointer)
+  document.addEventListener('pointercancel', onPointerEnd)
+  document.addEventListener('pointerup', onPointerEnd)
   window.addEventListener('resize', onReisze)
-
-  function onClick (event: MouseEvent) {
-    _preventDefault(event)
-
-    if (event.button === 0) {
-      _input.touched = true
-      _input.touches.mouse = [event.pageX / _scale, event.pageY / _scale]
-    }
-  }
 
   function onKeydown (event: KeyboardEvent) {
     _preventDefault(event)
@@ -362,27 +347,27 @@ export async function createEngine (
     delete _input.pressed[key]
   }
 
-  function onTouch (event: TouchEvent) {
-    _preventDefault(event)
+  function onPointer (event: PointerEvent) {
+    if (!event.isPrimary) return
 
-    _input.touched = true
-
-    for (let t = 0; t < event.changedTouches.length; t++) {
-      const touchEvent = event.changedTouches[t]
-      _input.touches[String(touchEvent.identifier)] = [
-        touchEvent.pageX / _scale,
-        touchEvent.pageY / _scale
-      ]
-    }
+    onPointerMove(event)
+    document.addEventListener('pointermove', onPointerMove)
   }
 
-  function onTouchEnd (event: TouchEvent) {
-    _preventDefault(event)
+  function onPointerMove (event: PointerEvent) {
+    if (!event.isPrimary) return
 
-    for (let t = 0; t < event.changedTouches.length; t++) {
-      const touchEvent = event.changedTouches[t]
-      delete _input.touches[String(touchEvent.identifier)]
-    }
+    _preventDefault(event)
+    _input.touched = true
+    _input.touches['_'] = [event.pageX / _scale, event.pageY / _scale]
+  }
+
+  function onPointerEnd (event: PointerEvent) {
+    if (!event.isPrimary) return
+
+    _preventDefault(event)
+    delete _input.touches['_']
+    document.removeEventListener('pointermove', onPointerMove)
   }
 
   function onReisze () {

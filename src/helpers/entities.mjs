@@ -10,7 +10,7 @@ import type { EntityState } from '../states/entities/EntityState.mjs'
  * projectile > characters, obstacles > particles
  */
 
-function getWeight (entity: Array<EntityState<>>): number {
+function getWeight (entity: EntityState<>): number {
   if (entity instanceof ProjectileState) return 3
   if (entity instanceof BuildingState) return 2
   if (entity instanceof ParticleState) return 0
