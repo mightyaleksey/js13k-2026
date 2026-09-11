@@ -1,8 +1,9 @@
 /* @flow */
 
 import { FRAMES, TILE_SIZE } from '../../constants.mjs'
-import { draw, setColor } from '../../engine.mjs'
+import { Dimentions, draw, setColor } from '../../engine.mjs'
 import { gameTiles } from '../../gameTiles.mjs'
+import { viewport } from '../../helpers/viewport.mjs'
 import { nullthrows } from '../../libs/nullthrows.mjs'
 import { ArcShootingStatus } from '../../statuses/ArcShootingStatus.mjs'
 import { ConeShootingStatus } from '../../statuses/ConeShootingStatus.mjs'
@@ -49,6 +50,11 @@ export class BossState extends CharacterState<> {
   update (delta: number) {
     super.update(delta)
     this.switchAttacks()
+
+    const targetY = viewport.y + 0.3 * viewport.height
+    if (targetY < this.y) {
+      this.camera.isMoving = false
+    }
   }
 
   /* helpers */

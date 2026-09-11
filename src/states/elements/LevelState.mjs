@@ -31,8 +31,6 @@ export class LevelState extends StatusState {
 
   positions: Array<number>
   stages: Array<[interval: number, count: number]>
-
-  distance: number
   level: number
 
   constructor (props: LevelProps) {
@@ -47,8 +45,6 @@ export class LevelState extends StatusState {
     this.positions = [0]
     this.stages = this.genStages()
     this.level = 0
-
-    this.distance = this.getDistance()
   }
 
   enter () {
@@ -105,15 +101,6 @@ export class LevelState extends StatusState {
     return stages
   }
 
-  getDistance (): number {
-    const extra =
-      this.level === 0
-        ? Math.floor(Math.max(0.2 * Dimentions.height, 2 * TILE_SIZE))
-        : Dimentions.height
-
-    return this.stages.reduce((t, s) => t + s[0], 0) + extra
-  }
-
   getPosition (): number {
     if (this.positions.length === 0) {
       const border = Math.ceil(0.5 * PLAY_AREA)
@@ -132,7 +119,6 @@ export class LevelState extends StatusState {
     })
 
     this.stages = this.genStages()
-    this.distance += this.getDistance()
   }
 
   onInterval (pointer: number) {
