@@ -84,9 +84,9 @@ export function arc (
   const c = _state.context
   c.beginPath()
   c.arc(
-    Math.floor(x),
-    Math.floor(y),
-    Math.floor(radius),
+    Math.round(x),
+    Math.round(y),
+    Math.round(radius),
     (a0 * Math.PI) / 180,
     (a1 * Math.PI) / 180
   )
@@ -102,7 +102,7 @@ export function clear () {
 export function circle (mode: DrawMode, x: number, y: number, radius: number) {
   const c = _state.context
   c.beginPath()
-  c.arc(Math.floor(x), Math.floor(y), Math.floor(radius), 0, 2 * Math.PI)
+  c.arc(Math.round(x), Math.round(y), Math.round(radius), 0, 2 * Math.PI)
   mode === 'fill' ? c.fill() : c.stroke()
 }
 
@@ -120,10 +120,10 @@ export function draw (
     0,
     drawable.width,
     drawable.height,
-    Math.floor(x),
-    Math.floor(y),
-    Math.floor(w),
-    Math.floor(h)
+    Math.round(x),
+    Math.round(y),
+    Math.round(w),
+    Math.round(h)
   )
 }
 
@@ -138,10 +138,10 @@ export function ellipse (
   const c = _state.context
   c.beginPath()
   c.ellipse(
-    Math.floor(x),
-    Math.floor(y),
-    Math.floor(radiusX),
-    Math.floor(radiusY),
+    Math.round(x),
+    Math.round(y),
+    Math.round(radiusX),
+    Math.round(radiusY),
     (rotation * Math.PI) / 180,
     0,
     2 * Math.PI
@@ -157,8 +157,8 @@ export function getTextWidth (text: string): number {
 export function line (x0: number, y0: number, x1: number, y1: number) {
   const c = _state.context
   c.beginPath()
-  c.moveTo(Math.floor(x0), Math.floor(y0))
-  c.lineTo(Math.floor(x1), Math.floor(y1))
+  c.moveTo(Math.round(x0), Math.round(y0))
+  c.lineTo(Math.round(x1), Math.round(y1))
   c.stroke()
 }
 
@@ -193,7 +193,7 @@ export function printf (
         ? 0.5 * (limit - width)
         : 0
 
-  c.fillText(text, Math.floor(x + dx), Math.floor(y), limit)
+  c.fillText(text, Math.round(x + dx), Math.round(y), limit)
 }
 
 export function putImageData (data: ImageData, x: number, y: number) {
@@ -212,11 +212,11 @@ export function rect (
   const c = _state.context
   c.beginPath()
   c.roundRect(
-    Math.floor(x),
-    Math.floor(y),
-    Math.floor(width),
-    Math.floor(height),
-    Math.floor(radius ?? 0)
+    Math.round(x),
+    Math.round(y),
+    Math.round(width),
+    Math.round(height),
+    Math.round(radius ?? 0)
   )
   mode === 'fill' ? c.fill() : c.stroke()
 }
@@ -254,9 +254,9 @@ export function setLine (width: number) {
 export function shape (mode: DrawMode, ...coords: ReadonlyArray<number>) {
   const c = _state.context
   c.beginPath()
-  c.moveTo(Math.floor(coords[0]), Math.floor(coords[1]))
+  c.moveTo(Math.round(coords[0]), Math.round(coords[1]))
   for (let i = 2; i < coords.length; i += 2) {
-    c.lineTo(Math.floor(coords[i]), Math.floor(coords[i + 1]))
+    c.lineTo(Math.round(coords[i]), Math.round(coords[i + 1]))
   }
   c.closePath()
   mode === 'fill' ? c.fill() : c.stroke()
@@ -264,7 +264,7 @@ export function shape (mode: DrawMode, ...coords: ReadonlyArray<number>) {
 
 export function translate (dx: number, dy: number) {
   const c = _state.context
-  c.translate(Math.floor(dx), Math.floor(dy))
+  c.translate(Math.round(dx), Math.round(dy))
 }
 
 export function wasResized (): boolean {

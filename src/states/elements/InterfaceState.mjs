@@ -1,7 +1,7 @@
 /* @flow */
 
-import { TILE_SIZE } from '../../constants.mjs'
-import { Dimentions, rect, setColor } from '../../engine.mjs'
+import { FONT_SMALL, TILE_SIZE } from '../../constants.mjs'
+import { Dimentions, printf, rect, setColor, setFont } from '../../engine.mjs'
 import { BaseState } from '../BaseState.mjs'
 import type { PlayerState } from '../entities/PlayerState.mjs'
 
@@ -19,14 +19,24 @@ export class InterfaceState extends BaseState {
     const { hp, hpMax } = this.player
     const barSize = 0.1 * Dimentions.width
 
+    setColor('#262d38')
+    rect('fill', -1, -1, Dimentions.width + 2, TILE_SIZE)
+
+    const barX = TILE_SIZE
+    const barY = 6
     setColor('#8d1c2c')
-    rect('line', 0.5 * TILE_SIZE, Dimentions.height - TILE_SIZE, barSize, 4)
-    rect(
-      'fill',
-      0.5 * TILE_SIZE,
-      Dimentions.height - TILE_SIZE,
-      Math.max((barSize * hp) / hpMax, 1),
-      4
+    rect('line', barX, barY, barSize, 4)
+    rect('fill', barX, barY, Math.max((barSize * hp) / hpMax, 1), 4)
+
+    const scores = 0
+    setColor('#fff')
+    setFont(FONT_SMALL)
+    printf(
+      String(scores).padStart(6, '0'),
+      0.5 * Dimentions.width,
+      TILE_SIZE - 6,
+      0.5 * Dimentions.width - TILE_SIZE,
+      'right'
     )
   }
 }

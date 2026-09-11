@@ -1,13 +1,7 @@
 /* @flow */
 
 import { TILE_SIZE } from './constants.mjs'
-import {
-  createEngine,
-  genQuads,
-  newImage,
-  scaleQuad,
-  setFont
-} from './engine.mjs'
+import { createEngine, genQuads, newImage, scaleQuad } from './engine.mjs'
 import { gameState } from './gameState.mjs'
 import { gameTiles } from './gameTiles.mjs'
 import { initSoundBank } from './sound.mjs'
@@ -95,7 +89,6 @@ function updateGame (delta: number) {
 }
 
 function renderGame () {
-  setFont('12px/1.3 Consolas, monaco, monospace')
   gameState.render()
 }
 

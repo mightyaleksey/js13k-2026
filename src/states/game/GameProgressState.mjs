@@ -1,6 +1,7 @@
 /* @flow */
 
-import { Dimentions, printf, rect, setColor } from '../../engine.mjs'
+import { FONT_MEDIUM } from '../../constants.mjs'
+import { Dimentions, printf, rect, setColor, setFont } from '../../engine.mjs'
 import { gameState, getLevel, nextlevel } from '../../gameState.mjs'
 import { RainbowState } from '../elements/RainbowState.mjs'
 import { TransitionState } from '../elements/TransitionState.mjs'
@@ -62,6 +63,7 @@ export class GameProgressState extends TransitionState {
 
     if (this.textOpacity > 0) {
       setColor('#fff', this.textOpacity)
+      setFont(FONT_MEDIUM)
       printf(
         `${colors[(this.level - 1) >> 0]} crystal returned.`,
         0,

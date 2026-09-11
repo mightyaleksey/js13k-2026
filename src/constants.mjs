@@ -1,5 +1,9 @@
 /* @flow */
 
+export const FONT_SMALL: string = '8px/1.3 Consolas, monaco, monospace'
+export const FONT_MEDIUM: string = '12px/1.3 Courier, monospace'
+export const FONT_HUGE: string = '24px/1.3 Courier, monospace'
+
 export const TILE_SIZE: number = 16
 export const PLAY_AREA: number = 10 // x tiles
 export const FREE_AREA: number = 3 // x tiles

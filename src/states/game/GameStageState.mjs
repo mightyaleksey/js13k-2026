@@ -1,7 +1,7 @@
 /* @flow */
 
-import { TILE_SIZE } from '../../constants.mjs'
-import { Dimentions, printf, setColor } from '../../engine.mjs'
+import { FONT_HUGE, TILE_SIZE } from '../../constants.mjs'
+import { Dimentions, printf, setColor, setFont } from '../../engine.mjs'
 import { inCubic, outCubic } from '../../libs/easing.mjs'
 import { TransitionState } from '../elements/TransitionState.mjs'
 
@@ -31,6 +31,7 @@ export class GameStageState extends TransitionState {
 
   render () {
     setColor('#fff')
+    setFont(FONT_HUGE)
     printf(`Level ${this.level + 1}`, 0, this.textY, Dimentions.width, 'center')
   }
 }
